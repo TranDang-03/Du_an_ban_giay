@@ -16,5 +16,6 @@ public class Main {
         TrangChu dn = new TrangChu();
         dn.setVisible(true);
         dn.setLocationRelativeTo(null);
+        System.out.println("hello world");
     }
 }
