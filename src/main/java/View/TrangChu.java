@@ -61,6 +61,8 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         dongho.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
+        dongho.setForeground(new java.awt.Color(204, 0, 0));
+        dongho.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         dongho.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jbgd.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N

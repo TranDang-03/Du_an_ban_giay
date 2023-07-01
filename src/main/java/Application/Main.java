@@ -16,8 +16,8 @@ public class Main {
         TrangChu dn = new TrangChu();
         dn.setVisible(true);
         dn.setLocationRelativeTo(null);
-        System.out.println("hello world");
-        
+       
+      
         /* #############################################################
 # Nhân quả không nợ chúng ta thứ gì, cho nên xin đừng oán giận #
 #                            _                                 #
