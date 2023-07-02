@@ -235,7 +235,7 @@ public class SanPham extends javax.swing.JFrame {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         String maSP = this.txtMasp.getText();
-        String tenSP = this.txtMasp.getText();
+        String tenSP = this.txtTensp.getText();
         int trangThai = Integer.parseInt(cbbSp.getSelectedItem().toString());
 
         Model.SanPham sp = new Model.SanPham(0, maSP, tenSP, trangThai);
@@ -246,6 +246,7 @@ public class SanPham extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Thêm thất bại");
+            return;
         }
 
         this.clear();
@@ -254,11 +255,12 @@ public class SanPham extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int id = Integer.parseInt(txtID.getText());
         String maSP = this.txtMasp.getText();
-        String tenSP = this.txtMasp.getText();
+        String tenSP = this.txtTensp.getText();
         int trangThai = Integer.parseInt(cbbSp.getSelectedItem().toString());
 
-        Model.SanPham sp = new Model.SanPham(0, maSP, tenSP, trangThai);
+        Model.SanPham sp = new Model.SanPham(id, maSP, tenSP, trangThai);
 
         boolean s = this.service.update(sp);
 
@@ -266,6 +268,7 @@ public class SanPham extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Sửa thành công");
         } else {
             JOptionPane.showMessageDialog(rootPane, "Sửa thất bại");
+            return;
         }
 
         this.clear();
