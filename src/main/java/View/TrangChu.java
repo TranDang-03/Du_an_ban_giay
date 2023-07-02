@@ -14,7 +14,7 @@ import javax.swing.JFrame;
 public class TrangChu extends javax.swing.JFrame implements Runnable{
     
     GiaoDich gd = new GiaoDich();
-    SanPham sp = new SanPham();
+    SanPhamCT sp = new SanPhamCT();
     NhanVien nv = new NhanVien();
     ThongKe tk = new ThongKe();
 
