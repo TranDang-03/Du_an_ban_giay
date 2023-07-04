@@ -25,6 +25,12 @@ public class KieuDang {
         this.trangThai = trangThai;
     }
 
+    public KieuDang(String maKD, String tenKD, int trangThai) {
+        this.maKD = maKD;
+        this.tenKD = tenKD;
+        this.trangThai = trangThai;
+    }
+
     public int getIdKD() {
         return idKD;
     }
@@ -57,6 +63,9 @@ public class KieuDang {
         this.trangThai = trangThai;
     }
 
-  
+    @Override
+    public String toString() {
+        return "KieuDang{" + "idKD=" + idKD + ", maKD=" + maKD + ", tenKD=" + tenKD + ", trangThai=" + trangThai + '}';
+    } 
     
 }

@@ -13,12 +13,7 @@ import View.TrangChu;
 public class Main {
 
     public static void main(String[] args) {
-        TrangChu dn = new TrangChu();
-        dn.setVisible(true);
-        dn.setLocationRelativeTo(null);
-       
-      
-        /* #############################################################
+/* #############################################################
 # Nhân quả không nợ chúng ta thứ gì, cho nên xin đừng oán giận #
 #                            _                                 #
 #                         _ooOoo_                              #
@@ -50,5 +45,9 @@ public class Main {
                     ))    .'
                    //    /
                         / */
+
+        TrangChu dn = new TrangChu();
+        dn.setVisible(true);
+        dn.setLocationRelativeTo(null);
     }
 }

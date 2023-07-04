@@ -25,6 +25,13 @@ public class NSX {
         this.trangThai = trangThai;
     }
 
+    public NSX(String maNSX, String tenNSX, int trangThai) {
+        this.maNSX = maNSX;
+        this.tenNSX = tenNSX;
+        this.trangThai = trangThai;
+    }
+    
+
     public int getIdNSX() {
         return idNSX;
     }
@@ -57,6 +64,9 @@ public class NSX {
         this.trangThai = trangThai;
     }
 
-   
+    @Override
+    public String toString() {
+        return "NSX{" + "idNSX=" + idNSX + ", maNSX=" + maNSX + ", tenNSX=" + tenNSX + ", trangThai=" + trangThai + '}';
+    }
     
 }
