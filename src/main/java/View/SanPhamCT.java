@@ -140,6 +140,11 @@ public class SanPhamCT extends javax.swing.JFrame {
         jButton7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton7.setForeground(new java.awt.Color(0, 204, 51));
         jButton7.setText("+");
+        jButton7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton7ActionPerformed(evt);
+            }
+        });
 
         jButton10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton10.setForeground(new java.awt.Color(0, 204, 51));
@@ -153,6 +158,11 @@ public class SanPhamCT extends javax.swing.JFrame {
         jButton11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton11.setForeground(new java.awt.Color(0, 204, 51));
         jButton11.setText("+");
+        jButton11.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton11ActionPerformed(evt);
+            }
+        });
 
         jLabel16.setText("Số lượng:");
 
@@ -432,6 +442,16 @@ public class SanPhamCT extends javax.swing.JFrame {
         KichCo kc = new KichCo();
         kc.setVisible(true);
     }//GEN-LAST:event_jButton14ActionPerformed
+
+    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
+       KieuDang kd =new KieuDang();
+       kd.setVisible(true);
+    }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
+        NSX nsx = new NSX();
+        nsx.setVisible(true);
+    }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
      * @param args the command line arguments
