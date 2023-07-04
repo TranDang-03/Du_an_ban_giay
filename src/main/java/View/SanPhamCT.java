@@ -127,6 +127,11 @@ public class SanPhamCT extends javax.swing.JFrame {
         jButton5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton5.setForeground(new java.awt.Color(0, 204, 51));
         jButton5.setText("+");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton6.setForeground(new java.awt.Color(0, 204, 51));
@@ -139,6 +144,11 @@ public class SanPhamCT extends javax.swing.JFrame {
         jButton10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton10.setForeground(new java.awt.Color(0, 204, 51));
         jButton10.setText("+");
+        jButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton10ActionPerformed(evt);
+            }
+        });
 
         jButton11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton11.setForeground(new java.awt.Color(0, 204, 51));
@@ -168,6 +178,11 @@ public class SanPhamCT extends javax.swing.JFrame {
         jButton14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jButton14.setForeground(new java.awt.Color(0, 204, 51));
         jButton14.setText("+");
+        jButton14.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton14ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -402,6 +417,21 @@ public class SanPhamCT extends javax.swing.JFrame {
         SanPham sp = new SanPham();
         sp.setVisible(true);
     }//GEN-LAST:event_btnThemSpActionPerformed
+
+    private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
+        MauSac ms = new MauSac();
+        ms.setVisible(true);
+    }//GEN-LAST:event_jButton10ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        ThuongHieu th = new ThuongHieu();
+        th.setVisible(true);
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
+        KichCo kc = new KichCo();
+        kc.setVisible(true);
+    }//GEN-LAST:event_jButton14ActionPerformed
 
     /**
      * @param args the command line arguments
