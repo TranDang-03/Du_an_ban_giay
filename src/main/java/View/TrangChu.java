@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -48,21 +49,24 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
         jbnv = new javax.swing.JLabel();
         jbtk = new javax.swing.JLabel();
         jb = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
+        btnThoat = new javax.swing.JLabel();
         Form = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lí của hàng bán giày thể thao nam");
+        setUndecorated(true);
 
         Menu.setBackground(new java.awt.Color(187, 221, 243));
 
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User.png"))); // NOI18N
         jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         dongho.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         dongho.setForeground(new java.awt.Color(204, 0, 0));
         dongho.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        dongho.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Alarm.png"))); // NOI18N
         dongho.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jbgd.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -110,10 +114,15 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
         jb.setText("KHÁCH HÀNG");
         jb.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("THOÁT");
-        jLabel8.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnThoat.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btnThoat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        btnThoat.setText("THOÁT");
+        btnThoat.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        btnThoat.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThoatMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout MenuLayout = new javax.swing.GroupLayout(Menu);
         Menu.setLayout(MenuLayout);
@@ -122,7 +131,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnThoat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jb, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
                     .addComponent(jbtk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbnv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -150,7 +159,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jb, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addComponent(btnThoat, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -199,6 +208,15 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
         this.setFrame(tk.getRootPane());
     }//GEN-LAST:event_jbtkMouseClicked
 
+    private void btnThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThoatMouseClicked
+        int cf = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn thoát ?");
+        if (cf == JOptionPane.YES_OPTION) {      
+                dispose();
+        }else {
+                return;
+            }
+    }//GEN-LAST:event_btnThoatMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -237,9 +255,9 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Form;
     private javax.swing.JPanel Menu;
+    private javax.swing.JLabel btnThoat;
     private javax.swing.JLabel dongho;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jb;
     private javax.swing.JLabel jbgd;
     private javax.swing.JLabel jbnv;
