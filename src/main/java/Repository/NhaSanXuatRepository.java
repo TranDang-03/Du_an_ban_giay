@@ -109,7 +109,7 @@ public class NhaSanXuatRepository {
     public boolean deleteNSX(int id) {
 
         String query = "UPDATE [dbo].[NSX]\n"
-                + "   SET [trangThai] = 0\n"
+                + "   SET [trangThai] = 1\n"
                 + " WHERE idNSX = ?";
         int check = 0;
 

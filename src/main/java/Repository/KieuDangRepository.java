@@ -111,7 +111,7 @@ public class KieuDangRepository {
     public boolean deleteKieuDang(int id) {
 
         String query = "UPDATE [dbo].[kieu_dang]\n"
-                + "   SET [trangThai] = 0\n"
+                + "   SET [trangThai] = 1\n"
                 + " WHERE idKieuDang = ?";
         int check = 0;
 

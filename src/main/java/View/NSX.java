@@ -4,6 +4,13 @@
  */
 package View;
 
+import Repository.NhaSanXuatRepository;
+import Service.NhaSanXuatService;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Admin
@@ -13,9 +20,42 @@ public class NSX extends javax.swing.JFrame {
     /**
      * Creates new form NSX
      */
+    private DefaultTableModel dtm = new DefaultTableModel();
+    private List<Model.NSX> listNsx = new ArrayList<>();
+    private NhaSanXuatService service = new NhaSanXuatService();
+
     public NSX() {
         initComponents();
         this.setLocationRelativeTo(null);
+
+        tblNSX.setModel(dtm);
+        String headers[] = {"ID", "Mã", "Tên", "Trạng Thái"};
+        dtm.setColumnIdentifiers(headers);
+        clear();
+        loadtable();
+    }
+
+    public void loadtable() {
+        listNsx = this.service.getAll();
+        dtm.setRowCount(0);
+
+        for (Model.NSX nsx : listNsx) {
+            dtm.addRow(new Object[]{
+                nsx.getIdNSX(),
+                nsx.getMaNSX(),
+                nsx.getTenNSX(),
+                nsx.getTrangThai() == 0 ? "Hoạt động" : "Không hoạt động"
+            });
+        }
+    }
+
+    public void clear() {
+        txtID.setText("");
+        txtMaNSX.setText("");
+        txtTenNSX.setText("");
+
+        radioHoatDong.setSelected(false);
+        radioKhongHoatDong.setSelected(false);
     }
 
     /**
@@ -29,26 +69,27 @@ public class NSX extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txtID = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        txtMaNSX = new javax.swing.JTextField();
+        txtTenNSX = new javax.swing.JTextField();
+        btnThem = new javax.swing.JButton();
+        btnSua = new javax.swing.JButton();
+        btnChuyenTT = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblNSX = new javax.swing.JTable();
+        radioHoatDong = new javax.swing.JRadioButton();
+        radioKhongHoatDong = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel1.setText("ID:");
 
-        jTextField1.setEditable(false);
+        txtID.setEditable(false);
 
         jButton1.setText("Thoát");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -66,15 +107,28 @@ public class NSX extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Tên NSX:");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1" }));
+        btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Thêm");
+        btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
 
-        jButton3.setText("Sửa");
+        btnChuyenTT.setText("Chuyển TT");
+        btnChuyenTT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnChuyenTTActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Mới");
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblNSX.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -82,7 +136,16 @@ public class NSX extends javax.swing.JFrame {
                 "ID", "Mã", "Tên", "Trạng thái"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblNSX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblNSXMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblNSX);
+
+        radioHoatDong.setText("Hoạt động");
+
+        radioKhongHoatDong.setText("Không hoạt động");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -104,17 +167,20 @@ public class NSX extends javax.swing.JFrame {
                                     .addComponent(jLabel4))
                                 .addGap(33, 33, 33)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField1)
-                                    .addComponent(jTextField3)
-                                    .addComponent(jTextField4)
-                                    .addComponent(jComboBox1, 0, 221, Short.MAX_VALUE)))
+                                    .addComponent(txtID, javax.swing.GroupLayout.DEFAULT_SIZE, 221, Short.MAX_VALUE)
+                                    .addComponent(txtMaNSX)
+                                    .addComponent(txtTenNSX)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(radioHoatDong)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(radioKhongHoatDong))))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(70, 70, 70)
-                                .addComponent(jButton2)
+                                .addComponent(btnThem)
                                 .addGap(95, 95, 95)
-                                .addComponent(jButton3)
+                                .addComponent(btnSua)
                                 .addGap(102, 102, 102)
-                                .addComponent(jButton4))
+                                .addComponent(btnChuyenTT))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(52, 52, 52)
                                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -128,24 +194,25 @@ public class NSX extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaNSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTenNSX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(radioHoatDong)
+                    .addComponent(radioKhongHoatDong))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton3)
-                    .addComponent(jButton4))
+                    .addComponent(btnThem)
+                    .addComponent(btnSua)
+                    .addComponent(btnChuyenTT))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 229, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -174,6 +241,95 @@ public class NSX extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tblNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNSXMouseClicked
+        // TODO add your handling code here:
+        int row = tblNSX.getSelectedRow();
+
+        int id = listNsx.get(row).getIdNSX();
+        String maNSX = listNsx.get(row).getMaNSX();
+        String tenNSX = listNsx.get(row).getTenNSX();
+        int trangThai = listNsx.get(row).getTrangThai();
+
+        txtID.setText(String.valueOf(id));
+        txtMaNSX.setText(maNSX);
+        txtTenNSX.setText(tenNSX);
+
+        if (trangThai == 0) {
+            radioHoatDong.setSelected(true);
+            radioKhongHoatDong.setSelected(false);
+        } else {
+            radioHoatDong.setSelected(false);
+            radioKhongHoatDong.setSelected(true);
+        }
+    }//GEN-LAST:event_tblNSXMouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+
+        String maNSX = txtMaNSX.getText();
+        String tenNSX = txtTenNSX.getText();
+        int trangThai;
+
+        if (radioHoatDong.isSelected() == true) {
+            trangThai = 0;
+        } else {
+            trangThai = 1;
+        }
+
+        Model.NSX nsx = new Model.NSX(maNSX, tenNSX, trangThai);
+
+        boolean add = this.service.add(nsx);
+
+        if (add == true) {
+            JOptionPane.showMessageDialog(this, "Thêm thành công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Thêm thất bại");
+        }
+
+        clear();
+        loadtable();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        
+        int id = Integer.valueOf(txtID.getText());
+        String maNSX = txtMaNSX.getText();
+        String tenNSX = txtTenNSX.getText();
+        int trangThai;
+        if (radioHoatDong.isSelected() == true) {
+            trangThai = 0;
+        } else {
+            trangThai = 1;
+        }
+
+        Model.NSX nsx = new Model.NSX(maNSX, tenNSX, trangThai);
+        boolean update = this.service.update(id, nsx);
+
+        if (update == true) {
+            JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Cập nhật thất bại");
+        }
+        clear();
+        loadtable();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnChuyenTTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnChuyenTTActionPerformed
+        // TODO add your handling code here:
+        int id = Integer.valueOf(txtID.getText());
+
+        boolean delete = this.service.delete(id);
+        if (delete == true) {
+            JOptionPane.showMessageDialog(this, "Chuyển TT thành công");
+        } else {
+            JOptionPane.showMessageDialog(this, "Chuyển TT thất bại");
+        }
+
+        clear();
+        loadtable();
+    }//GEN-LAST:event_btnChuyenTTActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,20 +367,21 @@ public class NSX extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnChuyenTT;
+    private javax.swing.JButton btnSua;
+    private javax.swing.JButton btnThem;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JRadioButton radioHoatDong;
+    private javax.swing.JRadioButton radioKhongHoatDong;
+    private javax.swing.JTable tblNSX;
+    private javax.swing.JTextField txtID;
+    private javax.swing.JTextField txtMaNSX;
+    private javax.swing.JTextField txtTenNSX;
     // End of variables declaration//GEN-END:variables
 }

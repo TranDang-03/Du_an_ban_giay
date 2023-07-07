@@ -2,9 +2,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package Service;
+package Utilties;
 
-import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
@@ -19,19 +18,15 @@ import javax.swing.JPanel;
 import javax.swing.JPopupMenu;
 import com.toedter.calendar.JCalendar;
 
-public class datepicker {
+public class DatePick extends JButton {
 
-    public static void main(String[] args) {
-        JFrame frame = new JFrame("DatePicker Example");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    private JFormattedTextField dateField;
 
-        // Tạo JTextField để hiển thị ngày được chọn
-        JFormattedTextField dateField = new JFormattedTextField(new SimpleDateFormat("dd/MM/yyyy"));
-        dateField.setColumns(10);
+    public DatePick(JFormattedTextField dateField) {
+        this.dateField = dateField;
+        setText("...");
 
-        // Tạo JButton để mở DatePicker
-        JButton datePickerButton = new JButton("...");
-        datePickerButton.addActionListener(new ActionListener() {
+        addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 JPopupMenu popup = new JPopupMenu();
@@ -39,15 +34,14 @@ public class datepicker {
                     @Override
                     public void setCalendar(Calendar calendar) {
                         super.setCalendar(calendar);
-                        
+
                         // Đặt giá trị ngày vào JTextField khi người dùng chọn ngày
                         dateField.setValue(calendar.getTime());
-                        
+
                         // Đóng popup sau khi người dùng chọn ngày
                         popup.setVisible(false);
                     }
                 };
-                
                 popup.add(calendar);
                 calendar.addPropertyChangeListener(new PropertyChangeListener() {
                     @Override
@@ -55,25 +49,35 @@ public class datepicker {
                         if (evt.getPropertyName().equals("calendar")) {
                             Calendar selectedDate = (Calendar) evt.getNewValue();
                             Date date = selectedDate.getTime();
-                            
-                            // Lấy dữ liệu ngày từ DatePicker
-                            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+
+                            // Lấy dữ liệu ngày từ DatePick
+                            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
                             String dateString = dateFormat.format(date);
                             System.out.println("Ngày được chọn: " + dateString);
                         }
                     }
                 });
-                
                 // Hiển thị popup bên cạnh JButton
-                popup.show(datePickerButton, 0, datePickerButton.getHeight());
+                popup.show(DatePick.this, 0, DatePick.this.getHeight());
             }
         });
+    }
+
+    public static void main(String[] args) {
+        JFrame frame = new JFrame("DatePicker Example");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+        // Tạo JTextField để hiển thị ngày được chọn
+        JFormattedTextField dateField = new JFormattedTextField(new SimpleDateFormat("yyyy/MM/dd"));
+        dateField.setColumns(10);
+
+        // Tạo JButton DatePick
+        DatePick datePickerButton = new DatePick(dateField);
 
         JPanel panel = new JPanel();
-        panel.add(dateField);
         panel.add(datePickerButton);
 
-        frame.getContentPane().add(panel, BorderLayout.CENTER);
+        frame.getContentPane().add(panel);
         frame.pack();
         frame.setVisible(true);
     }

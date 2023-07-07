@@ -10,6 +10,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -147,7 +149,15 @@ public class KhachHangRepository {
 //            System.out.println(kh.toString());
 //        }
 
-        new KhachHangRepository().deleteKhachHang(3);
+//        new KhachHangRepository().deleteKhachHang(3);
+//        System.out.println("den day roi");
+
+        String ngaySinh = "2003-10-10";
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localdate = LocalDate.parse(ngaySinh, formatter);
+        java.sql.Date birth = java.sql.Date.valueOf(localdate);
+        KhachHang kh = new KhachHang("KH005", "Nguyen Thi Hien", false, birth, "0816130199", "Hung Yen", 1);
+        new KhachHangRepository().addKhachhang(kh);
         System.out.println("den day roi");
     }
 }
