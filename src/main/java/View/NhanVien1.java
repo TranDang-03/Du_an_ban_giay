@@ -497,7 +497,7 @@ public class NhanVien1 extends javax.swing.JDialog {
         this.txtid.setText(idNhanVien);
         this.txtma.setText(maNhanVien);
         this.txtten.setText(tenNhanVien);
-        Boolean setGioiTinh = chucVu.equalsIgnoreCase("Nam") ? true : false;
+        Boolean setGioiTinh = gioiTinh.equalsIgnoreCase("Nam") ? true : false;
         if (setGioiTinh == true) {
             rd_nam.setSelected(true);
         } else {
