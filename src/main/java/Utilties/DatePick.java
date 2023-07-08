@@ -35,7 +35,6 @@ public class DatePick extends JButton {
                     public void setCalendar(Calendar calendar) {
                         super.setCalendar(calendar);
 
-                        // Đặt giá trị ngày vào JTextField khi người dùng chọn ngày
                         dateField.setValue(calendar.getTime());
 
                         // Đóng popup sau khi người dùng chọn ngày
@@ -67,11 +66,9 @@ public class DatePick extends JButton {
         JFrame frame = new JFrame("DatePicker Example");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // Tạo JTextField để hiển thị ngày được chọn
         JFormattedTextField dateField = new JFormattedTextField(new SimpleDateFormat("yyyy/MM/dd"));
         dateField.setColumns(10);
 
-        // Tạo JButton DatePick
         DatePick datePickerButton = new DatePick(dateField);
 
         JPanel panel = new JPanel();
@@ -80,6 +77,8 @@ public class DatePick extends JButton {
         frame.getContentPane().add(panel);
         frame.pack();
         frame.setVisible(true);
+        
+        
     }
 }
 
