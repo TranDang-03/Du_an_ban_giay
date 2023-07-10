@@ -5,6 +5,8 @@
 package Application;
 
 import View.DangNhap;
+import View.KichCo;
+import View.NhanVien1;
 import View.TrangChu;
 
 /**
@@ -47,8 +49,16 @@ public class Main {
                    //    /
                         / */
 
-        TrangChu dn = new TrangChu();
-        dn.setVisible(true);
-        dn.setLocationRelativeTo(null);
+//        TrangChu dn = new TrangChu();
+//        dn.setVisible(true);
+//        dn.setLocationRelativeTo(null);
+
+//          NhanVien1 view = new NhanVien1();
+//          view.setVisible(true);
+//          view.setLocationRelativeTo(null);
+
+          KichCo view = new KichCo();
+          view.setVisible(true);
+          view.setLocationRelativeTo(null);
     }
 }

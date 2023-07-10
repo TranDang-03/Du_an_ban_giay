@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class DBConnect {
 
     private static final String USERNAME = "sa";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "dangdzai";
     private static final String SERVER_NAME = "localhost";
     private static final String PORT = "1433";
     private static final String DATABASE_NAME = "BEESHOE";
