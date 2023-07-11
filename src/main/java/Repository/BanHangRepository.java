@@ -349,6 +349,34 @@ public class BanHangRepository {
         return null;
     }
 
+    public List<CTSPBanHang> searchSPCT(String name) {
+        String query = "select idChiTietSP,tenSanPham,tenDongSP,tenThuongHieu,tenKichCo,giaBan,soLuongTon,tenMauSac\n"
+                + "from chi_tiet_san_pham join san_pham on chi_tiet_san_pham.idSanPham = san_pham.idSanPham\n"
+                + "join dong_sp on chi_tiet_san_pham.idDongSP = dong_sp.idDongSP\n"
+                + "join thuong_hieu on chi_tiet_san_pham.idThuongHieu = thuong_hieu.idThuongHieu\n"
+                + "join kich_co on chi_tiet_san_pham.idKichCo = kich_co.idKichCo\n"
+                + "join mau_sac on chi_tiet_san_pham.idMauSac = mau_sac.idMauSac\n"
+                + "where san_pham.tenSanPham like ? \n"
+                + "group by idChiTietSP,tenSanPham,tenDongSP,tenThuongHieu,tenKichCo,giaBan,soLuongTon,tenMauSac";
+        List<CTSPBanHang> list = new ArrayList<>();
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            String ten = "%" + name + "%";
+            ps.setObject(1, ten);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                CTSPBanHang bh = new CTSPBanHang(rs.getInt("idChiTietSP"), rs.getString("tenSanPham"),
+                        rs.getString("tenDongSP"), rs.getString("tenThuongHieu"),
+                        rs.getInt("tenKichCo"), rs.getFloat("giaBan"),
+                        rs.getInt("soLuongTon"), rs.getString("tenMauSac"));
+                list.add(bh);
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
 //        List<String> list = new BanHangRepository().getAllMaHD();
 //        for (String string : list) {

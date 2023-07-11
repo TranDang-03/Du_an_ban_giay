@@ -96,4 +96,8 @@ public class BanHangService {
     public List<HoaDonViewModel> getAllHD() {
         return this.banHang.getAllHoaDon();
     }
+    
+    public List<CTSPBanHang> searchSP(String name){
+        return this.banHang.searchSPCT(name);
+    }
 }
