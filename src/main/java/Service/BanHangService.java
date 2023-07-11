@@ -96,8 +96,17 @@ public class BanHangService {
     public List<HoaDonViewModel> getAllHD() {
         return this.banHang.getAllHoaDon();
     }
-    
-    public List<CTSPBanHang> searchSP(String name){
+
+    public List<CTSPBanHang> searchSP(String name) {
         return this.banHang.searchSPCT(name);
+    }
+
+    public List<CTSPBanHang> giaCaoXuongThap(List<CTSPBanHang> list) {
+        list.sort((o1, o2) -> {
+            int x1 = (int) Math.round(o1.getGiaBan());
+            int x2 = (int) Math.round(o2.getGiaBan());
+            return x1 - x2;
+        });
+        return list;
     }
 }

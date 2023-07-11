@@ -121,7 +121,7 @@ public class GiaoDich extends javax.swing.JFrame {
         txtMaHD.setEditable(false);
 
         listCTSP = banHangService.getAllCTSP();
-        displayDateFilter(listCTSP);
+        displayProductFilter(listCTSP);
 
         ccbMauSac.addActionListener(filterListener);
         ccbSize.addActionListener(filterListener);
@@ -481,13 +481,13 @@ public class GiaoDich extends javax.swing.JFrame {
                     .addComponent(txtMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
                     .addComponent(ccbNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnThemNhanhKH, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(ccbKhachHang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel6))
-                    .addComponent(btnThemNhanhKH, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23)
+                        .addComponent(jLabel6)))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -552,7 +552,7 @@ public class GiaoDich extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 4, Short.MAX_VALUE)))
+                        .addGap(0, 1, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -581,7 +581,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void ccbTrangThaiHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccbTrangThaiHoaDonActionPerformed
         // TODO add your handling code here:
-        
+
         if (ccbTrangThaiHoaDon.getSelectedIndex() == 0) {
             listGetAllHD = banHangService.getAllHDDaThanhToan();
             showDataHD(listGetAllHD);
@@ -615,10 +615,11 @@ public class GiaoDich extends javax.swing.JFrame {
         String name = txtTimKiem.getText();
 
         if (name.isEmpty()) {
-            displayDateFilter(listCTSP);
+            listCTSP = this.banHangService.getAllCTSP();
+            displayProductFilter(listCTSP);
         } else {
             listCTSP = this.banHangService.searchSP(name);
-            displayDateFilter(listCTSP);
+            displayProductFilter(listCTSP);
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
@@ -627,7 +628,7 @@ public class GiaoDich extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             List<CTSPBanHang> filteredData = filterData(listCTSP);
 
-            displayDateFilter(filteredData);
+            displayProductFilter(filteredData);
             for (CTSPBanHang cTSPBanHang : filteredData) {
                 System.out.println(filteredData.toString());
             }
@@ -656,7 +657,7 @@ public class GiaoDich extends javax.swing.JFrame {
         return (List<CTSPBanHang>) CollectionUtils.select(data, predicate);
     }
 
-    private void displayDateFilter(List<CTSPBanHang> data) {
+    private void displayProductFilter(List<CTSPBanHang> data) {
         dtmCTSP.setRowCount(0);
         for (CTSPBanHang x : data) {
             Object[] row = {
@@ -684,10 +685,6 @@ public class GiaoDich extends javax.swing.JFrame {
                 x.getNgayTao()
             });
         }
-    }
-
-    private void fillData(HoaDon hd) {
-
     }
 
     /**
