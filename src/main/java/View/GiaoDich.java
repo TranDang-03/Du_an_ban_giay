@@ -38,95 +38,95 @@ public class GiaoDich extends javax.swing.JFrame {
      * Creates new form GiaoDich
      */
     private DefaultComboBoxModel dcbmMauSac = new DefaultComboBoxModel();
-
+    
     private List<String> listMauSac = new ArrayList<>();
-
+    
     private DefaultComboBoxModel dcbmThuongHieu = new DefaultComboBoxModel();
-
+    
     private List<String> listThuongHieu = new ArrayList<>();
-
+    
     private DefaultComboBoxModel dcbmKichCo = new DefaultComboBoxModel();
-
+    
     private List<Integer> listKichCo = new ArrayList<>();
-
+    
     private DefaultComboBoxModel dcbmNhanVien = new DefaultComboBoxModel();
-
+    
     private DefaultComboBoxModel dcbmKhachHang = new DefaultComboBoxModel();
-
+    
     private DefaultComboBoxModel dcbmKhuyenMai = new DefaultComboBoxModel();
-
+    
     private List<String> listKhuyenMai = new ArrayList<>();
-
+    
     private DefaultTableModel dtmHoaDon = new DefaultTableModel();
-
+    
     private List<HoaDonViewModel> listGetAllHD = new ArrayList<>();
-
+    
     private DefaultTableModel dtmCTSP = new DefaultTableModel();
-
+    
     private List<CTSPBanHang> listCTSP = new ArrayList<>();
-
+    
     private DefaultTableModel dtmHDCT = new DefaultTableModel();
-
+    
     private BanHangService banHangService = new BanHangService();
-
+    
     public GiaoDich() {
         initComponents();
         tblHoaDon.setModel(dtmHoaDon);
-
+        
         tblHDCT.setModel(dtmHDCT);
-
+        
         tblSanPhamCT.setModel(dtmCTSP);
-
+        
         ccbMauSac.setModel(dcbmMauSac);
-
+        
         ccbThuongHieu.setModel(dcbmThuongHieu);
-
+        
         ccbSize.setModel(dcbmKichCo);
-
+        
         ccbKhuyenMai.setModel(dcbmKhuyenMai);
-
+        
         String headerHoaDon[] = {"Mã HD", "Tên KH", "Tên NV", "Mã Khuyến Mãi", "Thành Tiền", "Ngày Tạo"};
         dtmHoaDon.setColumnIdentifiers(headerHoaDon);
-
+        
         String headerHDCT[] = {"Tên SP", "Số lượng", "Loại", "Hãng", "Size", "Đơn giá"};
         dtmHDCT.setColumnIdentifiers(headerHDCT);
-
+        
         String headerCTSP[] = {"Tên SP", "Loại", "Thương Hiệu", "Size", "Giá", "Số lượng tồn", "Màu Sắc"};
         dtmCTSP.setColumnIdentifiers(headerCTSP);
-
+        
         listMauSac = banHangService.getAllTenMauSac();
         listMauSac.add("All");
         dcbmMauSac.addAll(listMauSac);
-
+        
         listThuongHieu = banHangService.getAllTenThuongHieu();
         listThuongHieu.add("All");
         dcbmThuongHieu.addAll(listThuongHieu);
-
+        
         listKichCo = banHangService.getAllTenKichCo();
         listKichCo.add(0);
         dcbmKichCo.addAll(listKichCo);
-
+        
         listKhuyenMai = banHangService.getALLMaKhuyenMai();
         listKhuyenMai.add("Không");
         dcbmKhuyenMai.addAll(listKhuyenMai);
-
+        
         ccbMauSac.setSelectedIndex(listMauSac.size() - 1);
-
+        
         ccbThuongHieu.setSelectedIndex(listThuongHieu.size() - 1);
-
+        
         ccbSize.setSelectedIndex(listKichCo.size() - 1);
-
+        
         ccbKhuyenMai.setSelectedIndex(listKhuyenMai.size() - 1);
-
+        
         txtMaHD.setEditable(false);
-
+        
         listCTSP = banHangService.getAllCTSP();
         displayProductFilter(listCTSP);
-
+        
         ccbMauSac.addActionListener(filterListener);
         ccbSize.addActionListener(filterListener);
         ccbThuongHieu.addActionListener(filterListener);
-
+        
         ccbTrangThaiHoaDon.setSelectedIndex(2);
     }
 
@@ -458,13 +458,13 @@ public class GiaoDich extends javax.swing.JFrame {
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                             .addComponent(txtMaHD)
                                             .addComponent(ccbKhachHang, 0, 159, Short.MAX_VALUE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addGap(0, 0, Short.MAX_VALUE)
                                                 .addComponent(ccbNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addGap(0, 0, Short.MAX_VALUE)))))
                                 .addGap(37, 37, 37))))
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -570,7 +570,7 @@ public class GiaoDich extends javax.swing.JFrame {
         if (ngayTao != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDate = dateFormat.format(ngayTao);
-
+            
             try {
                 java.util.Date parsedDate = dateFormat.parse(formattedDate);
                 java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
@@ -602,23 +602,23 @@ public class GiaoDich extends javax.swing.JFrame {
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblHoaDonMouseClicked
         // TODO add your handling code here:
         int row = tblHoaDon.getSelectedRow();
-
+        
         txtMaHD.setText(listGetAllHD.get(row).getMaHD());
-
+        
         java.util.Date ngayTao = listGetAllHD.get(row).getNgayTao();
         txtNgayTao.setDate(ngayTao);
-
+        
         txtThanhTien.setText(String.valueOf(listGetAllHD.get(row).getThanhTien()));
-
+        
         txtHoaDonChon.setText(listGetAllHD.get(row).getMaHD());
-
+        
         ccbKhuyenMai.setSelectedItem(listGetAllHD.get(row).getMaKM());
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
         // TODO add your handling code here:
         String name = txtTimKiem.getText();
-
+        
         if (name.isEmpty()) {
             listCTSP = this.banHangService.getAllCTSP();
             displayProductFilter(listCTSP);
@@ -632,41 +632,41 @@ public class GiaoDich extends javax.swing.JFrame {
         KhachHang kh = new KhachHang();
         kh.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
-
+    
     ActionListener filterListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
             List<CTSPBanHang> filteredData = filterData(listCTSP);
-
+            
             displayProductFilter(filteredData);
             for (CTSPBanHang cTSPBanHang : filteredData) {
                 System.out.println(filteredData.toString());
             }
         }
     };
-
+    
     private List<CTSPBanHang> filterData(List<CTSPBanHang> data) {
         Predicate<CTSPBanHang> predicate = new Predicate<CTSPBanHang>() {
             public boolean evaluate(CTSPBanHang item) {
-
+                
                 String selectedColor = (String) ccbMauSac.getSelectedItem();
                 int selectedSize = (int) ccbSize.getSelectedItem();
                 String selectedBranch = (String) ccbThuongHieu.getSelectedItem();
-
+                
                 boolean filterByColor = !selectedColor.equals("All");
                 boolean filterBySize = selectedSize != 0;
                 boolean filterByBranch = !selectedBranch.equals("All");
-
+                
                 boolean colorMatch = !filterByColor || item.getTenMau().equalsIgnoreCase(selectedColor);
                 boolean sizeMatch = !filterBySize || item.getSize() == selectedSize;
                 boolean branchMatch = !filterByBranch || item.getThuongHieu().equalsIgnoreCase(selectedBranch);
-
+                
                 return colorMatch && sizeMatch && branchMatch;
             }
         };
         return (List<CTSPBanHang>) CollectionUtils.select(data, predicate);
     }
-
+    
     private void displayProductFilter(List<CTSPBanHang> data) {
         dtmCTSP.setRowCount(0);
         for (CTSPBanHang x : data) {
@@ -682,7 +682,7 @@ public class GiaoDich extends javax.swing.JFrame {
             dtmCTSP.addRow(row);
         }
     }
-
+    
     private void showDataHD(List<HoaDonViewModel> list) {
         dtmHoaDon.setRowCount(0);
         for (HoaDonViewModel x : list) {
