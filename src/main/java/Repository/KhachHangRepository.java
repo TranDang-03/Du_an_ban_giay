@@ -109,7 +109,7 @@ public class KhachHangRepository {
                 + "      ,[ngaySinh] = ?\n"
                 + "      ,[sdt] = ?\n"
                 + "      ,[diaChi] = ?\n"
-                + "      ,[trangThai] = /\n"
+                + "      ,[trangThai] = ?\n"
                 + " WHERE idKhachHang = ?";
         int check = 0;
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
@@ -120,6 +120,7 @@ public class KhachHangRepository {
             ps.setObject(5, kh.getSdt());
             ps.setObject(6, kh.getDiaChi());
             ps.setObject(7, kh.getTrangThai());
+             ps.setObject(8, id);
 
             check = ps.executeUpdate();
         } catch (SQLException ex) {
