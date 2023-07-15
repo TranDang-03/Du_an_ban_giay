@@ -10,14 +10,14 @@ package Model;
  */
 public class ChiTietSP {
     private int idChiTietSP;
-    private int idNSX;
-    private int idSP;
-    private int idMS;
-    private int idDong;
-    private int idCL;
-    private int idKC;
-    private int idKD;
-    private int idTH;
+    private String idNSX;
+    private String idSP;
+    private String idMS;
+    private String idDong;
+    private String idCL;
+    private String idKC;
+    private String idKD;
+    private String idTH;
     private String maCTSP;
     private int soLuongTon;
     private float giaNhap;
@@ -27,7 +27,7 @@ public class ChiTietSP {
     public ChiTietSP() {
     }
 
-    public ChiTietSP(int idChiTietSP, int idNSX, int idSP, int idMS, int idDong, int idCL, int idKC, int idKD, int idTH, String maCTSP, int soLuongTon, float giaNhap, float giaBan, String anh) {
+    public ChiTietSP(int idChiTietSP, String idNSX, String idSP, String idMS, String idDong, String idCL, String idKC, String idKD, String idTH, String maCTSP, int soLuongTon, float giaNhap, float giaBan, String anh) {
         this.idChiTietSP = idChiTietSP;
         this.idNSX = idNSX;
         this.idSP = idSP;
@@ -52,67 +52,67 @@ public class ChiTietSP {
         this.idChiTietSP = idChiTietSP;
     }
 
-    public int getIdNSX() {
+    public String getIdNSX() {
         return idNSX;
     }
 
-    public void setIdNSX(int idNSX) {
+    public void setIdNSX(String idNSX) {
         this.idNSX = idNSX;
     }
 
-    public int getIdSP() {
+    public String getIdSP() {
         return idSP;
     }
 
-    public void setIdSP(int idSP) {
+    public void setIdSP(String idSP) {
         this.idSP = idSP;
     }
 
-    public int getIdMS() {
+    public String getIdMS() {
         return idMS;
     }
 
-    public void setIdMS(int idMS) {
+    public void setIdMS(String idMS) {
         this.idMS = idMS;
     }
 
-    public int getIdDong() {
+    public String getIdDong() {
         return idDong;
     }
 
-    public void setIdDong(int idDong) {
+    public void setIdDong(String idDong) {
         this.idDong = idDong;
     }
 
-    public int getIdCL() {
+    public String getIdCL() {
         return idCL;
     }
 
-    public void setIdCL(int idCL) {
+    public void setIdCL(String idCL) {
         this.idCL = idCL;
     }
 
-    public int getIdKC() {
+    public String getIdKC() {
         return idKC;
     }
 
-    public void setIdKC(int idKC) {
+    public void setIdKC(String idKC) {
         this.idKC = idKC;
     }
 
-    public int getIdKD() {
+    public String getIdKD() {
         return idKD;
     }
 
-    public void setIdKD(int idKD) {
+    public void setIdKD(String idKD) {
         this.idKD = idKD;
     }
 
-    public int getIdTH() {
+    public String getIdTH() {
         return idTH;
     }
 
-    public void setIdTH(int idTH) {
+    public void setIdTH(String idTH) {
         this.idTH = idTH;
     }
 
@@ -155,6 +155,10 @@ public class ChiTietSP {
     public void setAnh(String anh) {
         this.anh = anh;
     }
-    
 
+    @Override
+    public String toString() {
+        return "ChiTietSP{" + "idChiTietSP=" + idChiTietSP + ", idNSX=" + idNSX + ", idSP=" + idSP + ", idMS=" + idMS + ", idDong=" + idDong + ", idCL=" + idCL + ", idKC=" + idKC + ", idKD=" + idKD + ", idTH=" + idTH + ", maCTSP=" + maCTSP + ", soLuongTon=" + soLuongTon + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", anh=" + anh + '}';
+    }
+    
 }

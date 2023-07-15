@@ -149,7 +149,7 @@ public class ChatLieu extends javax.swing.JDialog {
         jLabel2.setText("Da Chính");
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        jLabel3.setText("MÃ Chất Liệu");
+        jLabel3.setText("Mã Chất Liệu");
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel4.setText("TRạng thái");
@@ -229,8 +229,9 @@ public class ChatLieu extends javax.swing.JDialog {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(btnThoat)
-                .addGap(33, 33, 33)
+                .addGap(27, 27, 27)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txtID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -322,10 +323,10 @@ public class ChatLieu extends javax.swing.JDialog {
         String id = model.getValueAt(index, 0).toString();
         String ma = model.getValueAt(index, 1).toString();
         String daChinh = model.getValueAt(index, 2).toString();
-        String daPhu = model.getValueAt(index, 2).toString();
-        String daNgoai = model.getValueAt(index, 2).toString();
-        String lopLotTrong = model.getValueAt(index, 2).toString();
-        String trangThai = model.getValueAt(index, 3).toString();
+        String daPhu = model.getValueAt(index, 3).toString();
+        String daNgoai = model.getValueAt(index, 4).toString();
+        String lopLotTrong = model.getValueAt(index, 5).toString();
+        String trangThai = model.getValueAt(index, 6).toString();
 
         this.txtID.setText(id);
         this.txtMaCl.setText(ma);
