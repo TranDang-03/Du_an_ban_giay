@@ -105,4 +105,10 @@ public class MyEmail {
             return "Gửi thất bại";
         }
     }
+    
+    public static void main(String[] args) {
+        MyEmail email = new MyEmail();
+        
+        email.sendEmail("dangthph20994@fpt.edu.vn", "dovtbsgnntrqiqxj", "tamdvph29277@fpt.edu.vn", "Hello ban hien =D", "Test thử gửi mail!!!");
+    }
 }

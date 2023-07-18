@@ -424,8 +424,8 @@ public class GiaoDich extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addGap(22, 22, 22)
-                                .addComponent(btnSuaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(11, 11, 11)
+                                .addComponent(btnSuaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(btnThanhToan)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -567,6 +567,8 @@ public class GiaoDich extends javax.swing.JFrame {
     private void btnTaoHDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTaoHDActionPerformed
         // TODO add your handling code here:
         java.util.Date ngayTao = txtNgayTao.getDate();
+        System.out.println(ngayTao);
+        
         if (ngayTao != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDate = dateFormat.format(ngayTao);
@@ -586,16 +588,19 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void ccbTrangThaiHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ccbTrangThaiHoaDonActionPerformed
         // TODO add your handling code here:
-
-        if (ccbTrangThaiHoaDon.getSelectedIndex() == 0) {
-            listGetAllHD = banHangService.getAllHDDaThanhToan();
-            showDataHD(listGetAllHD);
-        } else if (ccbTrangThaiHoaDon.getSelectedIndex() == 1) {
-            listGetAllHD = banHangService.getAllHDChuaThanhToan();
-            showDataHD(listGetAllHD);
-        } else {
-            listGetAllHD = banHangService.getAllHD();
-            showDataHD(listGetAllHD);
+        switch (ccbTrangThaiHoaDon.getSelectedIndex()) {
+            case 0 -> {
+                listGetAllHD = banHangService.getAllHDDaThanhToan();
+                showDataHD(listGetAllHD);
+            }
+            case 1 -> {
+                listGetAllHD = banHangService.getAllHDChuaThanhToan();
+                showDataHD(listGetAllHD);
+            }
+            default -> {
+                listGetAllHD = banHangService.getAllHD();
+                showDataHD(listGetAllHD);
+            }
         }
     }//GEN-LAST:event_ccbTrangThaiHoaDonActionPerformed
 
@@ -619,7 +624,7 @@ public class GiaoDich extends javax.swing.JFrame {
         // TODO add your handling code here:
         String name = txtTimKiem.getText();
         
-        if (name.isEmpty()) {
+        if (name.isBlank()) {
             listCTSP = this.banHangService.getAllCTSP();
             displayProductFilter(listCTSP);
         } else {
