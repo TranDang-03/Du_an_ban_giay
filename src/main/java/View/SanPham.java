@@ -91,6 +91,7 @@ public class SanPham extends javax.swing.JFrame {
         });
 
         btnXoa.setText("Xóa");
+        btnXoa.setEnabled(false);
         btnXoa.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnXoaActionPerformed(evt);
@@ -251,7 +252,6 @@ public class SanPham extends javax.swing.JFrame {
 
         this.clear();
         this.loadTable();
-
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed

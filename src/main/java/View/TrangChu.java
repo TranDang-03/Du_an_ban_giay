@@ -18,6 +18,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
     SanPhamCT sp = new SanPhamCT();
     NhanVien1 nv = new NhanVien1();
     ThongKe tk = new ThongKe();
+    KhachHang1 kh = new KhachHang1();
 
     public TrangChu() {
         initComponents();
@@ -113,6 +114,11 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
         jb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jb.setText("KHÁCH HÀNG");
         jb.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jb.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbMouseClicked(evt);
+            }
+        });
 
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnThoat.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -216,6 +222,10 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
                 return;
             }
     }//GEN-LAST:event_btnThoatMouseClicked
+
+    private void jbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbMouseClicked
+       this.setFrame(kh.getRootPane());
+    }//GEN-LAST:event_jbMouseClicked
 
     /**
      * @param args the command line arguments

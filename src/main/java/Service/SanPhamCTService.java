@@ -6,6 +6,7 @@ package Service;
 
 import Model.ChiTietSP;
 import Repository.SanPhamCTRepository;
+import View.SanPhamCT;
 import ViewModels.SPCTViewModel;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +23,17 @@ public class SanPhamCTService {
         this.SanPhamCTRepo = new SanPhamCTRepository();
     }
 
+    public boolean update(ChiTietSP model) {
+        return this.SanPhamCTRepo.update(model);
+    }
+
     public List<SPCTViewModel> all() {
         return this.SanPhamCTRepo.all();
+    }
+
+    public List<SPCTViewModel> getSPByTT(int tt) {
+        return this.SanPhamCTRepo.getSPByTT(tt);
+   
     }
 
     public boolean add(ChiTietSP add) {
@@ -66,7 +76,7 @@ public class SanPhamCTService {
         return SanPhamCTRepo.getSPByID(id);
     }
 
-    public String getIDBySP(String ten) {
+    public Integer getIDBySP(String ten) {
         return SanPhamCTRepo.getIDBySP(ten);
     }
 
@@ -74,7 +84,7 @@ public class SanPhamCTService {
         return SanPhamCTRepo.getNSXByID(id);
     }
 
-    public String getIDByNSX(String ten) {
+    public Integer getIDByNSX(String ten) {
         return SanPhamCTRepo.getIDByNSX(ten);
     }
 
@@ -82,7 +92,7 @@ public class SanPhamCTService {
         return SanPhamCTRepo.getMauSacByID(id);
     }
 
-    public String getIDByMauSac(String ten) {
+    public Integer getIDByMauSac(String ten) {
         return SanPhamCTRepo.getIDByMauSac(ten);
     }
 
@@ -90,39 +100,39 @@ public class SanPhamCTService {
         return SanPhamCTRepo.getDongSPByID(id);
     }
 
-    public String getIDByDongSP(String ten) {
+    public Integer getIDByDongSP(String ten) {
         return SanPhamCTRepo.getIDByDongSP(ten);
     }
-    
+
     public String getKichCoByID(String id) {
         return SanPhamCTRepo.getKichCoByID(id);
     }
 
-    public String getIDByKichCo(String ten) {
+    public Integer getIDByKichCo(String ten) {
         return SanPhamCTRepo.getIDByKichCo(ten);
     }
-    
+
     public String getKieuDangByID(String id) {
         return SanPhamCTRepo.getKieuDangByID(id);
     }
 
-    public String getIDByKieuDang(String ten) {
+    public Integer getIDByKieuDang(String ten) {
         return SanPhamCTRepo.getIDByKieuDang(ten);
     }
-    
+
     public String getChatLieuByID(String id) {
         return SanPhamCTRepo.getChatLieuByID(id);
     }
 
-    public String getIDByChatLieu(String ten) {
+    public Integer getIDByChatLieu(String ten) {
         return SanPhamCTRepo.getIDByChatLieu(ten);
     }
-    
+
     public String getThuongHieuByID(String id) {
         return SanPhamCTRepo.getThuongHieuByID(id);
     }
 
-    public String getIDByThuongHieu(String ten) {
+    public Integer getIDByThuongHieu(String ten) {
         return SanPhamCTRepo.getIDByThuongHieu(ten);
     }
 }

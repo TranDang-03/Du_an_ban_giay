@@ -6,6 +6,7 @@ package Repository;
 
 import Model.ChiTietSP;
 import Util.DBConnect;
+import View.SanPhamCT;
 import ViewModels.SPCTViewModel;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ public class SanPhamCTRepository {
 
     public List<SPCTViewModel> all() {
         String sql = "SELECT dbo.chi_tiet_san_pham.idChiTietSP, dbo.chi_tiet_san_pham.anh, dbo.chi_tiet_san_pham.maCTSP, dbo.san_pham.tenSanPham, dbo.chi_tiet_san_pham.soLuongTon, dbo.kich_co.tenKichCo, dbo.mau_sac.tenMauSac, \n"
-                + "                  dbo.thuong_hieu.tenThuongHieu, dbo.dong_sp.tenDongSP, dbo.kieu_dang.tenKieuDang, dbo.chat_lieu.daChinh, dbo.chi_tiet_san_pham.giaNhap, dbo.chi_tiet_san_pham.giaBan, dbo.NSX.tenNSX\n"
+                + "                  dbo.thuong_hieu.tenThuongHieu, dbo.dong_sp.tenDongSP, dbo.kieu_dang.tenKieuDang, dbo.chat_lieu.daChinh, dbo.chi_tiet_san_pham.giaNhap, dbo.chi_tiet_san_pham.giaBan, dbo.NSX.tenNSX,dbo.chi_tiet_san_pham.trang_thai\n"
                 + "FROM     dbo.chat_lieu INNER JOIN\n"
                 + "                  dbo.chi_tiet_san_pham ON dbo.chat_lieu.idChatLieu = dbo.chi_tiet_san_pham.idChatLieu INNER JOIN\n"
                 + "                  dbo.dong_sp ON dbo.chi_tiet_san_pham.idDongSP = dbo.dong_sp.idDongSP INNER JOIN\n"
@@ -40,7 +41,7 @@ public class SanPhamCTRepository {
                 SPCTViewModel ctsp = new SPCTViewModel(rs.getInt("idChiTietSP"),
                         rs.getString("anh"), rs.getString("maCTSP"), rs.getString("tenSanPham"), rs.getInt("soLuongTon"), rs.getString("tenKichCo"), rs.getString("tenMauSac"),
                         rs.getString("tenThuongHieu"), rs.getString("tenDongSP"), rs.getString("tenKieuDang"),
-                        rs.getString("daChinh"), rs.getFloat("giaNhap"), rs.getFloat("giaBan"), rs.getString("tenNSX"));
+                        rs.getString("daChinh"), rs.getFloat("giaNhap"), rs.getFloat("giaBan"), rs.getString("tenNSX"), rs.getInt("trang_thai"));
 
                 list.add(ctsp);
             }
@@ -67,9 +68,10 @@ public class SanPhamCTRepository {
                                   ,[idChatLieu]
                                   ,[giaNhap]
                                   ,[giaBan]
-                                  ,[idNSX])
+                                  ,[idNSX]
+                                  ,[trang_thai])
                             VALUES
-                                  (?,?,?,?,?,?,?,?,?,?,?,?,?)
+                                  (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
                        """;
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ctsp.getAnh());
@@ -85,6 +87,7 @@ public class SanPhamCTRepository {
             ps.setObject(11, ctsp.getGiaNhap());
             ps.setObject(12, ctsp.getGiaBan());
             ps.setObject(13, ctsp.getIdNSX());
+            ps.setObject(14, ctsp.getTrangThai());
             check = ps.executeUpdate();
         } catch (Exception e) {
             e.printStackTrace(System.out);
@@ -98,8 +101,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[chi_tiet_san_pham]
                          WHERE [idChiTietSP] =  ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -112,14 +114,14 @@ public class SanPhamCTRepository {
         return -1;
     }
 /////1
+
     public List<String> getListSP() {
         String query = """
                        SELECT [tenSanPham]
                          FROM [dbo].[san_pham]
                        Order By [maSanPham] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -139,8 +141,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[san_pham]
                        Where [idSanPham] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -153,34 +154,32 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDBySP(String ten) {
+    public Integer getIDBySP(String ten) {
         String query = """
                        SELECT [idSanPham]
                          FROM [dbo].[san_pham]
                        Where [tenSanPham] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        return null;
+        throw new RuntimeException("San pham khong ton tai");
     }
 ///2
+
     public List<String> getListNSX() {
         String query = """
                        SELECT [tenNSX]
                          FROM [dbo].[NSX]
                        Order By [maNSX] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -200,8 +199,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[NSX]
                        Where [idNSX] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -214,34 +212,32 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDByNSX(String ten) {
+    public Integer getIDByNSX(String ten) {
         String query = """
                        SELECT [idNSX]
                          FROM [dbo].[NSX]
                        Where [tenNSX] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        return null;
+        throw new RuntimeException("Khong ton tai");
     }
 ///3
+
     public List<String> getListMauSac() {
         String query = """
                        SELECT [tenMauSac]
                          FROM [dbo].[mau_sac]
                        Order By [maMauSac] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -255,14 +251,38 @@ public class SanPhamCTRepository {
         return null;
     }
 
+    public boolean update(ChiTietSP ctsp) {
+        String query = "UPDATE chi_tiet_san_pham SET idNSX = ?,idSanPham= ?,idMauSac = ?,"
+                + "idDongSP = ?,idChatLieu = ? , idKichCo = ?, idKieuDang = ?, idThuongHieu = ?,soLuongTon =?, giaNhap =?, giaBan = ?,anh =?,trang_thai = ? WHERE maCTSP =?";
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
+            ps.setInt(1, ctsp.getIdNSX());
+            ps.setInt(2, ctsp.getIdSP());
+            ps.setInt(3, ctsp.getIdMS());
+            ps.setInt(4, ctsp.getIdDong());
+            ps.setInt(5, ctsp.getIdCL());
+            ps.setInt(6, ctsp.getIdKC());
+            ps.setInt(7, ctsp.getIdKD());
+            ps.setInt(8, ctsp.getIdTH());
+            ps.setInt(9, ctsp.getSoLuongTon());
+            ps.setFloat(10, ctsp.getGiaNhap());
+            ps.setFloat(11, ctsp.getGiaBan());
+            ps.setString(12, ctsp.getAnh());
+            ps.setInt(13, ctsp.getTrangThai());
+            ps.setString(14, ctsp.getMaCTSP());
+            return ps.executeUpdate() > 0;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        throw new RuntimeException("San pham khong co");
+    }
+
     public String getMauSacByID(String id) {
         String query = """
                        SELECT [tenMauSac]
                          FROM [dbo].[mau_sac]
                        Where [idMauSac] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -275,34 +295,32 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDByMauSac(String ten) {
+    public Integer getIDByMauSac(String ten) {
         String query = """
                        SELECT [idMauSac]
                          FROM [dbo].[mau_sac]
                        Where [tenMauSac] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
-        return null;
+        throw new RuntimeException();
     }
 ////4
+
     public List<String> getListDongSP() {
         String query = """
                        SELECT [tenDongSP]
                          FROM [dbo].[dong_sp]
                        Order By [maDongSP] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -322,8 +340,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[dong_sp]
                        Where [idDongSP] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -336,19 +353,17 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDByDongSP(String ten) {
+    public Integer getIDByDongSP(String ten) {
         String query = """
                        SELECT [idDongSP]
                          FROM [dbo].[dong_sp]
                        Where [tenDongSP] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
@@ -356,14 +371,14 @@ public class SanPhamCTRepository {
         return null;
     }
 /////5
+
     public List<String> getListKichCo() {
         String query = """
                        SELECT [tenKichCo]
                          FROM [dbo].[kich_co]
                        Order By [maKichCo] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -383,8 +398,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[kich_co]
                        Where [idKichCo] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -397,34 +411,32 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDByKichCo(String ten) {
+    public Integer getIDByKichCo(String ten) {
         String query = """
                        SELECT [idKichCo]
                          FROM [dbo].[kich_co]
                        Where [tenKichCo] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
         return null;
     }
-   /////6
+    /////6
+
     public List<String> getListThuongHieu() {
         String query = """
                        SELECT [tenThuongHieu]
                          FROM [dbo].[thuong_hieu]
                        Order By [maThuongHieu] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -444,8 +456,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[thuong_hieu]
                        Where [idThuongHieu] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -458,26 +469,24 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDByThuongHieu(String ten) {
+    public Integer getIDByThuongHieu(String ten) {
         String query = """
                        SELECT [idThuongHieu]
                          FROM [dbo].[thuong_hieu]
                        Where [tenThuongHieu] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
         return null;
     }
-    
+
     /////7
     public List<String> getListKieuDang() {
         String query = """
@@ -485,8 +494,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[kieu_dang]
                        Order By [maKieuDang] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -506,8 +514,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[kieu_dang]
                        Where [idKieuDang] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -520,35 +527,32 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDByKieuDang(String ten) {
+    public Integer getIDByKieuDang(String ten) {
         String query = """
                        SELECT [idKieuDang]
                          FROM [dbo].[kieu_dang]
                        Where [tenKieuDang] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
         return null;
     }
-    
+
     ////8
-        public List<String> getListChatLieu() {
+    public List<String> getListChatLieu() {
         String query = """
                        SELECT [daChinh]
                          FROM [dbo].[chat_lieu]
                        Order By [maChatLieu] asc
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ResultSet rs = ps.executeQuery();
             List<String> lists = new ArrayList<>();
             while (rs.next()) {
@@ -568,8 +572,7 @@ public class SanPhamCTRepository {
                          FROM [dbo].[chat_lieu]
                        Where [idChatLieu] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, id);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -582,23 +585,55 @@ public class SanPhamCTRepository {
         return null;
     }
 
-    public String getIDByChatLieu(String ten) {
+    public Integer getIDByChatLieu(String ten) {
         String query = """
                        SELECT [idChatLieu]
                          FROM [dbo].[chat_lieu]
                        Where [daChinh] = ?
                        """;
-        try (Connection con = DBConnect.getConnection();
-                PreparedStatement ps = con.prepareStatement(query)) {
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query)) {
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
-                String s = rs.getString(1);
-                return s;
+                return rs.getInt(1);
             }
         } catch (Exception e) {
             e.printStackTrace(System.out);
         }
         return null;
     }
+    
+    public List<SPCTViewModel> getSPByTT(int tt) {
+        String sql = "SELECT dbo.chi_tiet_san_pham.idChiTietSP, dbo.chi_tiet_san_pham.anh, dbo.chi_tiet_san_pham.maCTSP, dbo.san_pham.tenSanPham, dbo.chi_tiet_san_pham.soLuongTon, dbo.kich_co.tenKichCo, dbo.mau_sac.tenMauSac, \n"
+                + "                  dbo.thuong_hieu.tenThuongHieu, dbo.dong_sp.tenDongSP, dbo.kieu_dang.tenKieuDang, dbo.chat_lieu.daChinh, dbo.chi_tiet_san_pham.giaNhap, dbo.chi_tiet_san_pham.giaBan, dbo.NSX.tenNSX,dbo.chi_tiet_san_pham.trang_thai\n"
+                + "FROM     dbo.chat_lieu INNER JOIN\n"
+                + "                  dbo.chi_tiet_san_pham ON dbo.chat_lieu.idChatLieu = dbo.chi_tiet_san_pham.idChatLieu INNER JOIN\n"
+                + "                  dbo.dong_sp ON dbo.chi_tiet_san_pham.idDongSP = dbo.dong_sp.idDongSP INNER JOIN\n"
+                + "                  dbo.kich_co ON dbo.chi_tiet_san_pham.idKichCo = dbo.kich_co.idKichCo INNER JOIN\n"
+                + "                  dbo.kieu_dang ON dbo.chi_tiet_san_pham.idKieuDang = dbo.kieu_dang.idKieuDang INNER JOIN\n"
+                + "                  dbo.mau_sac ON dbo.chi_tiet_san_pham.idMauSac = dbo.mau_sac.idMauSac INNER JOIN\n"
+                + "                  dbo.NSX ON dbo.chi_tiet_san_pham.idNSX = dbo.NSX.idNSX INNER JOIN\n"
+                + "                  dbo.san_pham ON dbo.chi_tiet_san_pham.idSanPham = dbo.san_pham.idSanPham INNER JOIN\n"
+                + "                  dbo.thuong_hieu ON dbo.chi_tiet_san_pham.idThuongHieu = dbo.thuong_hieu.idThuongHieu\n"
+                +"                   where dbo.chi_tiet_san_pham.trang_thai = ?";
+
+        List<SPCTViewModel> list = new ArrayList<>();
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, tt );
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                SPCTViewModel ctsp = new SPCTViewModel(rs.getInt("idChiTietSP"),
+                        rs.getString("anh"), rs.getString("maCTSP"), rs.getString("tenSanPham"), rs.getInt("soLuongTon"), rs.getString("tenKichCo"), rs.getString("tenMauSac"),
+                        rs.getString("tenThuongHieu"), rs.getString("tenDongSP"), rs.getString("tenKieuDang"),
+                        rs.getString("daChinh"), rs.getFloat("giaNhap"), rs.getFloat("giaBan"), rs.getString("tenNSX"), rs.getInt("trang_thai"));
+
+                list.add(ctsp);
+            }
+            return list;
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
 }

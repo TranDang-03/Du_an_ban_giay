@@ -9,25 +9,27 @@ package Model;
  * @author Admin
  */
 public class ChiTietSP {
+
     private int idChiTietSP;
-    private String idNSX;
-    private String idSP;
-    private String idMS;
-    private String idDong;
-    private String idCL;
-    private String idKC;
-    private String idKD;
-    private String idTH;
+    private int idNSX;
+    private int idSP;
+    private int idMS;
+    private int idDong;
+    private int idCL;
+    private int idKC;
+    private int idKD;
+    private int idTH;
     private String maCTSP;
     private int soLuongTon;
     private float giaNhap;
     private float giaBan;
     private String anh;
+    private int trangThai;
 
     public ChiTietSP() {
     }
 
-    public ChiTietSP(int idChiTietSP, String idNSX, String idSP, String idMS, String idDong, String idCL, String idKC, String idKD, String idTH, String maCTSP, int soLuongTon, float giaNhap, float giaBan, String anh) {
+    public ChiTietSP(int idChiTietSP, int idNSX, int idSP, int idMS, int idDong, int idCL, int idKC, int idKD, int idTH, String maCTSP, int soLuongTon, float giaNhap, float giaBan, String anh, int trangThai) {
         this.idChiTietSP = idChiTietSP;
         this.idNSX = idNSX;
         this.idSP = idSP;
@@ -42,6 +44,24 @@ public class ChiTietSP {
         this.giaNhap = giaNhap;
         this.giaBan = giaBan;
         this.anh = anh;
+        this.trangThai = trangThai;
+    }
+
+    public ChiTietSP(int idNSX, int idSP, int idMS, int idDong, int idCL, int idKC, int idKD, int idTH, String maCTSP, int soLuongTon, float giaNhap, float giaBan, String anh, int trangThai) {
+        this.idNSX = idNSX;
+        this.idSP = idSP;
+        this.idMS = idMS;
+        this.idDong = idDong;
+        this.idCL = idCL;
+        this.idKC = idKC;
+        this.idKD = idKD;
+        this.idTH = idTH;
+        this.maCTSP = maCTSP;
+        this.soLuongTon = soLuongTon;
+        this.giaNhap = giaNhap;
+        this.giaBan = giaBan;
+        this.anh = anh;
+        this.trangThai = trangThai;
     }
 
     public int getIdChiTietSP() {
@@ -52,67 +72,67 @@ public class ChiTietSP {
         this.idChiTietSP = idChiTietSP;
     }
 
-    public String getIdNSX() {
+    public int getIdNSX() {
         return idNSX;
     }
 
-    public void setIdNSX(String idNSX) {
+    public void setIdNSX(int idNSX) {
         this.idNSX = idNSX;
     }
 
-    public String getIdSP() {
+    public int getIdSP() {
         return idSP;
     }
 
-    public void setIdSP(String idSP) {
+    public void setIdSP(int idSP) {
         this.idSP = idSP;
     }
 
-    public String getIdMS() {
+    public int getIdMS() {
         return idMS;
     }
 
-    public void setIdMS(String idMS) {
+    public void setIdMS(int idMS) {
         this.idMS = idMS;
     }
 
-    public String getIdDong() {
+    public int getIdDong() {
         return idDong;
     }
 
-    public void setIdDong(String idDong) {
+    public void setIdDong(int idDong) {
         this.idDong = idDong;
     }
 
-    public String getIdCL() {
+    public int getIdCL() {
         return idCL;
     }
 
-    public void setIdCL(String idCL) {
+    public void setIdCL(int idCL) {
         this.idCL = idCL;
     }
 
-    public String getIdKC() {
+    public int getIdKC() {
         return idKC;
     }
 
-    public void setIdKC(String idKC) {
+    public void setIdKC(int idKC) {
         this.idKC = idKC;
     }
 
-    public String getIdKD() {
+    public int getIdKD() {
         return idKD;
     }
 
-    public void setIdKD(String idKD) {
+    public void setIdKD(int idKD) {
         this.idKD = idKD;
     }
 
-    public String getIdTH() {
+    public int getIdTH() {
         return idTH;
     }
 
-    public void setIdTH(String idTH) {
+    public void setIdTH(int idTH) {
         this.idTH = idTH;
     }
 
@@ -156,9 +176,17 @@ public class ChiTietSP {
         this.anh = anh;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
     @Override
     public String toString() {
-        return "ChiTietSP{" + "idChiTietSP=" + idChiTietSP + ", idNSX=" + idNSX + ", idSP=" + idSP + ", idMS=" + idMS + ", idDong=" + idDong + ", idCL=" + idCL + ", idKC=" + idKC + ", idKD=" + idKD + ", idTH=" + idTH + ", maCTSP=" + maCTSP + ", soLuongTon=" + soLuongTon + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", anh=" + anh + '}';
+        return "ChiTietSP{" + "idChiTietSP=" + idChiTietSP + ", idNSX=" + idNSX + ", idSP=" + idSP + ", idMS=" + idMS + ", idDong=" + idDong + ", idCL=" + idCL + ", idKC=" + idKC + ", idKD=" + idKD + ", idTH=" + idTH + ", maCTSP=" + maCTSP + ", soLuongTon=" + soLuongTon + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", anh=" + anh + ", trangThai=" + trangThai + '}';
     }
-    
+
 }

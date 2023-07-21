@@ -20,11 +20,12 @@ public class SPCTViewModel {
     private float giaNhap;
     private float giaBan;
     private String NSX;
+    private int trangThai;
 
     public SPCTViewModel() {
     }
 
-    public SPCTViewModel(int id, String anh, String maSp, String tenSp, int soLuong, String KichCo, String MauSac, String ThuongHieu, String Dong, String KieuDang, String ChatLieu, float giaNhap, float giaBan, String NSX) {
+    public SPCTViewModel(int id, String anh, String maSp, String tenSp, int soLuong, String KichCo, String MauSac, String ThuongHieu, String Dong, String KieuDang, String ChatLieu, float giaNhap, float giaBan, String NSX, int trangThai) {
         this.id = id;
         this.anh = anh;
         this.maSp = maSp;
@@ -39,6 +40,7 @@ public class SPCTViewModel {
         this.giaNhap = giaNhap;
         this.giaBan = giaBan;
         this.NSX = NSX;
+        this.trangThai = trangThai;
     }
 
     public int getId() {
@@ -153,10 +155,19 @@ public class SPCTViewModel {
         this.NSX = NSX;
     }
 
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
+    }
+
     @Override
     public String toString() {
-        return "SPCTViewModel{" + "id=" + id + ", anh=" + anh + ", maSp=" + maSp + ", tenSp=" + tenSp + ", soLuong=" + soLuong + ", KichCo=" + KichCo + ", MauSac=" + MauSac + ", ThuongHieu=" + ThuongHieu + ", Dong=" + Dong + ", KieuDang=" + KieuDang + ", ChatLieu=" + ChatLieu + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", NSX=" + NSX + '}';
+        return "SPCTViewModel{" + "id=" + id + ", anh=" + anh + ", maSp=" + maSp + ", tenSp=" + tenSp + ", soLuong=" + soLuong + ", KichCo=" + KichCo + ", MauSac=" + MauSac + ", ThuongHieu=" + ThuongHieu + ", Dong=" + Dong + ", KieuDang=" + KieuDang + ", ChatLieu=" + ChatLieu + ", giaNhap=" + giaNhap + ", giaBan=" + giaBan + ", NSX=" + NSX + ", trangThai=" + trangThai + '}';
     }
-    
 
+    
+    
 }
