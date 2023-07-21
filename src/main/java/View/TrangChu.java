@@ -15,7 +15,7 @@ import javax.swing.JOptionPane;
 public class TrangChu extends javax.swing.JFrame implements Runnable{
     
     GiaoDich gd = new GiaoDich();
-    SanPhamCT sp = new SanPhamCT();
+//    SanPhamCT sp = new SanPhamCT();
     NhanVien1 nv = new NhanVien1();
     ThongKe tk = new ThongKe();
     KhachHang1 kh = new KhachHang1();

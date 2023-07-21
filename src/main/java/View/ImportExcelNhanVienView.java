@@ -25,6 +25,7 @@ import java.sql.PreparedStatement;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 /**
@@ -142,17 +143,31 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
                     XSSFCell maNV = excelRow.getCell(0);
                     XSSFCell ten = excelRow.getCell(1);
                     XSSFCell gioiTinh = excelRow.getCell(2);
-                    XSSFCell ngaySinh = excelRow.getCell(3);
+                    String gioiTinhStr = String.valueOf(gioiTinh).equals("1") ? "Nam" : "Nữ";
+//                    System.out.println("Gioi tinh sau khi convert string : " + gioiTinhStr);
+
+//                    String gioiTinhStr = gioiTinh.equals("1")?"Nam":"Nữ";
+                    java.util.Date ngaySinh = excelRow.getCell(3).getDateCellValue();
+                    DateFormat dateFormatNgaySinh = new SimpleDateFormat("yyyy-MM-dd");
+                    String strNgaySinh = dateFormatNgaySinh.format(ngaySinh);
+//                  
                     XSSFCell SDT = excelRow.getCell(4);
                     XSSFCell diaChi = excelRow.getCell(5);
                     XSSFCell chucVu = excelRow.getCell(6);
+//                    String chucVuString = String.valueOf(chucVu);
+////                    Integer chucVuInt = Integer.parseInt(chucVuString);
+//                    
+//                    System.out.println("Chuc vu excel: " + chucVu);
+                    String chucVuStr = String.valueOf(chucVu).equals("1") ? "1" : "0";
                     XSSFCell Luong = excelRow.getCell(7);
+                    String luongStr = String.valueOf(chucVu);
                     XSSFCell tenTK = excelRow.getCell(8);
                     XSSFCell mk = excelRow.getCell(9);
                     XSSFCell trangThai = excelRow.getCell(10);
+                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "0" : "1";
 
                     System.out.println();
-                    dtm.addRow(new Object[]{maNV, ten, gioiTinh, ngaySinh, diaChi, SDT, chucVu, Luong, tenTK, mk, trangThai});
+                    dtm.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, diaChi, SDT, chucVuStr, Luong, tenTK, mk, trangThaiStr});
                 }
                 JOptionPane.showMessageDialog(rootPane, "Import Excel thanh cong");
             } catch (FileNotFoundException ex) {
@@ -208,20 +223,36 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
                 ps = con.prepareStatement(query);
                 ps.setString(1, maNV);
                 ps.setString(2, ten);
-                Boolean gioiTinhBoolean = gioiTinh.equals("1") ? true : false;
-                ps.setBoolean(3, Boolean.valueOf(gioiTinhBoolean));
+                // gioiTinh - bit 
+                // ngaySinh - date 
+                Boolean gioiTinhBoolean = gioiTinh.equals("Nam") ? true : false;
+                ps.setBoolean(3, gioiTinhBoolean);
+                ps.setString(4, ngaySinh);
+               
+                try {
+                    java.util.Date dateNgaySinhUtil = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(ngaySinh);
+                    java.sql.Date sqlDateNgaySinh = new java.sql.Date(dateNgaySinhUtil.getTime());
+                     ps.setDate(4, sqlDateNgaySinh);
+                } catch (Exception e) {
+                    System.out.println("Errror convert date to date.sql " + e.getMessage());
+                }
+//                String ngaySinh = txtNgaySinh.getText();
+//                Date dateNgaySinh;
+//                try {
+//                    dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
+//                } catch (ParseException ex) {
+//                    JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+//                    return;
+//                }
 
-                Date dateNgaySinhUtil = (Date) new SimpleDateFormat("yyyy/MM/dd").parse(ngaySinh);
-                java.sql.Date sqlDateNgaySinh = new java.sql.Date(dateNgaySinhUtil.getTime());
-                ps.setDate(4, sqlDateNgaySinh);
                 ps.setString(5, diachi);
+                ps.setString(6, SDT);
+//                ps.setInt(6, Integer.valueOf(SDT));
                 ps.setInt(7, Integer.parseInt(chucVu));   // kiểu int 
                 ps.setFloat(8, Float.valueOf(luong));
                 ps.setString(9, tenTK);
                 ps.setString(10, mk);
                 ps.setInt(11, Integer.parseInt(trangThai));
-
-                ps.setInt(6, Integer.valueOf(SDT));
 
                 int result = ps.executeUpdate();
                 if (result > 0) {

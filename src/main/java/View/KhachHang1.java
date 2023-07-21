@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Model.KhachHang;
 
 /**
  *
@@ -69,6 +70,42 @@ public class KhachHang1 extends javax.swing.JDialog {
         radioKhongHoatDong.setSelected(false);
     }
 
+    public boolean checkData() {
+        if (txtMaKH.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống!");
+            return false;
+        } else if (txtTenKH.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống!");
+            return false;
+        } else if (txtDC.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Địa Chỉ không được để trống!");
+            return false;
+        } else if (txtNS.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ngày Sinh không được để trống!");
+            return false;
+
+        } else if (txtSDt.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sdt không được để trống!");
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+//    
+//
+    public boolean checkMaKHAdd() {
+        String ma = this.txtMaKH.getText();
+        for (KhachHang khachHangService : listkh) {
+            if (khachHangService.getMaKH().equalsIgnoreCase(ma)) {
+                JOptionPane.showMessageDialog(this, "Mã khách hàng đã tồn tại");
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -101,11 +138,11 @@ public class KhachHang1 extends javax.swing.JDialog {
         radioNam = new javax.swing.JRadioButton();
         radioNu = new javax.swing.JRadioButton();
         btnLM = new javax.swing.JButton();
-        jButton11 = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Add.png"))); // NOI18N
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -113,6 +150,7 @@ public class KhachHang1 extends javax.swing.JDialog {
             }
         });
 
+        btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Edit.png"))); // NOI18N
         btnSua.setText("Sửa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -174,20 +212,11 @@ public class KhachHang1 extends javax.swing.JDialog {
 
         radioNu.setText("Nu");
 
+        btnLM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Refresh.png"))); // NOI18N
         btnLM.setText("Mới");
         btnLM.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnLMActionPerformed(evt);
-            }
-        });
-
-        jButton11.setBackground(new java.awt.Color(0, 102, 0));
-        jButton11.setForeground(new java.awt.Color(255, 255, 255));
-        jButton11.setText("import Excel");
-        jButton11.setBorder(null);
-        jButton11.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton11ActionPerformed(evt);
             }
         });
 
@@ -201,16 +230,7 @@ public class KhachHang1 extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(247, 247, 247)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(btnThem)
-                        .addGap(146, 146, 146)
-                        .addComponent(btnSua)
-                        .addGap(165, 165, 165)
-                        .addComponent(btnLM)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(131, 131, 131))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -246,7 +266,15 @@ public class KhachHang1 extends javax.swing.JDialog {
                                 .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 62, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
                                 .addComponent(txtNS, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(106, 106, Short.MAX_VALUE))))
+                        .addGap(106, 106, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(87, 87, 87)
+                        .addComponent(btnThem)
+                        .addGap(171, 171, 171)
+                        .addComponent(btnSua)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLM)
+                        .addGap(167, 167, 167))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -255,7 +283,7 @@ public class KhachHang1 extends javax.swing.JDialog {
                         .addGap(251, 251, 251))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 850, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))))
+                        .addGap(58, 58, 58))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -288,15 +316,14 @@ public class KhachHang1 extends javax.swing.JDialog {
                     .addComponent(jLabel9)
                     .addComponent(radioNam)
                     .addComponent(radioNu))
-                .addGap(18, 36, Short.MAX_VALUE)
+                .addGap(18, 24, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnSua)
-                    .addComponent(btnThem)
                     .addComponent(btnLM)
-                    .addComponent(jButton11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                    .addComponent(btnSua)
+                    .addComponent(btnThem))
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(58, 58, 58))
+                .addGap(41, 41, 41))
         );
 
         pack();
@@ -305,50 +332,102 @@ public class KhachHang1 extends javax.swing.JDialog {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
 
-        String maKH = txtMaKH.getText();
-        String tenKH = txtTenKH.getText();
-        String diaChi = txtDC.getText();
-        String sdt = txtSDt.getText();
-        String ngaySinh = txtNS.getText();
-        Date dateNgaySinh;
-        try {
-            dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
-            return;
-        }
+//        String maKH = txtMaKH.getText();
+//        String tenKH = txtTenKH.getText();
+//        String diaChi = txtDC.getText();
+//        String sdt = txtSDt.getText();
+//        String ngaySinh = txtNS.getText();
+//        Date dateNgaySinh;
+//        try {
+//            dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
+//        } catch (ParseException ex) {
+//            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+//            return;
+//        }
+//
+//        boolean gioiTinh;
+//
+//        if (radioNam.isSelected() == true) {
+//            gioiTinh = true;
+//        } else {
+//            gioiTinh = false;
+//        }
+//        int trangThai;
+//
+//        if (radioHoatDong.isSelected() == true) {
+//            trangThai = 0;
+//        } else {
+//            trangThai = 1;
+//        }
+//
+//        Model.KhachHang kh = new Model.KhachHang(maKH, tenKH, gioiTinh, dateNgaySinh, sdt, diaChi, trangThai);
+//
+//        boolean add = this.service.add(kh);
+//
+//        if (add == true) {
+//            JOptionPane.showMessageDialog(this, "Thêm thành công");
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Thêm thất bại");
+//        }
+//
+//        clear();
+//        loadtable();
+        int cf = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn thêm ?");
+        if (cf == JOptionPane.YES_OPTION) {
 
-        boolean gioiTinh;
+            if (checkData()) {
+                if (checkMaKHAdd()) {
+                    String maKH = txtMaKH.getText();
+                    String tenKH = txtTenKH.getText();
+                    String diaChi = txtDC.getText();
+                    String sdt = txtSDt.getText();
+                    String ngaySinh = txtNS.getText();
+                    Date dateNgaySinh;
+                    try {
+                        dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
+                    } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+                        return;
+                    }
 
-        if (radioNam.isSelected() == true) {
-            gioiTinh = true;
-        } else {
-            gioiTinh = false;
-        }
-        int trangThai;
+                    boolean gioiTinh;
 
-        if (radioHoatDong.isSelected() == true) {
-            trangThai = 0;
-        } else {
-            trangThai = 1;
-        }
+                    if (radioNam.isSelected() == true) {
+                        gioiTinh = true;
+                    } else {
+                        gioiTinh = false;
+                    }
+                    int trangThai;
 
-        Model.KhachHang kh = new Model.KhachHang(maKH, tenKH, gioiTinh, dateNgaySinh, sdt, diaChi, trangThai);
+                    if (radioHoatDong.isSelected() == true) {
+                        trangThai = 0;
+                    } else {
+                        trangThai = 1;
+                    }
 
-        boolean add = this.service.add(kh);
+                    Model.KhachHang kh = new Model.KhachHang(maKH, tenKH, gioiTinh, dateNgaySinh, sdt, diaChi, trangThai);
 
-        if (add == true) {
-            JOptionPane.showMessageDialog(this, "Thêm thành công");
-        } else {
-            JOptionPane.showMessageDialog(this, "Thêm thất bại");
-        }
+                    boolean add = this.service.add(kh);
 
-        clear();
-        loadtable();
+                    if (add == true) {
+                        JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Thêm thất bại");
+                    }
+
+                    clear();
+                    loadtable();
+                }
+                } else {
+                    return;
+                }
+            }
+
+
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        
+
         int id = Integer.valueOf(txtID.getText());
         String maKH = txtMaKH.getText();
         String tenKH = txtTenKH.getText();
@@ -376,7 +455,7 @@ public class KhachHang1 extends javax.swing.JDialog {
             trangThai = 1;
         }
 
-        Model.KhachHang kh = new Model.KhachHang( maKH, tenKH, gioiTinh, dateNgaySinh, diaChi, sdt, trangThai);
+        Model.KhachHang kh = new Model.KhachHang(maKH, tenKH, gioiTinh, dateNgaySinh, diaChi, sdt, trangThai);
         boolean update = this.service.update(id, kh);
 
         if (update == true) {
@@ -433,12 +512,6 @@ public class KhachHang1 extends javax.swing.JDialog {
         this.clear();
     }//GEN-LAST:event_btnLMActionPerformed
 
-    private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-//        ImportExcelKhachHang excelKhachHangView = new ImportExcelKhachHang();
-//        excelKhachHangView.setVisible(true);
-    }//GEN-LAST:event_jButton11ActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -478,7 +551,6 @@ public class KhachHang1 extends javax.swing.JDialog {
     private javax.swing.JButton btnLM;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
-    private javax.swing.JButton jButton11;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

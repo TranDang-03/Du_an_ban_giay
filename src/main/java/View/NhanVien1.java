@@ -9,10 +9,34 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import Util.DBConnect;
+import Model.NhanVien;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import java.sql.PreparedStatement;
+import java.sql.Connection;
+
+import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  *
@@ -25,6 +49,7 @@ public class NhanVien1 extends javax.swing.JDialog {
      */
     private NhanVienService service = new NhanVienService();
     private DefaultTableModel model;
+    private List<Model.NhanVien> listnv = new ArrayList<>();
 
     public NhanVien1() {
         initComponents();
@@ -40,7 +65,7 @@ public class NhanVien1 extends javax.swing.JDialog {
 
         for (Model.NhanVien nv : list) {
             model.addRow(new Object[]{
-                nv.getIdNV(),
+                
                 nv.getMaNV(),
                 nv.getTenNV(),
                 nv.isGioiTinh(),
@@ -57,7 +82,7 @@ public class NhanVien1 extends javax.swing.JDialog {
     }
 
     public void clear() {
-        this.txtid.setText("");
+        
         this.txtNgaySinh.setText("");
         this.txtma.setText("");
         this.txtten.setText("");
@@ -68,6 +93,48 @@ public class NhanVien1 extends javax.swing.JDialog {
         this.txtDiaChi.setText("");
 
         this.cbbnv.setSelectedItem(true);
+    }
+
+    public boolean checkData() {
+        if (txtma.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống!");
+            return false;
+        } else if (txtNgaySinh.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống!");
+            return false;
+        } else if (txtten.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Địa Chỉ không được để trống!");
+            return false;
+        } else if (txt_Luong.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ngày Sinh không được để trống!");
+            return false;
+
+        } else if (txt_sdt.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sdt không được để trống!");
+            return false;
+        } else if (txtTK.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sdt không được để trống!");
+            return false;
+        } else if (txtMK.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sdt không được để trống!");
+            return false;
+
+        } else {
+            return true;
+        }
+    }
+
+//    
+//
+    public boolean checkMaNVAdd() {
+        String ma = this.txtma.getText();
+        for (Model.NhanVien nhanVien : listnv) {
+            if (nhanVien.getMaNV().equalsIgnoreCase(ma)) {
+                JOptionPane.showMessageDialog(this, "Mã Nhân Viên đã tồn tại");
+                return false;
+            }
+        }
+        return true;
     }
 
     /**
@@ -109,8 +176,6 @@ public class NhanVien1 extends javax.swing.JDialog {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
-        jLabel14 = new javax.swing.JLabel();
-        txtid = new javax.swing.JTextField();
         jButton11 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
@@ -210,8 +275,6 @@ public class NhanVien1 extends javax.swing.JDialog {
             }
         });
 
-        jLabel14.setText("ID:");
-
         jButton11.setBackground(new java.awt.Color(0, 102, 0));
         jButton11.setForeground(new java.awt.Color(255, 255, 255));
         jButton11.setText("import Excel");
@@ -272,8 +335,7 @@ public class NhanVien1 extends javax.swing.JDialog {
                                 .addComponent(jLabel9))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
-                                .addGap(32, 32, 32))
-                            .addComponent(jLabel14, javax.swing.GroupLayout.Alignment.LEADING))))
+                                .addGap(32, 32, 32)))))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(31, 31, 31)
@@ -282,8 +344,7 @@ public class NhanVien1 extends javax.swing.JDialog {
                             .addComponent(txt_sdt)
                             .addComponent(txtDiaChi)
                             .addComponent(txtTK)
-                            .addComponent(txtMK, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
-                            .addComponent(txtid)))
+                            .addComponent(txtMK, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(45, 45, 45)
                         .addComponent(jButton11, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -297,9 +358,7 @@ public class NhanVien1 extends javax.swing.JDialog {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
-                            .addComponent(txtma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel14)
-                            .addComponent(txtid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel4)
@@ -359,7 +418,7 @@ public class NhanVien1 extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Id", "Mã Nhân Viên", "Tên Nhân Viên", "Giới Tính", "Ngày Sinh", "Sđt", "Địa chỉ", "Chức Vụ", "Lương", "Tên Tk", "Mật Khẩu", "Trạng Thái"
+                "Mã Nhân Viên", "Tên Nhân Viên", "Giới Tính", "Ngày Sinh", "Sđt", "Địa chỉ", "Chức Vụ", "Lương", "Tên Tk", "Mật Khẩu", "Trạng Thái"
             }
         ));
         tblnv.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -386,7 +445,7 @@ public class NhanVien1 extends javax.swing.JDialog {
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83)
                         .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 535, Short.MAX_VALUE)))
+                        .addGap(0, 554, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -405,18 +464,17 @@ public class NhanVien1 extends javax.swing.JDialog {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(126, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(13, 13, 13))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(337, 337, 337))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32))))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 398, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(337, 337, 337))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(32, 32, 32)))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -434,7 +492,7 @@ public class NhanVien1 extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        int id = Integer.parseInt(txtid.getText());
+        
         String maNhanVien = this.txtma.getText();
         String tenNhanVien = this.txtten.getText();
         boolean gioiTinh;
@@ -466,7 +524,7 @@ public class NhanVien1 extends javax.swing.JDialog {
         String taiKhoan = this.txtTK.getText();
         String matKhau = this.txtMK.getText();
 
-        Model.NhanVien nv = new Model.NhanVien(id, maNhanVien, tenNhanVien, gioiTinh, dateNgaySinh, diaChi, sdt, chucVu, trangThai, luong, taiKhoan, matKhau);
+        Model.NhanVien nv = new Model.NhanVien(0, maNhanVien, tenNhanVien, gioiTinh, dateNgaySinh, diaChi, sdt, chucVu, trangThai, luong, taiKhoan, matKhau);
 
         boolean a = this.service.update(nv);
 
@@ -501,20 +559,20 @@ public class NhanVien1 extends javax.swing.JDialog {
     private void tblnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblnvMouseClicked
         // TODO add your handling code here:
         int index = this.tblnv.getSelectedRow();
-        String idNhanVien = model.getValueAt(index, 0).toString();
-        String maNhanVien = model.getValueAt(index, 1).toString();
-        String tenNhanVien = model.getValueAt(index, 2).toString();
-        String gioiTinh = model.getValueAt(index, 3).toString();
-        String ngaySinh = model.getValueAt(index, 4).toString();
-        String sdt = model.getValueAt(index, 5).toString();
-        String diaChi = model.getValueAt(index, 6).toString();
-        String chucVu = model.getValueAt(index, 7).toString();
-        String luong = model.getValueAt(index, 8).toString();
-        String tenTaiKhoan = model.getValueAt(index, 9).toString();
-        String matKhau = model.getValueAt(index, 10).toString();
-        String trangThai = model.getValueAt(index, 11).toString();
+//        String idNhanVien = model.getValueAt(index, 0).toString();
+        String maNhanVien = model.getValueAt(index, 0).toString();
+        String tenNhanVien = model.getValueAt(index, 1).toString();
+        String gioiTinh = model.getValueAt(index, 2).toString();
+        String ngaySinh = model.getValueAt(index, 3).toString();
+        String sdt = model.getValueAt(index, 4).toString();
+        String diaChi = model.getValueAt(index, 5).toString();
+        String chucVu = model.getValueAt(index, 6).toString();
+        String luong = model.getValueAt(index, 7).toString();
+        String tenTaiKhoan = model.getValueAt(index, 8).toString();
+        String matKhau = model.getValueAt(index, 9).toString();
+        String trangThai = model.getValueAt(index, 10).toString();
 
-        this.txtid.setText(idNhanVien);
+        
         this.txtma.setText(maNhanVien);
         this.txtten.setText(tenNhanVien);
         Boolean setGioiTinh = gioiTinh.equalsIgnoreCase("Nam") ? true : false;
@@ -540,61 +598,170 @@ public class NhanVien1 extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String maNhanVien = this.txtma.getText();
-        String tenNhanVien = this.txtten.getText();
-        boolean gioiTinh;
-        if (rd_nam.isSelected() == true) {
-            gioiTinh = true;
-        } else {
-            gioiTinh = false;
-        }
-        int chucVu;
-        if (rd_ql.isSelected() == true) {
-            chucVu = 1;
-        } else {
-            chucVu = 0;
-        }
-        int trangThai = Integer.parseInt(cbbnv.getSelectedItem().toString());
+//        String maNhanVien = this.txtma.getText();
+//        String tenNhanVien = this.txtten.getText();
+//        boolean gioiTinh;
+//        if (rd_nam.isSelected() == true) {
+//            gioiTinh = true;
+//        } else {
+//            gioiTinh = false;
+//        }
+//        int chucVu;
+//        if (rd_ql.isSelected() == true) {
+//            chucVu = 1;
+//        } else {
+//            chucVu = 0;
+//        }
+//        int trangThai = Integer.parseInt(cbbnv.getSelectedItem().toString());
+////      
+//        String ngaySinh = txtNgaySinh.getText();
+//        Date dateNgaySinh;
+//        try {
+//            dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
+//        } catch (ParseException ex) {
+//            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+//            return;
+//        }
+//        float luong = Float.parseFloat(txt_Luong.getText());
+//        String Luong = String.valueOf(txt_Luong.getText());
+//        String diaChi = this.txtDiaChi.getText();
+//        String sdt = this.txt_sdt.getText();
+//        String taiKhoan = this.txtTK.getText();
+//        String matKhau = this.txtMK.getText();
+//
+//        Model.NhanVien nv = new Model.NhanVien(0, maNhanVien, tenNhanVien, gioiTinh, dateNgaySinh, diaChi, sdt, chucVu, trangThai, luong, taiKhoan, matKhau);
+//
+//        boolean a = this.service.insert(nv);
+//
+//        if (a == true) {
+//            JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
+//        } else {
+//            JOptionPane.showMessageDialog(rootPane, "Thêm thất bại");
+//            return;
+//        }
+//
+//        this.clear();
+//        this.loadTable();
+        int cf = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn thêm ?");
+        if (cf == JOptionPane.YES_OPTION) {
+
+            if (checkData()) {
+                if (checkMaNVAdd()) {
+                    String maNhanVien = this.txtma.getText();
+                    String tenNhanVien = this.txtten.getText();
+                    boolean gioiTinh;
+                    if (rd_nam.isSelected() == true) {
+                        gioiTinh = true;
+                    } else {
+                        gioiTinh = false;
+                    }
+                    int chucVu;
+                    if (rd_ql.isSelected() == true) {
+                        chucVu = 1;
+                    } else {
+                        chucVu = 0;
+                    }
+                    int trangThai = Integer.parseInt(cbbnv.getSelectedItem().toString());
 //      
-        String ngaySinh = txtNgaySinh.getText();
-        Date dateNgaySinh;
-        try {
-            dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
-        } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
-            return;
+                    String ngaySinh = txtNgaySinh.getText();
+                    Date dateNgaySinh;
+                    try {
+                        dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
+                    } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+                        return;
+                    }
+                    float luong = Float.parseFloat(txt_Luong.getText());
+                    String Luong = String.valueOf(txt_Luong.getText());
+                    String diaChi = this.txtDiaChi.getText();
+                    String sdt = this.txt_sdt.getText();
+                    String taiKhoan = this.txtTK.getText();
+                    String matKhau = this.txtMK.getText();
+
+                    Model.NhanVien nv = new Model.NhanVien(0, maNhanVien, tenNhanVien, gioiTinh, dateNgaySinh, diaChi, sdt, chucVu, trangThai, luong, taiKhoan, matKhau);
+
+                    boolean a = this.service.insert(nv);
+
+                    if (a == true) {
+                        JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(rootPane, "Thêm thất bại");
+                        return;
+                    }
+
+                    this.clear();
+                    this.loadTable();
+                }
+            } else {
+                return;
+            }
         }
-        float luong = Float.parseFloat(txt_Luong.getText());
-        String Luong = String.valueOf(txt_Luong.getText());
-        String diaChi = this.txtDiaChi.getText();
-        String sdt = this.txt_sdt.getText();
-        String taiKhoan = this.txtTK.getText();
-        String matKhau = this.txtMK.getText();
 
-        Model.NhanVien nv = new Model.NhanVien(0, maNhanVien, tenNhanVien, gioiTinh, dateNgaySinh, diaChi, sdt, chucVu, trangThai, luong, taiKhoan, matKhau);
-
-        boolean a = this.service.insert(nv);
-
-        if (a == true) {
-            JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "Thêm thất bại");
-            return;
-        }
-
-        this.clear();
-        this.loadTable();
 
     }//GEN-LAST:event_jButton1ActionPerformed
-
+ DefaultTableModel dtm;
     private void txttenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txttenActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        // TODO add your handling code here:
-        ImportExcelNhanVienView excelNhanVienView = new ImportExcelNhanVienView();
-        excelNhanVienView.setVisible(true);
+      dtm = (DefaultTableModel) tblnv.getModel();
+        dtm.setRowCount(0);
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelImportWorkBook = null;
+        String currentDirectoryPath = "C:\\Users\\admin\\Documents";
+        JFileChooser ejfc = new JFileChooser(currentDirectoryPath);
+        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Excel file", "xls", "xlsx", "xslm");
+        ejfc.setFileFilter(extensionFilter);
+        int excelchooser = ejfc.showOpenDialog(null);
+        if (excelchooser == JFileChooser.APPROVE_OPTION) {
+            try {
+                File excelFile = ejfc.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelImportWorkBook = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelImportWorkBook.getSheetAt(0);
+                for (int i = 1; i < excelSheet.getLastRowNum(); i++) {
+                    XSSFRow excelRow = excelSheet.getRow(i);
+                    XSSFCell maNV = excelRow.getCell(0);
+                    XSSFCell ten = excelRow.getCell(1);
+                    XSSFCell gioiTinh = excelRow.getCell(2);
+                    String gioiTinhStr = String.valueOf(gioiTinh).equals("1") ? "Nam" : "Nữ";
+//                    System.out.println("Gioi tinh sau khi convert string : " + gioiTinhStr);
+
+//                    String gioiTinhStr = gioiTinh.equals("1")?"Nam":"Nữ";
+                    java.util.Date ngaySinh = excelRow.getCell(3).getDateCellValue();
+                    DateFormat dateFormatNgaySinh = new SimpleDateFormat("yyyy-MM-dd");
+                    String strNgaySinh = dateFormatNgaySinh.format(ngaySinh);
+//                  
+                    XSSFCell SDT = excelRow.getCell(4);
+                    XSSFCell diaChi = excelRow.getCell(5);
+                    XSSFCell chucVu = excelRow.getCell(6);
+//                    String chucVuString = String.valueOf(chucVu);
+////                    Integer chucVuInt = Integer.parseInt(chucVuString);
+//                    
+//                    System.out.println("Chuc vu excel: " + chucVu);
+                    String chucVuStr = String.valueOf(chucVu).equals("1") ? "1" : "0";
+                    XSSFCell Luong = excelRow.getCell(7);
+                    String luongStr = String.valueOf(chucVu);
+                    XSSFCell tenTK = excelRow.getCell(8);
+                    XSSFCell mk = excelRow.getCell(9);
+                    XSSFCell trangThai = excelRow.getCell(10);
+                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "0" : "1";
+
+                    System.out.println();
+                    dtm.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, diaChi, SDT, chucVuStr, Luong, tenTK, mk, trangThaiStr});
+                }
+                JOptionPane.showMessageDialog(rootPane, "Import Excel thanh cong");
+            } catch (FileNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (IOException ex) {
+                Logger.getLogger(ImportExcelNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+                               
     }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
@@ -645,7 +812,6 @@ public class NhanVien1 extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -669,7 +835,6 @@ public class NhanVien1 extends javax.swing.JDialog {
     private javax.swing.JTextField txtTK;
     private javax.swing.JTextField txt_Luong;
     private javax.swing.JTextField txt_sdt;
-    private javax.swing.JTextField txtid;
     private javax.swing.JTextField txtma;
     private javax.swing.JTextField txtten;
     // End of variables declaration//GEN-END:variables

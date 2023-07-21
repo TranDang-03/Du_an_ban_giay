@@ -7,30 +7,29 @@ package Service;
 import Model.NhanVien;
 import Repository.NhanVienRepository;
 import java.util.ArrayList;
+
 /**
  *
  * @author admin
  */
 public class NhanVienService {
-     private NhanVienRepository NhanVienRepo;
+
+    private NhanVienRepository NhanVienRepo;
 
     public NhanVienService() {
-        this. NhanVienRepo = new NhanVienRepository();
+        this.NhanVienRepo = new NhanVienRepository();
     }
-    
+
     public ArrayList<NhanVien> all() {
-        return this. NhanVienRepo.all();
+        return this.NhanVienRepo.all();
     }
-    
-    public boolean insert(NhanVien nv){
-        return this. NhanVienRepo.insert(nv);
-    }
-    public boolean update(View.NhanVien nv){
-        return this. NhanVienRepo.update(nv);
+
+    public boolean insert(NhanVien nv) {
+        return this.NhanVienRepo.insert(nv);
     }
 
     public boolean update(NhanVien nv) {
-         return this. NhanVienRepo.update(nv);// Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return this.NhanVienRepo.update(nv);
     }
 
 }
