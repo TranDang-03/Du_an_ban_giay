@@ -19,6 +19,7 @@ import Repository.NhanVienRepository;
 import Repository.ThuongHieuRepository;
 import java.util.List;
 import view_model.CTSPBanHang;
+import view_model.HDCTBanHang;
 import view_model.HoaDonViewModel;
 
 /**
@@ -108,5 +109,17 @@ public class BanHangService {
             return x1 - x2;
         });
         return list;
+    }
+
+    public List<String> getAllTenNhanVien() {
+        return this.banHang.getAllTenNhanVien();
+    }
+
+    public List<HDCTBanHang> getAllHDCTTheoMaHD(String maHD) {
+        return this.banHang.getAllHDCTTheoMaHD(maHD);
+    }
+    
+    public boolean addHoaDon(){
+        return this.banHang.addHoaDon();
     }
 }

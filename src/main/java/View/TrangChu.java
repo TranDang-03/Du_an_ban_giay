@@ -1,4 +1,3 @@
-
 package View;
 
 import java.awt.BorderLayout;
@@ -12,8 +11,8 @@ import javax.swing.JOptionPane;
  *
  * @author Admin
  */
-public class TrangChu extends javax.swing.JFrame implements Runnable{
-    
+public class TrangChu extends javax.swing.JFrame implements Runnable {
+
     GiaoDich gd = new GiaoDich();
 //    SanPhamCT sp = new SanPhamCT();
     NhanVien1 nv = new NhanVien1();
@@ -23,13 +22,13 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
     public TrangChu() {
         initComponents();
         setExtendedState(JFrame.MAXIMIZED_BOTH);
-        
+
         Thread t1 = new Thread(this);
         t1.start();
-        
+
     }
 
-     private void setFrame(JComponent comp) {
+    private void setFrame(JComponent comp) {
         Form.removeAll();
         Form.add(comp);
         Form.setLayout(new BorderLayout());
@@ -203,7 +202,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
     }//GEN-LAST:event_jbgdMouseClicked
 
     private void jbspMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbspMouseClicked
-         this.setFrame(sp.getRootPane());
+        this.setFrame(sp.getRootPane());
     }//GEN-LAST:event_jbspMouseClicked
 
     private void jbnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbnvMouseClicked
@@ -216,15 +215,15 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
 
     private void btnThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThoatMouseClicked
         int cf = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn thoát ?");
-        if (cf == JOptionPane.YES_OPTION) {      
-                dispose();
-        }else {
-                return;
-            }
+        if (cf == JOptionPane.YES_OPTION) {
+            dispose();
+        } else {
+            return;
+        }
     }//GEN-LAST:event_btnThoatMouseClicked
 
     private void jbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbMouseClicked
-       this.setFrame(kh.getRootPane());
+        this.setFrame(kh.getRootPane());
     }//GEN-LAST:event_jbMouseClicked
 
     /**
@@ -276,18 +275,18 @@ public class TrangChu extends javax.swing.JFrame implements Runnable{
     // End of variables declaration//GEN-END:variables
 
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");
-    
+
     @Override
     public void run() {
-        while(true){
+        while (true) {
             Date now = new Date();
             String st = sdf.format(now);
             dongho.setText(st);
             try {
-              Thread.sleep(1000);
-          } catch (InterruptedException e) {
-          }
-            
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+            }
+
         }
     }
 }

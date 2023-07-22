@@ -211,3 +211,6 @@ insert into hoa_don_chi_tiet(soLuong,donGia,idHoaDon,idChiTietSanPham) values
 (2,150000,1,3),
 (1,170000,2,4),
 (3,250000,3,5)
+
+alter table hoa_don_chi_tiet
+add trangThai int
