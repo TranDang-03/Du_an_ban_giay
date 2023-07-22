@@ -289,10 +289,10 @@ public class BanHangRepository {
 
     public List<HoaDonViewModel> getAllHoaDonChuaThanhToan() {
         String query = "select maHoaDon,tenNhanVien,tenKhachHang,tenKhuyenMai,thanhTien,ngayTao\n"
-                + "from hoa_don join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien\n"
-                + "join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
-                + "join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai\n"
-                + "where hoa_don.trangThai = 1 order by idHoaDon desc";
+                + "                from hoa_don left join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien\n"
+                + "                left join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
+                + "                left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai\n"
+                + "                where hoa_don.trangThai = 1 order by idHoaDon desc";
         List<HoaDonViewModel> list = new ArrayList<>();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
@@ -311,10 +311,10 @@ public class BanHangRepository {
 
     public List<HoaDonViewModel> getAllHoaDonDaThanhToan() {
         String query = "select maHoaDon,tenNhanVien,tenKhachHang,tenKhuyenMai,thanhTien,ngayTao\n"
-                + "from hoa_don join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien\n"
-                + "join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
-                + "join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai\n"
-                + "where hoa_don.trangThai = 0 order by idHoaDon desc";
+                + "                from hoa_don left join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien\n"
+                + "                left join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
+                + "                left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai\n"
+                + "                where hoa_don.trangThai = 0 order by idHoaDon desc";
         List<HoaDonViewModel> list = new ArrayList<>();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
@@ -333,9 +333,9 @@ public class BanHangRepository {
 
     public List<HoaDonViewModel> getAllHoaDon() {
         String query = "select maHoaDon,tenNhanVien,tenKhachHang,tenKhuyenMai,thanhTien,ngayTao\n"
-                + "from hoa_don join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien\n"
-                + "join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
-                + "join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai order by idHoaDon desc";
+                + "from hoa_don left join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien\n"
+                + "left join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
+                + "left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai order by idHoaDon desc";
         List<HoaDonViewModel> list = new ArrayList<>();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
