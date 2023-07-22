@@ -235,7 +235,7 @@ public class BanHangRepository {
                 + "           ,[thanhTien]\n"
                 + "           ,[trangThai])\n"
                 + "     VALUES\n"
-                + "           (5,?,GETDATE(),0,1)";
+                + "           (?,?,GETDATE(),0,1)";
         int check = 0;
         String maHD = maHD();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
