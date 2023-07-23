@@ -202,7 +202,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_jbgdMouseClicked
 
     private void jbspMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbspMouseClicked
-        this.setFrame(sp.getRootPane());
+//        this.setFrame(sp.getRootPane());
     }//GEN-LAST:event_jbspMouseClicked
 
     private void jbnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbnvMouseClicked
