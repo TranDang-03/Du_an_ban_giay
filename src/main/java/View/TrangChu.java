@@ -1,5 +1,6 @@
 package View;
 
+import Constrant.UserInfor;
 import java.awt.BorderLayout;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -26,6 +27,11 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         Thread t1 = new Thread(this);
         t1.start();
 
+        String employee = String.valueOf(UserInfor.user.values());
+        String replaceAll = employee.replaceAll("[\\[\\]\\{\\}()]", "");
+        System.out.println(replaceAll);
+
+        txtWelcome.setText("Xin chào, " + replaceAll + " đã đến với BEESHOES");
     }
 
     private void setFrame(JComponent comp) {
@@ -51,6 +57,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         jb = new javax.swing.JLabel();
         btnThoat = new javax.swing.JLabel();
         Form = new javax.swing.JPanel();
+        txtWelcome = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lí của hàng bán giày thể thao nam");
@@ -168,15 +175,24 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
                 .addContainerGap())
         );
 
+        txtWelcome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        txtWelcome.setText("jLabel2");
+
         javax.swing.GroupLayout FormLayout = new javax.swing.GroupLayout(Form);
         Form.setLayout(FormLayout);
         FormLayout.setHorizontalGroup(
             FormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 821, Short.MAX_VALUE)
+            .addGroup(FormLayout.createSequentialGroup()
+                .addGap(146, 146, 146)
+                .addComponent(txtWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         FormLayout.setVerticalGroup(
             FormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(FormLayout.createSequentialGroup()
+                .addGap(62, 62, 62)
+                .addComponent(txtWelcome)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,6 +232,8 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     private void btnThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThoatMouseClicked
         int cf = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn thoát ?");
         if (cf == JOptionPane.YES_OPTION) {
+            UserInfor.user.clear();
+            System.out.println(UserInfor.user);
             dispose();
         } else {
             return;
@@ -272,6 +290,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jbnv;
     private javax.swing.JLabel jbsp;
     private javax.swing.JLabel jbtk;
+    private javax.swing.JLabel txtWelcome;
     // End of variables declaration//GEN-END:variables
 
     SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss");

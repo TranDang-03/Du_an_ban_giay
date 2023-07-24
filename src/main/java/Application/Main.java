@@ -4,6 +4,7 @@
  */
 package Application;
 
+import Constrant.UserInfor;
 import View.DangNhap;
 import View.GiaoDich;
 import View.KichCo;
@@ -17,7 +18,6 @@ import View.TrangChu;
 public class Main {
 
     public static void main(String[] args) {
-
         // TrangChu dn = new TrangChu();
         // dn.setVisible(true);
         // dn.setLocationRelativeTo(null);
@@ -27,9 +27,14 @@ public class Main {
         // KichCo view = new KichCo();
         // view.setVisible(true);
         // view.setLocationRelativeTo(null);
+
+        // GiaoDich view = new GiaoDich();
+        // view.setVisible(true);
+        // view.setLocationRelativeTo(null);
         
-        GiaoDich view = new GiaoDich();
+        DangNhap view = new DangNhap();
         view.setVisible(true);
         view.setLocationRelativeTo(null);
+
     }
 }

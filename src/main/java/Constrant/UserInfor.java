@@ -4,6 +4,7 @@
  */
 package Constrant;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -18,14 +19,12 @@ public class UserInfor {
         CUSTOMERNAME = name;
     }
 
-    public static String CUSTOMERCODE = "";
+    public static String CUSTOMERCODE;
 
     public static void setCUSTOMERCODE(String code) {
         CUSTOMERCODE = code;
     }
 
-    public static Map<String, String> user;
-    
- 
-       
+    public static Map<Integer, String> user = new HashMap<>();
+
 }

@@ -80,7 +80,7 @@ public class BanHangRepository {
 
     public List<String> getAllMaKhuyenMai() {
         String query = "SELECT [tenKhuyenMai]\n"
-                + "  FROM [dbo].[khuyen_mai]";
+                + "  FROM [dbo].[khuyen_mai] where trangThai = 0";
         List<String> list = new ArrayList<>();
 
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
@@ -227,7 +227,7 @@ public class BanHangRepository {
         return null;
     }
 
-    public boolean addHoaDon() {
+    public boolean addHoaDon(String maKH) {
         String query = "INSERT INTO [dbo].[hoa_don]\n"
                 + "           ([idKhachHang]\n"
                 + "           ,[maHoaDon]\n"
@@ -239,7 +239,8 @@ public class BanHangRepository {
         int check = 0;
         String maHD = maHD();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
-            ps.setObject(1, maHD);
+            ps.setObject(1, getIDKhachHang(maKH));
+            ps.setObject(2, maHD);
             check = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();

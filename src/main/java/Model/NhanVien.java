@@ -11,6 +11,7 @@ import java.util.Date;
  * @author Admin
  */
 public class NhanVien {
+
     private int idNV;
     private String maNV;
     private String tenNV;
@@ -137,5 +138,10 @@ public class NhanVien {
     public void setMatKhau(String matKhau) {
         this.matKhau = matKhau;
     }
-    
+
+    @Override
+    public String toString() {
+        return "NhanVien{" + "idNV=" + idNV + ", maNV=" + maNV + ", tenNV=" + tenNV + ", gioiTinh=" + gioiTinh + ", ngSinh=" + ngSinh + ", diaChi=" + diaChi + ", sdt=" + sdt + ", chucVu=" + chucVu + ", trangThai=" + trangThai + ", luong=" + luong + ", taiKhoan=" + taiKhoan + ", matKhau=" + matKhau + '}';
+    }
+
 }

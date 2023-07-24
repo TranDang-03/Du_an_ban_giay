@@ -176,7 +176,7 @@ insert into chi_tiet_san_pham(idNSX,idSanPham,idMauSac,idDongSP,idChatLieu,idKic
 (2,2,2,2,2,2,2,2,'CTSP2',0,120000,170000,'anh2.jpg'),
 (3,3,3,3,3,3,3,3,'CTSP3',200,200000,250000,'anh3.jpg')
 
--- sp_rename 'chi_tiet_san_pham.moTa', 'maCTSP' , 'COLUMN';
+ sp_rename 'chi_tiet_san_pham.moTa', 'maCTSP' , 'COLUMN';
 
 create table hoa_don(
 	idHoaDon bigint IDENTITY(1,1) primary key not null,

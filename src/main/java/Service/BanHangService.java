@@ -54,8 +54,8 @@ public class BanHangService {
         return this.thuongHieu.all();
     }
 
-    public List<KhuyenMai> getAllKhuyenMai() {
-        return this.khuyenMai.all();
+    public List<String> getAllKhuyenMai() {
+        return this.banHang.getAllMaKhuyenMai();
     }
 
     public List<NhanVien> getAllNhanVien() {
@@ -119,7 +119,7 @@ public class BanHangService {
         return this.banHang.getAllHDCTTheoMaHD(maHD);
     }
     
-    public boolean addHoaDon(){
-        return this.banHang.addHoaDon();
+    public boolean addHoaDon(String maKH){
+        return this.banHang.addHoaDon(maKH);
     }
 }

@@ -4,6 +4,10 @@
  */
 package View;
 
+import Constrant.UserInfor;
+import Service.DangNhapService;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Admin
@@ -12,7 +16,8 @@ public class DangNhap extends javax.swing.JFrame {
 
     boolean hide = false;
 
-    
+    private DangNhapService dangNhap = new DangNhapService();
+
     public DangNhap() {
         initComponents();
         this.setLocationRelativeTo(null);
@@ -32,13 +37,13 @@ public class DangNhap extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        txtUser = new javax.swing.JTextField();
+        txtUserName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jSeparator2 = new javax.swing.JSeparator();
         btnThoat = new javax.swing.JButton();
         hideshow = new javax.swing.JLabel();
-        txtPass = new javax.swing.JPasswordField();
-        jButton2 = new javax.swing.JButton();
+        txtPassword = new javax.swing.JPasswordField();
+        btnDangNhap = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -69,20 +74,16 @@ public class DangNhap extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Tên ");
+        jLabel1.setText("Tài khoản");
 
-        jSeparator1.setBackground(new java.awt.Color(255, 255, 255));
-
-        txtUser.setBackground(new java.awt.Color(0, 102, 102));
-        txtUser.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        txtUser.setForeground(new java.awt.Color(255, 255, 255));
-        txtUser.setBorder(null);
+        txtUserName.setBackground(new java.awt.Color(0, 102, 102));
+        txtUserName.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        txtUserName.setForeground(new java.awt.Color(255, 255, 255));
+        txtUserName.setBorder(null);
 
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Mật khẩu");
-
-        jSeparator2.setBackground(new java.awt.Color(255, 255, 255));
 
         btnThoat.setBackground(new java.awt.Color(0, 102, 102));
         btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -102,19 +103,19 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
 
-        txtPass.setBackground(new java.awt.Color(0, 102, 102));
-        txtPass.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txtPass.setForeground(new java.awt.Color(255, 255, 255));
-        txtPass.setBorder(null);
+        txtPassword.setBackground(new java.awt.Color(0, 102, 102));
+        txtPassword.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txtPassword.setForeground(new java.awt.Color(255, 255, 255));
+        txtPassword.setBorder(null);
 
-        jButton2.setBackground(new java.awt.Color(0, 102, 102));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Đăng nhập");
-        jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnDangNhap.setBackground(new java.awt.Color(0, 102, 102));
+        btnDangNhap.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnDangNhap.setForeground(new java.awt.Color(255, 255, 255));
+        btnDangNhap.setText("Đăng nhập");
+        btnDangNhap.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnDangNhap.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnDangNhapActionPerformed(evt);
             }
         });
 
@@ -128,9 +129,9 @@ public class DangNhap extends javax.swing.JFrame {
                     .addComponent(jSeparator2)
                     .addComponent(jLabel2)
                     .addComponent(jSeparator1)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtUser, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
-                    .addComponent(txtPass))
+                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 214, Short.MAX_VALUE)
+                    .addComponent(txtPassword)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(hideshow)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -141,7 +142,7 @@ public class DangNhap extends javax.swing.JFrame {
                         .addComponent(btnThoat, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 114, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(180, 180, 180))))
         );
         jPanel2Layout.setVerticalGroup(
@@ -152,7 +153,7 @@ public class DangNhap extends javax.swing.JFrame {
                 .addGap(41, 41, 41)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
@@ -160,12 +161,12 @@ public class DangNhap extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(4, 4, 4)
-                        .addComponent(txtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(hideshow, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(43, 43, 43)
-                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -191,11 +192,11 @@ public class DangNhap extends javax.swing.JFrame {
         if (hide == false) {
             hide = true;
             hideshow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/hide.png")));
-            txtPass.setEchoChar((char) 0);
+            txtPassword.setEchoChar((char) 0);
         } else {
             hide = false;
             hideshow.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/show.png")));
-            txtPass.setEchoChar('\u25cf');
+            txtPassword.setEchoChar('\u25cf');
         }
     }//GEN-LAST:event_hideshowMouseClicked
 
@@ -203,9 +204,30 @@ public class DangNhap extends javax.swing.JFrame {
         dispose();
     }//GEN-LAST:event_btnThoatActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnDangNhapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDangNhapActionPerformed
+
+        String userName = txtUserName.getText();
+        String passWord = txtPassword.getText();
+        Model.NhanVien nv = this.dangNhap.login(userName, passWord);
+
+        if (userName.isEmpty() || passWord.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không hợp lệ!!!");
+        } else if (!userName.matches("^[a-zA-Z0-9]+$") || !passWord.matches("^[a-zA-Z0-9]+$")) {
+            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không hợp lệ!!!");
+        } else if (nv == null) {
+            JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không hợp lệ!!!");
+        } else if (nv.getTrangThai() == 1) {
+            JOptionPane.showMessageDialog(this, "Tài khoản đã bị dừng hoạt động!!!");
+        } else {
+            UserInfor.user.put(nv.getIdNV(), nv.getTenNV());
+            JOptionPane.showMessageDialog(this, "Đăng nhập thành công!!!");
+            this.dispose();
+            TrangChu dn = new TrangChu();
+            dn.setVisible(true);
+            dn.setLocationRelativeTo(null);
+        }
+
+    }//GEN-LAST:event_btnDangNhapActionPerformed
 
     /**
      * @param args the command line arguments
@@ -243,9 +265,9 @@ public class DangNhap extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    public javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnThoat;
     private javax.swing.JLabel hideshow;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -253,7 +275,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JPasswordField txtPass;
-    private javax.swing.JTextField txtUser;
+    public javax.swing.JPasswordField txtPassword;
+    public javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
