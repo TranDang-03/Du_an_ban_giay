@@ -679,11 +679,12 @@ public class GiaoDich extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(45, 45, 45)
+                 .addGap(45, 45, 45)
                 .addComponent(jLabel1)
-                .addGap(33, 33, 33)
+                .addGap(33, 33, 33) 
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
+                     .addGroup(layout.createSequentialGroup()
+
                         .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -708,11 +709,9 @@ public class GiaoDich extends javax.swing.JFrame {
         // TODO add your handling code here:
         java.util.Date ngayTao = txtNgayTao.getDate();
         System.out.println(ngayTao);
-
         if (ngayTao != null) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             String formattedDate = dateFormat.format(ngayTao);
-
             try {
                 java.util.Date parsedDate = dateFormat.parse(formattedDate);
                 java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
@@ -724,6 +723,7 @@ public class GiaoDich extends javax.swing.JFrame {
         } else {
             JOptionPane.showMessageDialog(this, "Ngày tạo không hợp lệ");
         }
+
         String maKH = txtMaKH.getText();
 
         boolean check = this.banHangService.addHoaDon(maKH);

@@ -18,6 +18,7 @@ public class HoaDonViewModel {
     String maKM;
     float thanhTien;
     Date ngayTao;
+    int TrangThai;
 
     public HoaDonViewModel() {
     }
@@ -29,6 +30,16 @@ public class HoaDonViewModel {
         this.maKM = maKM;
         this.thanhTien = thanhTien;
         this.ngayTao = ngayTao;
+    }
+
+    public HoaDonViewModel(String maHD, String tenKH, String tenNV, String maKM, float thanhTien, Date ngayTao, int TrangThai) {
+        this.maHD = maHD;
+        this.tenKH = tenKH;
+        this.tenNV = tenNV;
+        this.maKM = maKM;
+        this.thanhTien = thanhTien;
+        this.ngayTao = ngayTao;
+        this.TrangThai = TrangThai;
     }
 
     public Date getNgayTao() {
@@ -79,9 +90,17 @@ public class HoaDonViewModel {
         this.thanhTien = thanhTien;
     }
 
+    public int getTrangThai() {
+        return TrangThai;
+    }
+
+    public void setTrangThai(int TrangThai) {
+        this.TrangThai = TrangThai;
+    }
+
     @Override
     public String toString() {
-        return "HoaDonViewModel{" + "maHD=" + maHD + ", tenKH=" + tenKH + ", tenNV=" + tenNV + ", maKM=" + maKM + ", thanhTien=" + thanhTien + '}';
+        return "HoaDonViewModel{" + "maHD=" + maHD + ", tenKH=" + tenKH + ", tenNV=" + tenNV + ", maKM=" + maKM + ", thanhTien=" + thanhTien + ", ngayTao=" + ngayTao + ", TrangThai=" + TrangThai + '}';
     }
 
 }

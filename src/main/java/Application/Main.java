@@ -28,13 +28,15 @@ public class Main {
         // view.setVisible(true);
         // view.setLocationRelativeTo(null);
 
-        // GiaoDich view = new GiaoDich();
-        // view.setVisible(true);
-        // view.setLocationRelativeTo(null);
-        
-        DangNhap view = new DangNhap();
-        view.setVisible(true);
-        view.setLocationRelativeTo(null);
+         GiaoDich view = new GiaoDich();
+         view.setVisible(true);
+         view.setLocationRelativeTo(null);
+
+//        DangNhap view = new DangNhap();
+//        view.setVisible(true);
+//        view.setLocationRelativeTo(null);
+
+
 
     }
 }
