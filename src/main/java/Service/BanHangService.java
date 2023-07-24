@@ -122,4 +122,8 @@ public class BanHangService {
     public boolean addHoaDon(String maKH){
         return this.banHang.addHoaDon(maKH);
     }
+    
+    public List<HDCTBanHang> checkTonTaiSP(String maHD, int idCTSP){
+        return this.banHang.checkTonTaiSP(maHD, idCTSP);
+    }
 }
