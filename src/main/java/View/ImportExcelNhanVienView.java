@@ -230,7 +230,7 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
                 ps.setString(4, ngaySinh);
                
                 try {
-                    java.util.Date dateNgaySinhUtil = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(ngaySinh);
+                    java.util.Date dateNgaySinhUtil = (Date) new SimpleDateFormat("yyyy/MM/dd").parse(ngaySinh);
                     java.sql.Date sqlDateNgaySinh = new java.sql.Date(dateNgaySinhUtil.getTime());
                      ps.setDate(4, sqlDateNgaySinh);
                 } catch (Exception e) {

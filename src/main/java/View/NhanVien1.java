@@ -37,6 +37,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 /**
  *
@@ -62,27 +64,73 @@ public class NhanVien1 extends javax.swing.JDialog {
     public void loadTable() {
         ArrayList<Model.NhanVien> list = this.service.all();
         model.setRowCount(0);
-
+        listnv = this.service.all();
         for (Model.NhanVien nv : list) {
             model.addRow(new Object[]{
-                
                 nv.getMaNV(),
                 nv.getTenNV(),
-                nv.isGioiTinh(),
+                nv.isGioiTinh() == true ? "Nam " : "Nữ",
                 nv.getNgSinh(),
                 nv.getSdt(),
                 nv.getDiaChi(),
-                nv.getChucVu(),
+                nv.getChucVu() == 0 ? "Trưởng phòng" : "Nhân viên",
                 nv.getLuong(),
                 nv.getTaiKhoan(),
                 nv.getMatKhau(),
                 nv.getTrangThai() == 0 ? "Hoạt động" : "Không hoạt động"
             });
+            this.initSearch();
         }
     }
 
+    public void initSearch() {
+        txtTimKiem.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search();
+            }
+
+            public void search() {
+                DefaultTableModel model = (DefaultTableModel) tblnv.getModel();
+                model.setRowCount(0);
+                String code = txtTimKiem.getText();
+                List<NhanVien> tempList = new ArrayList<>();
+                for (NhanVien item : listnv) {
+                    if (item.getMaNV().contains(code)) {
+                        tempList.add(item);
+                    }
+                }
+                for (NhanVien nv : tempList) {
+                    model.addRow(new Object[]{
+                        nv.getMaNV(),
+                        nv.getTenNV(),
+                        nv.isGioiTinh() == true ? "Nam " : "Nữ",
+                        nv.getNgSinh(),
+                        nv.getSdt(),
+                        nv.getDiaChi(),
+                        nv.getChucVu() == 0 ? "Trưởng phòng" : "Nhân viên",
+                        nv.getLuong(),
+                        nv.getTaiKhoan(),
+                        nv.getMatKhau(),
+                        nv.getTrangThai() == 0 ? "Hoạt động" : "Không hoạt động"});
+                }
+            }
+        });
+
+    }
+
     public void clear() {
-        
+
         this.txtNgaySinh.setText("");
         this.txtma.setText("");
         this.txtten.setText("");
@@ -182,7 +230,7 @@ public class NhanVien1 extends javax.swing.JDialog {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblnv = new javax.swing.JTable();
         jLabel13 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtTimKiem = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -444,7 +492,7 @@ public class NhanVien1 extends javax.swing.JDialog {
                         .addGap(60, 60, 60)
                         .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(83, 83, 83)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 272, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 554, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -453,7 +501,7 @@ public class NhanVien1 extends javax.swing.JDialog {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 240, Short.MAX_VALUE)
@@ -492,7 +540,7 @@ public class NhanVien1 extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        
+
         String maNhanVien = this.txtma.getText();
         String tenNhanVien = this.txtten.getText();
         boolean gioiTinh;
@@ -572,17 +620,26 @@ public class NhanVien1 extends javax.swing.JDialog {
         String matKhau = model.getValueAt(index, 9).toString();
         String trangThai = model.getValueAt(index, 10).toString();
 
-        
         this.txtma.setText(maNhanVien);
         this.txtten.setText(tenNhanVien);
-        Boolean setGioiTinh = gioiTinh.equalsIgnoreCase("Nam") ? true : false;
-        if (setGioiTinh == true) {
-            rd_nam.setSelected(true);
-        } else {
+//        Boolean setGioiTinh = gioiTinh.equalsIgnoreCase("Nam") ? true : false;
+//        if (setGioiTinh == true) {
+//            rd_nam.setSelected(true);
+//        } else {
+//            rd_nu.setSelected(true);
+//        }
+        if (gioiTinh.equals("Nữ")) {
             rd_nu.setSelected(true);
+        } else {
+            rd_nam.setSelected(true);
         }
-        Boolean setChucVu = chucVu.equalsIgnoreCase("1") ? true : false;
-        if (setChucVu == true) {
+//        Boolean setChucVu = chucVu.equalsIgnoreCase("1") ? true : false;
+//        if (setChucVu == true) {
+//            rd_ql.setSelected(true);
+//        } else {
+//            rd_nv.setSelected(true);
+//        }
+        if (chucVu.equals("Trưởng phòng")) {
             rd_ql.setSelected(true);
         } else {
             rd_nv.setSelected(true);
@@ -699,13 +756,13 @@ public class NhanVien1 extends javax.swing.JDialog {
 
 
     }//GEN-LAST:event_jButton1ActionPerformed
- DefaultTableModel dtm;
+    DefaultTableModel dtm;
     private void txttenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttenActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txttenActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-      dtm = (DefaultTableModel) tblnv.getModel();
+        dtm = (DefaultTableModel) tblnv.getModel();
         dtm.setRowCount(0);
         FileInputStream excelFIS = null;
         BufferedInputStream excelBIS = null;
@@ -761,7 +818,7 @@ public class NhanVien1 extends javax.swing.JDialog {
             }
 
         }
-                               
+
     }//GEN-LAST:event_jButton11ActionPerformed
 
     /**
@@ -823,7 +880,6 @@ public class NhanVien1 extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JRadioButton rd_nam;
     private javax.swing.JRadioButton rd_nu;
     private javax.swing.JRadioButton rd_nv;
@@ -833,6 +889,7 @@ public class NhanVien1 extends javax.swing.JDialog {
     private javax.swing.JTextField txtMK;
     private javax.swing.JTextField txtNgaySinh;
     private javax.swing.JTextField txtTK;
+    private javax.swing.JTextField txtTimKiem;
     private javax.swing.JTextField txt_Luong;
     private javax.swing.JTextField txt_sdt;
     private javax.swing.JTextField txtma;
