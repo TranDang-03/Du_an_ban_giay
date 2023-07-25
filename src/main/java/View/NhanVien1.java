@@ -551,9 +551,9 @@ public class NhanVien1 extends javax.swing.JDialog {
         }
         int chucVu;
         if (rd_ql.isSelected() == true) {
-            chucVu = 1;
-        } else {
             chucVu = 0;
+        } else {
+            chucVu = 1;
         }
         int trangThai = Integer.parseInt(cbbnv.getSelectedItem().toString());
 //      
