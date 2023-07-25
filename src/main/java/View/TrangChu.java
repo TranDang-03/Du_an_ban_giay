@@ -34,7 +34,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         String replaceAll = employee.replaceAll("[\\[\\]\\{\\}()]", "");
         System.out.println(replaceAll);
 
-        txtWelcome.setText("Xin chào, " + replaceAll + " đã đến với BEESHOES");
+        txtWelcome.setText( replaceAll);
     }
 
     private void setFrame(JComponent comp) {
@@ -51,7 +51,6 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     private void initComponents() {
 
         Menu = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         dongho = new javax.swing.JLabel();
         jbgd = new javax.swing.JLabel();
         jbsp = new javax.swing.JLabel();
@@ -59,19 +58,14 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         jbtk = new javax.swing.JLabel();
         jb = new javax.swing.JLabel();
         btnThoat = new javax.swing.JLabel();
-        Form = new javax.swing.JPanel();
         txtWelcome = new javax.swing.JLabel();
+        Form = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Quản lí của hàng bán giày thể thao nam");
         setUndecorated(true);
 
         Menu.setBackground(new java.awt.Color(187, 221, 243));
-
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User.png"))); // NOI18N
-        jLabel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         dongho.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         dongho.setForeground(new java.awt.Color(204, 0, 0));
@@ -139,6 +133,11 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        txtWelcome.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        txtWelcome.setForeground(new java.awt.Color(255, 0, 51));
+        txtWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txtWelcome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User.png"))); // NOI18N
+
         javax.swing.GroupLayout MenuLayout = new javax.swing.GroupLayout(Menu);
         Menu.setLayout(MenuLayout);
         MenuLayout.setHorizontalGroup(
@@ -146,21 +145,21 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThoat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(jb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbnv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbsp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbgd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dongho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(dongho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         MenuLayout.setVerticalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
+                .addComponent(txtWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dongho, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -178,24 +177,15 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
                 .addContainerGap())
         );
 
-        txtWelcome.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        txtWelcome.setText("jLabel2");
-
         javax.swing.GroupLayout FormLayout = new javax.swing.GroupLayout(Form);
         Form.setLayout(FormLayout);
         FormLayout.setHorizontalGroup(
             FormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FormLayout.createSequentialGroup()
-                .addGap(146, 146, 146)
-                .addComponent(txtWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 590, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(85, Short.MAX_VALUE))
+            .addGap(0, 821, Short.MAX_VALUE)
         );
         FormLayout.setVerticalGroup(
             FormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(FormLayout.createSequentialGroup()
-                .addGap(62, 62, 62)
-                .addComponent(txtWelcome)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 640, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -287,7 +277,6 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     private javax.swing.JPanel Menu;
     private javax.swing.JLabel btnThoat;
     private javax.swing.JLabel dongho;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jb;
     private javax.swing.JLabel jbgd;
     private javax.swing.JLabel jbnv;

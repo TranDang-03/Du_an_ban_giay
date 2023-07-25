@@ -581,13 +581,13 @@ public class SanPhamCT extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("jButton1");
+        jButton1.setText("|<<");
 
-        jButton2.setText("jButton2");
+        jButton2.setText("<<");
 
-        jButton3.setText("jButton3");
+        jButton3.setText(">>");
 
-        jButton4.setText("jButton4");
+        jButton4.setText(">>|");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
