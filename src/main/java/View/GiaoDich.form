@@ -183,11 +183,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="X&#xf3;a SP"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaSPMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btnSuaSL">
           <Properties>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a SL"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSuaSLMouseClicked"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>
@@ -296,6 +302,9 @@
                   </Table>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tblSanPhamCTMouseClicked"/>
+              </Events>
             </Component>
           </SubComponents>
         </Container>

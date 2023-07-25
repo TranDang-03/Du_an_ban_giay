@@ -324,7 +324,7 @@ public class BanHangRepository {
                 HoaDonViewModel hd = new HoaDonViewModel(rs.getString("maHoaDon"),
                         rs.getString("tenKhachhang"), rs.getString("tenNhanVien"),
                         rs.getString("tenKhuyenMai"), rs.getFloat("thanhTien"), rs.getDate("ngayTao"),
-                rs.getInt("trangThai"));
+                        rs.getInt("trangThai"));
                 list.add(hd);
             }
             return list;
@@ -346,7 +346,7 @@ public class BanHangRepository {
                 HoaDonViewModel hd = new HoaDonViewModel(rs.getString("maHoaDon"),
                         rs.getString("tenKhachhang"), rs.getString("tenNhanVien"),
                         rs.getString("tenKhuyenMai"), rs.getFloat("thanhTien"), rs.getDate("ngayTao"),
-                rs.getInt("trangThai"));
+                        rs.getInt("trangThai"));
                 list.add(hd);
             }
             return list;
@@ -445,14 +445,13 @@ public class BanHangRepository {
         return null;
     }
 
-    public boolean xoaSPDaCot(int HDCT, String maHD) {
-        String query = "DELETE hoa_don_chi_tiet FROM [dbo].[hoa_don_chi_tiet]\n"
-                + "inner join hoa_don on hoa_don_chi_tiet.idHoaDon = hoa_don.idHoaDon\n"
-                + "      WHERE idHoaDonChiTiet = ? and hoa_don.idHoaDon = ?";
+    public boolean xoaSPDaCot(int idHDCT, String maHD) {
+        String query = "DELETE FROM [dbo].[hoa_don_chi_tiet]\n"
+                + "     WHERE idHoaDonChiTiet = ? and idHoaDon = ?";
         int check = 0;
 
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
-            ps.setObject(1, HDCT);
+            ps.setObject(1, idHDCT);
             ps.setObject(2, getIDHD(maHD));
             check = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -542,7 +541,8 @@ public class BanHangRepository {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HDCTBanHang hd = new HDCTBanHang(rs.getInt("idChiTietSanPham"), rs.getString("tenSanPham"),
-                        rs.getInt("soLuong"), rs.getString("tenDongSP"), rs.getString("tenNSX"), rs.getInt("tenKichThuoc"),
+                        rs.getInt("soLuong"), rs.getString("tenDongSP"), rs.getString("tenNSX"),
+                        rs.getInt("tenKichCo"),
                         rs.getFloat("donGia"));
                 list.add(hd);
             }
@@ -553,6 +553,149 @@ public class BanHangRepository {
         return null;
     }
 
+    public boolean suaSoLuong(int soLuong, int idCTSP, String maHD) {
+        String query = "UPDATE [dbo].[hoa_don_chi_tiet]\n"
+                + "   SET [soLuong] = ?  \n"
+                + " WHERE idChiTietSanPham = ? and idHoaDon = ?";
+        int check = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+
+            ps.setObject(1, soLuong);
+            ps.setObject(2, idCTSP);
+            ps.setObject(3, getIDHD(maHD));
+            check = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return check > 0;
+    }
+
+    public boolean suaSoLuongCTSP(int soLuong, int idCTSP) {
+        String query = "UPDATE [dbo].[chi_tiet_san_pham]\n"
+                + "   SET \n"
+                + "	[soLuongTon] = ?\n"
+                + "\n"
+                + " WHERE idChiTietSP = ?";
+        int check = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, soLuong);
+            ps.setObject(2, idCTSP);
+            check = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return check > 0;
+    }
+
+    public float tinhTongTienSanPhamTheoHoaDon(String maHD) {
+        String query = "SELECT \n"
+                + "    SUM(hdct.soLuong * hdct.donGia) AS TongTien\n"
+                + "FROM\n"
+                + "    hoa_don hd\n"
+                + "INNER JOIN\n"
+                + "    hoa_don_chi_tiet hdct ON hd.idHoaDon = hdct.idHoaDon\n"
+                + "	where hd.idHoaDon = ?\n"
+                + "GROUP BY\n"
+                + "    hd.idHoaDon,\n"
+                + "    hd.maHoaDon,\n"
+                + "    hd.ngayTao;";
+        float a = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, getIDHD(maHD));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return a = rs.getFloat("TongTien");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return a;
+    }
+
+    public Integer laySoLuongSPTrongHDCT(String maHD, int idCTSP) {
+        String query = "SELECT \n"
+                + "    soLuong\n"
+                + "FROM\n"
+                + "    hoa_don_chi_tiet\n"
+                + "WHERE\n"
+                + "    idHoaDon = ?\n"
+                + "    AND idChiTietSanPham = ?;";
+        int a = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, getIDHD(maHD));
+            ps.setObject(2, idCTSP);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return a = rs.getInt("soLuong");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return a;
+    }
+
+    public Integer layIDCTSPTheoMAHD(int idHDCT, String maHD) {
+        String query = "SELECT idChiTietSanPham\n"
+                + "FROM\n"
+                + "    hoa_don_chi_tiet\n"
+                + "WHERE\n"
+                + "    idHoaDonChiTiet = ? and idHoaDon = ?";
+        int a = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, idHDCT);
+            ps.setObject(2, getIDHD(maHD));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return a = rs.getInt("idChiTietSanPham");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return a;
+    }
+
+    public Integer laySLTonTheoidCTSP(int idCTSP) {
+        String query = "SELECT \n"
+                + "    soLuongTon\n"
+                + "FROM\n"
+                + "    chi_tiet_san_pham\n"
+                + "WHERE\n"
+                + "    idChiTietSP = ?";
+        int a = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, idCTSP);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return a = rs.getInt("soLuongTon");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return a;
+    }
+
+    public Integer layIdHDCTTheoIdHDVaIdCTSP(int idCTSP, String maHD) {
+        String query = "SELECT \n"
+                + "    idHoaDonChiTiet\n"
+                + "FROM\n"
+                + "    hoa_don_chi_tiet\n"
+                + "WHERE\n"
+                + "    idChiTietSanPham = ?\n"
+                + "    AND idHoaDon = ?";
+        int a = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, idCTSP);
+            ps.setObject(2, getIDHD(maHD));
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return a = rs.getInt("idHoaDonChiTiet");
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return a;
+    }
+
     public static void main(String[] args) {
         // List<String> list = new BanHangRepository().getAllMaHD();
         // for (String string : list) {
@@ -560,5 +703,8 @@ public class BanHangRepository {
         // }
         // int a = new BanHangRepository().getIDHD("HD01");
         // System.out.println(a);
+
+        float a = new BanHangRepository().tinhTongTienSanPhamTheoHoaDon("HD01");
+        System.out.println(a);
     }
 }

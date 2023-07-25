@@ -118,12 +118,48 @@ public class BanHangService {
     public List<HDCTBanHang> getAllHDCTTheoMaHD(String maHD) {
         return this.banHang.getAllHDCTTheoMaHD(maHD);
     }
-    
-    public boolean addHoaDon(String maKH){
+
+    public boolean addHoaDon(String maKH) {
         return this.banHang.addHoaDon(maKH);
     }
-    
-    public List<HDCTBanHang> checkTonTaiSP(String maHD, int idCTSP){
+
+    public List<HDCTBanHang> checkTonTaiSP(String maHD, int idCTSP) {
         return this.banHang.checkTonTaiSP(maHD, idCTSP);
+    }
+
+    public boolean themSPVaoHDCT(int soLuong, float donGia, String maHD, int idCTSP) {
+        return this.banHang.themSPVaoHDCT(soLuong, donGia, maHD, idCTSP);
+    }
+
+    public boolean suaSoLuong(int soLuong, int idCTSP, String maHD) {
+        return this.banHang.suaSoLuong(soLuong, idCTSP, maHD);
+    }
+
+    public boolean suaSoLuongCTSP(int soLuong, int idCTSP) {
+        return this.banHang.suaSoLuongCTSP(soLuong, idCTSP);
+    }
+
+    public Float getTongTienTheoMaHD(String maHD) {
+        return this.banHang.tinhTongTienSanPhamTheoHoaDon(maHD);
+    }
+
+    public Integer laySoLuongSPTrongHDCT(String maHD, int idCTSP) {
+        return this.banHang.laySoLuongSPTrongHDCT(maHD, idCTSP);
+    }
+
+    public boolean xoaSPHDCT(int idHDCT, String maHD) {
+        return this.banHang.xoaSPDaCot(idHDCT, maHD);
+    }
+
+    public Integer layIDCTSPTheoMAHDvIdCTHD(int idCTHD, String maHD) {
+        return this.banHang.layIDCTSPTheoMAHD(idCTHD, maHD);
+    }
+    
+    public Integer laySLTonTheoIdCTSP(int idCTSP){
+        return this.banHang.laySLTonTheoidCTSP(idCTSP);
+    }
+    
+    public Integer layIdHDCTTheoIdHDVaIdCTSP(int idCTSP, String maHD){
+        return this.banHang.layIdHDCTTheoIdHDVaIdCTSP(idCTSP, maHD);
     }
 }
