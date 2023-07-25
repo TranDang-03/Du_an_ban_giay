@@ -190,7 +190,7 @@ public class GiaoDich extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 txtTimer.setText(data + " s");
                 if (data == MIN_COUNT) {
-//                    JOptionPane.showMessageDialog(rootPane, "Reset lai du lieu nha =D");
+                    JOptionPane.showMessageDialog(rootPane, "Reset lai du lieu nha =D");
                     data = 10;
                 } else {
                     data--;
