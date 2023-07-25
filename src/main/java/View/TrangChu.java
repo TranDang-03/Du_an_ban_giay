@@ -20,6 +20,8 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     NhanVien1 nv = new NhanVien1();
     ThongKe tk = new ThongKe();
     KhachHang1 kh = new KhachHang1();
+    HoaDonView hd = new HoaDonView();
+    KhuyenMai km = new KhuyenMai();
 
     BarChartExample bar = new BarChartExample();
 
@@ -55,10 +57,12 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         jbgd = new javax.swing.JLabel();
         jbsp = new javax.swing.JLabel();
         jbnv = new javax.swing.JLabel();
-        jbtk = new javax.swing.JLabel();
         jb = new javax.swing.JLabel();
         btnThoat = new javax.swing.JLabel();
         txtWelcome = new javax.swing.JLabel();
+        jbsp1 = new javax.swing.JLabel();
+        jbsp2 = new javax.swing.JLabel();
+        jbtk = new javax.swing.JLabel();
         Form = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -103,16 +107,6 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
             }
         });
 
-        jbtk.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jbtk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jbtk.setText("THỐNG KÊ");
-        jbtk.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jbtk.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jbtkMouseClicked(evt);
-            }
-        });
-
         jb.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         jb.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jb.setText("KHÁCH HÀNG");
@@ -138,28 +132,60 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         txtWelcome.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtWelcome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/User.png"))); // NOI18N
 
+        jbsp1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbsp1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jbsp1.setText("HÓA ÐƠN");
+        jbsp1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jbsp1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbsp1MouseClicked(evt);
+            }
+        });
+
+        jbsp2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbsp2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jbsp2.setText("KHUYẾN MÃI");
+        jbsp2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jbsp2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbsp2MouseClicked(evt);
+            }
+        });
+
+        jbtk.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        jbtk.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jbtk.setText("THỐNG KÊ");
+        jbtk.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jbtk.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jbtkMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout MenuLayout = new javax.swing.GroupLayout(Menu);
         Menu.setLayout(MenuLayout);
         MenuLayout.setHorizontalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, MenuLayout.createSequentialGroup()
+            .addGroup(MenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThoat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtWelcome, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 178, Short.MAX_VALUE)
+                    .addComponent(jbnv, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbsp, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbgd, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(dongho, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbsp1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jbsp2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jbtk, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbnv, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbsp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jbgd, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(dongho, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jb, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnThoat, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         MenuLayout.setVerticalGroup(
             MenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(MenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(txtWelcome, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtWelcome, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(dongho, javax.swing.GroupLayout.DEFAULT_SIZE, 33, Short.MAX_VALUE)
                 .addGap(18, 18, 18)
@@ -167,9 +193,13 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbsp, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jbnv, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addComponent(jbsp1, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbsp2, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jbtk, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jbnv, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jb, javax.swing.GroupLayout.DEFAULT_SIZE, 60, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -185,7 +215,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         );
         FormLayout.setVerticalGroup(
             FormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 640, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -243,6 +273,16 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         this.setFrame(kh.getRootPane());
     }//GEN-LAST:event_jbMouseClicked
 
+    private void jbsp1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbsp1MouseClicked
+        this.setFrame(hd.getRootPane());
+        gd.timer.stop();
+    }//GEN-LAST:event_jbsp1MouseClicked
+
+    private void jbsp2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbsp2MouseClicked
+        this.setFrame(km.getRootPane());
+        gd.timer.stop();
+    }//GEN-LAST:event_jbsp2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -287,6 +327,8 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jbgd;
     private javax.swing.JLabel jbnv;
     private javax.swing.JLabel jbsp;
+    private javax.swing.JLabel jbsp1;
+    private javax.swing.JLabel jbsp2;
     private javax.swing.JLabel jbtk;
     private javax.swing.JLabel txtWelcome;
     // End of variables declaration//GEN-END:variables
