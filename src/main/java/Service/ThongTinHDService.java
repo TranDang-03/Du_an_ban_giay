@@ -22,4 +22,10 @@ public class ThongTinHDService {
     public List<ThongTinHD> HdAll(){
         return this.hoaDonRepo.HdAll();
     }
+     public List<ThongTinHD> getHDByTongTienCao(){
+        return this.hoaDonRepo.getHDByTongTienCao();
+    }
+     public List<ThongTinHD> getHDByTongTienThap(){
+        return this.hoaDonRepo.getHDByTongTienThap();
+    }
 }

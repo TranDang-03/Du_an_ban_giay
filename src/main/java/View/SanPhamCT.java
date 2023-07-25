@@ -4,6 +4,7 @@ import Model.ChiTietSP;
 import Service.SanPhamCTService;
 import Util.DBConnect;
 import ViewModels.SPCTViewModel;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -19,12 +20,16 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
@@ -94,7 +99,7 @@ public class SanPhamCT extends javax.swing.JFrame {
                 String code = txt_search.getText();
                 List<SPCTViewModel> tempList = new ArrayList<>();
                 for (SPCTViewModel item : list) {
-                    if (item.getMaSp().contains(code)) {
+                    if (item.getTenSp().contains(code)) {
                         tempList.add(item);
                     }
                 }
@@ -176,6 +181,10 @@ public class SanPhamCT extends javax.swing.JFrame {
         rdHD = new javax.swing.JRadioButton();
         rdNo = new javax.swing.JRadioButton();
         rdAll = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -346,10 +355,10 @@ public class SanPhamCT extends javax.swing.JFrame {
         jLabel15.setText("Trạng thái:");
 
         buttonGroup1.add(rdhd);
-        rdhd.setText("Hoạt động");
+        rdhd.setText("Đang kinh doanh");
 
         buttonGroup1.add(rdno);
-        rdno.setText("Không hoạt động");
+        rdno.setText("Ngừng kinh doanh");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -363,8 +372,8 @@ public class SanPhamCT extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdhd, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdhd)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(rdno)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -549,7 +558,7 @@ public class SanPhamCT extends javax.swing.JFrame {
         });
 
         buttonGroup2.add(rdHD);
-        rdHD.setText("Hoạt động");
+        rdHD.setText("Đang bán");
         rdHD.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdHDActionPerformed(evt);
@@ -557,7 +566,7 @@ public class SanPhamCT extends javax.swing.JFrame {
         });
 
         buttonGroup2.add(rdNo);
-        rdNo.setText("Không hoạt động");
+        rdNo.setText("Ngừng bán");
         rdNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 rdNoActionPerformed(evt);
@@ -571,6 +580,14 @@ public class SanPhamCT extends javax.swing.JFrame {
                 rdAllActionPerformed(evt);
             }
         });
+
+        jButton1.setText("jButton1");
+
+        jButton2.setText("jButton2");
+
+        jButton3.setText("jButton3");
+
+        jButton4.setText("jButton4");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -600,6 +617,16 @@ public class SanPhamCT extends javax.swing.JFrame {
                 .addGap(5, 5, 5)
                 .addComponent(btnMoi, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addGap(18, 18, 18)
+                .addComponent(jButton3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton4)
+                .addGap(94, 94, 94))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -619,8 +646,14 @@ public class SanPhamCT extends javax.swing.JFrame {
                     .addComponent(btnImport, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnMoi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 294, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton1)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton4))
+                .addGap(11, 11, 11))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -753,7 +786,7 @@ public class SanPhamCT extends javax.swing.JFrame {
         txtGiaBan.setText(giaban);
         cbbNSX.setSelectedItem(nsx.toString());
 
-        if (trangThai.equals("Hoạt động")) {
+        if (trangThai.equals("Đang kinh doanh")) {
             rdhd.setSelected(true);
         } else {
             rdno.setSelected(true);
@@ -768,7 +801,6 @@ public class SanPhamCT extends javax.swing.JFrame {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         int cf = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn thêm ?");
         if (cf == JOptionPane.YES_OPTION) {
-
             if (checkData()) {
                 if (checkMaSPAdd()) {
                     Integer idSanPham = service.getIDBySP(cbbSP.getSelectedItem().toString());
@@ -897,196 +929,68 @@ public class SanPhamCT extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMoiActionPerformed
 
     private void btnImportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImportActionPerformed
-//        ImportExcelSanPham ex = new ImportExcelSanPham();
-//        ex.setVisible(true);
-
-        this.importDataFromExcel();
-        this.loadCbb();
+        this.importExcelToJtableJava();
+        
     }//GEN-LAST:event_btnImportActionPerformed
 
-    private void importDataFromExcel() {
-        JFileChooser fileChooser = new JFileChooser("D:\\");
-        int returnVal = fileChooser.showOpenDialog(this.getRootPane());
-        if (returnVal == JFileChooser.APPROVE_OPTION) {
-            File file = fileChooser.getSelectedFile();
-
+    public void importExcelToJtableJava() {
+        File excelFile;
+        FileInputStream excelFIS = null;
+        BufferedInputStream excelBIS = null;
+        XSSFWorkbook excelImportToJTable = null;
+        String defaultCurrentDirectoryPath = "D:\\";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        excelFileChooser.setDialogTitle("Select Excel File");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
             try {
-                FileInputStream excelFile = new FileInputStream(file);
-                Workbook workbook = new XSSFWorkbook(excelFile);
-                Sheet sheet = workbook.getSheetAt(0);
+                excelFile = excelFileChooser.getSelectedFile();
+                excelFIS = new FileInputStream(excelFile);
+                excelBIS = new BufferedInputStream(excelFIS);
+                excelImportToJTable = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
 
-                int startingRow = 1;
-                for (int rowNum = startingRow; rowNum <= sheet.getLastRowNum(); rowNum++) {
-                    Row row = sheet.getRow(rowNum);
-                    ChiTietSP ctsp = new ChiTietSP();
-                    Cell cell;
-
-                    // Lấy giá trị từ ô có kiểu dữ liệu là chuỗi (STRING cell)
-                    cell = row.getCell(1); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            String stringValue = cell.getStringCellValue();
-                            ctsp.setAnh(row.getCell(1).getStringCellValue());
-                        }
-                    }
-                    cell = row.getCell(2); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            String stringValue = cell.getStringCellValue();
-                            ctsp.setMaCTSP(row.getCell(2).getStringCellValue());
-                        }
-                    }
-                    cell = row.getCell(3); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdSP((int) row.getCell(3).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(4); // Ví dụ: ô cột B
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.NUMERIC) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setSoLuongTon((int) row.getCell(4).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(5); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdKC((int) row.getCell(5).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(6); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdMS((int) row.getCell(6).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(7); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdTH((int) row.getCell(7).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(8); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdDong((int) row.getCell(8).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(9); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdKD((int) row.getCell(9).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(10); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdCL((int) row.getCell(10).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(11); // Ví dụ: ô cột B
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.NUMERIC) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setGiaNhap((float) row.getCell(11).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(12); // Ví dụ: ô cột B
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.NUMERIC) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setGiaBan((float) row.getCell(12).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(13); // Ví dụ: ô cột A
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.STRING) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdNSX((int) row.getCell(13).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(14); // Ví dụ: ô cột B
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.NUMERIC) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setTrangThai((int) row.getCell(14).getNumericCellValue());
-                        }
-                    }
-                    cell = row.getCell(0); // Ví dụ: ô cột B
-                    if (cell != null) {
-                        if (cell.getCellType() == CellType.NUMERIC) {
-                            double numericValue = cell.getNumericCellValue();
-                            ctsp.setIdChiTietSP((int) row.getCell(0).getNumericCellValue());
-                        }
-                    }
-//                    
-
-                    saveToDatabase(ctsp);
+                for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
+                    XSSFCell id = excelRow.getCell(0);
+                    XSSFCell anh = excelRow.getCell(1);
+                    XSSFCell ma = excelRow.getCell(2);
+                    XSSFCell ten = excelRow.getCell(3);
+                    XSSFCell soluong = excelRow.getCell(4);
+                    XSSFCell kichco = excelRow.getCell(5);
+                    XSSFCell ms = excelRow.getCell(6);
+                    XSSFCell th = excelRow.getCell(7);
+                    XSSFCell dong = excelRow.getCell(8);
+                    XSSFCell kd = excelRow.getCell(9);
+                    XSSFCell cl = excelRow.getCell(10);
+                    XSSFCell giaban = excelRow.getCell(11);
+                    XSSFCell gianhap = excelRow.getCell(12);
+                    XSSFCell nsx = excelRow.getCell(13);
+                    XSSFCell trangThai = excelRow.getCell(14);
+                    model.addRow(new Object[]{id, anh, ma, ten, soluong, kichco, ms, th, dong, kd, cl, giaban, gianhap, nsx, trangThai});
                 }
-
-                workbook.close();
-                excelFile.close();
-                JOptionPane.showMessageDialog(getRootPane(), "Dữ liệu đã được import thành công!", "Thành công", JOptionPane.INFORMATION_MESSAGE);
-            } catch (IOException | SQLException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(getRootPane(), "Lỗi khi import dữ liệu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, "Imported thành công !!!");
+            } catch (IOException iOException) {
+                JOptionPane.showMessageDialog(null, iOException.getMessage());
+            } finally {
+                try {
+                    if (excelFIS != null) {
+                        excelFIS.close();
+                    }
+                    if (excelBIS != null) {
+                        excelBIS.close();
+                    }
+                    if (excelImportToJTable != null) {
+                        excelImportToJTable.close();
+                    }
+                } catch (IOException iOException) {
+                    JOptionPane.showMessageDialog(null, iOException.getMessage());
+                }
             }
-        } else {
-            System.out.println("Không có tệp được chọn.");
         }
     }
-
-    private void saveToDatabase(ChiTietSP ctsp) throws SQLException {
-        int check = 0;
-        String sql = """
-                       INSERT INTO [dbo].[chi_tiet_san_pham]
-                                  ([anh]
-                                  ,[maCTSP]
-                                  ,[idSanPham]
-                                  ,[soLuongTon]
-                                  ,[idKichCo]
-                                  ,[idMauSac]
-                                  ,[idThuongHieu]
-                                  ,[idDongSP]
-                                  ,[idKieuDang]
-                                  ,[idChatLieu]
-                                  ,[giaNhap]
-                                  ,[giaBan]
-                                  ,[idNSX]
-                                  ,[trang_thai])
-                            VALUES
-                                  (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
-                       """;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(sql)) {
-            PreparedStatement statement = con.prepareStatement(sql);
-            ps.setObject(1, ctsp.getAnh());
-            ps.setObject(2, ctsp.getMaCTSP());
-            ps.setObject(3, ctsp.getIdSP());
-            ps.setObject(4, ctsp.getSoLuongTon());
-            ps.setObject(5, ctsp.getIdKC());
-            ps.setObject(6, ctsp.getIdMS());
-            ps.setObject(7, ctsp.getIdTH());
-            ps.setObject(8, ctsp.getIdDong());
-            ps.setObject(9, ctsp.getIdKD());
-            ps.setObject(10, ctsp.getIdCL());
-            ps.setObject(11, ctsp.getGiaNhap());
-            ps.setObject(12, ctsp.getGiaBan());
-            ps.setObject(13, ctsp.getIdNSX());
-            ps.setObject(14, ctsp.getTrangThai());
-            check = ps.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
 
     private void cbbSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbSPMouseClicked
         cbbSP.removeAllItems();
@@ -1398,10 +1302,14 @@ public class SanPhamCT extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> cbbNSX;
     private javax.swing.JComboBox<String> cbbSP;
     private javax.swing.JComboBox<String> cbbTH;
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton10;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton13;
     private javax.swing.JButton jButton14;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;

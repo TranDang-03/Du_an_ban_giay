@@ -1,10 +1,13 @@
-
 package View;
 
 import Service.ThongTinHDService;
+import ViewModels.SPCTViewModel;
 import ViewModels.ThongTinHD;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -16,11 +19,12 @@ public class HoaDonView extends javax.swing.JFrame {
     private ThongTinHDService service = new ThongTinHDService();
     private DefaultTableModel model;
     private List<ThongTinHD> list = new LinkedList<>();
-    
+
     public HoaDonView() {
         initComponents();
         this.loadTable();
     }
+
     public void loadTable() {
         model = (DefaultTableModel) this.tblHoaDon.getModel();
         model.setRowCount(0);
@@ -33,11 +37,12 @@ public class HoaDonView extends javax.swing.JFrame {
                 hd.getTenKhachHang(),
                 hd.getThanhTien(),
                 hd.getKhuyenMai(),
-                hd.getTrangThai() == 0 ? "Hoạt động" : "Không hoạt động"
+                hd.getTrangThai() == 0 ? "Đã thanh toán" : (hd.getTrangThai() == 1) ? "Chưa thanh toán" : "Đã hủy"
             });
         }
+        this.initSearch();
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -48,11 +53,11 @@ public class HoaDonView extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoaDon = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
+        txt_search = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
+        rdCao = new javax.swing.JRadioButton();
+        rdThap = new javax.swing.JRadioButton();
+        rdAll = new javax.swing.JRadioButton();
         jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
@@ -77,14 +82,29 @@ public class HoaDonView extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel3.setText("Sắp xếp theo tổng tiền:");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Cao nhất");
+        buttonGroup1.add(rdCao);
+        rdCao.setText("Cao nhất");
+        rdCao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdCaoActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Thấp nhất");
+        buttonGroup1.add(rdThap);
+        rdThap.setText("Thấp nhất");
+        rdThap.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdThapActionPerformed(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton3);
-        jRadioButton3.setText("Tất cả");
+        buttonGroup1.add(rdAll);
+        rdAll.setText("Tất cả");
+        rdAll.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdAllActionPerformed(evt);
+            }
+        });
 
         jButton1.setText("Thoát");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -106,20 +126,20 @@ public class HoaDonView extends javax.swing.JFrame {
                         .addGap(45, 45, 45)
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(40, 40, 40)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 232, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel3)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(rdCao, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jRadioButton2)
+                                .addComponent(rdThap)
                                 .addGap(18, 18, 18)
-                                .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(rdAll, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 209, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
@@ -137,11 +157,11 @@ public class HoaDonView extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3))
+                    .addComponent(rdCao)
+                    .addComponent(rdThap)
+                    .addComponent(rdAll))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 307, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(28, 28, 28))
@@ -170,6 +190,87 @@ public class HoaDonView extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    public void initSearch() {
+        txt_search.getDocument().addDocumentListener(new DocumentListener() {
+            @Override
+            public void insertUpdate(DocumentEvent e) {
+                search();
+            }
+
+            @Override
+            public void removeUpdate(DocumentEvent e) {
+                search();
+            }
+
+            @Override
+            public void changedUpdate(DocumentEvent e) {
+                search();
+            }
+
+            public void search() {
+                DefaultTableModel model = (DefaultTableModel) tblHoaDon.getModel();
+                model.setRowCount(0);
+                String code = txt_search.getText();
+                List<ThongTinHD> tempList = new ArrayList<>();
+                for (ThongTinHD item : list) {
+                    if (item.getTenNV().contains(code)) {
+                        tempList.add(item);
+                    }
+                }
+                for (ThongTinHD hd : tempList) {
+                    model.addRow(new Object[]{
+                        hd.getMaHD(),
+                        hd.getTenNV(),
+                        hd.getNgayTao(),
+                        hd.getTenKhachHang(),
+                        hd.getThanhTien(),
+                        hd.getKhuyenMai(),
+                        hd.getTrangThai() == 0 ? "Đã thanh toán" : (hd.getTrangThai() == 1) ? "Chưa thanh toán" : "Đã hủy"});
+                }
+            }
+        });
+    }
+
+    private void rdCaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdCaoActionPerformed
+        model = (DefaultTableModel) this.tblHoaDon.getModel();
+        model.setRowCount(0);
+        list = this.service.getHDByTongTienCao();
+        for (ThongTinHD hd : list) {
+            model.addRow(new Object[]{
+                hd.getMaHD(),
+                hd.getTenNV(),
+                hd.getNgayTao(),
+                hd.getTenKhachHang(),
+                hd.getThanhTien(),
+                hd.getKhuyenMai(),
+                hd.getTrangThai() == 0 ? "Đã thanh toán" : (hd.getTrangThai() == 1) ? "Chưa thanh toán" : "Đã hủy"
+            });
+        }
+        this.initSearch();
+    }//GEN-LAST:event_rdCaoActionPerformed
+
+    private void rdThapActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdThapActionPerformed
+        model = (DefaultTableModel) this.tblHoaDon.getModel();
+        model.setRowCount(0);
+        list = this.service.getHDByTongTienThap();
+        for (ThongTinHD hd : list) {
+            model.addRow(new Object[]{
+                hd.getMaHD(),
+                hd.getTenNV(),
+                hd.getNgayTao(),
+                hd.getTenKhachHang(),
+                hd.getThanhTien(),
+                hd.getKhuyenMai(),
+                hd.getTrangThai() == 0 ? "Đã thanh toán" : (hd.getTrangThai() == 1) ? "Chưa thanh toán" : "Đã hủy"
+            });
+        }
+        this.initSearch();
+    }//GEN-LAST:event_rdThapActionPerformed
+
+    private void rdAllActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdAllActionPerformed
+        this.loadTable();
+    }//GEN-LAST:event_rdAllActionPerformed
 
     /**
      * @param args the command line arguments
@@ -213,11 +314,11 @@ public class HoaDonView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JRadioButton rdAll;
+    private javax.swing.JRadioButton rdCao;
+    private javax.swing.JRadioButton rdThap;
     private javax.swing.JTable tblHoaDon;
+    private javax.swing.JTextField txt_search;
     // End of variables declaration//GEN-END:variables
 }
