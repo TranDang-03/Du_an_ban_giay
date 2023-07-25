@@ -77,21 +77,21 @@ public class NhanVienRepository {
     public boolean update(NhanVien nv) {
         try {
             Connection conn = DBConnect.getConnection();
-            String sql = "UPDATE nhan_vien SET maNhanVien= ?, tenNhanVien= ?, gioiTinh= ?, ngaySinh= ?, diaChi= ?, sdt= ?, chucVu= ?,trangThai= ?,luong= ?,tenTaiKhoan= ?,matKhau = ? WHERE idNhanVien = ? ";
+            String sql = "UPDATE nhan_vien SET tenNhanVien= ?, gioiTinh= ?, ngaySinh= ?, diaChi= ?, sdt= ?, chucVu= ?,trangThai= ?,luong= ?,tenTaiKhoan= ?,matKhau = ? WHERE maNhanVien = ? ";
             PreparedStatement ps = conn.prepareStatement(sql);
-            ps.setString(1, nv.getMaNV());
-            ps.setString(2, nv.getTenNV());
-            ps.setBoolean(3, nv.isGioiTinh());
+            ps.setString(11, nv.getMaNV());
+            ps.setString(1, nv.getTenNV());
+            ps.setBoolean(2, nv.isGioiTinh());
             java.sql.Date ngaySinh = new java.sql.Date(nv.getNgSinh().getTime());
-            ps.setDate(4, ngaySinh);
-            ps.setString(5, nv.getDiaChi());
-            ps.setString(6, nv.getSdt());
-            ps.setInt(7, nv.getChucVu());
-            ps.setInt(8, nv.getTrangThai());
-            ps.setFloat(9, nv.getLuong());
-            ps.setString(10, nv.getTaiKhoan());
-            ps.setString(11, nv.getMatKhau());
-            ps.setInt(12, nv.getIdNV());
+            ps.setDate(3, ngaySinh);
+            ps.setString(4, nv.getDiaChi());
+            ps.setString(5, nv.getSdt());
+            ps.setInt(6, nv.getChucVu());
+            ps.setInt(7, nv.getTrangThai());
+            ps.setFloat(8, nv.getLuong());
+            ps.setString(9, nv.getTaiKhoan());
+            ps.setString(10, nv.getMatKhau());
+//            ps.setInt(12, nv.getIdNV());
             ps.execute();
 
             return true;
@@ -101,8 +101,6 @@ public class NhanVienRepository {
         }
     }
 
-    public boolean update(View.NhanVien nv) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
-    }
+    
 
 }
