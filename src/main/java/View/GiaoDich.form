@@ -464,16 +464,15 @@
                                                           <Component id="btnLayTTKH" min="-2" pref="44" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Group type="102" alignment="0" attributes="0">
-                                                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                                          <Component id="ccbKhuyenMai" min="-2" pref="157" max="-2" attributes="0"/>
-                                                      </Group>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                                      <Component id="ccbKhuyenMai" alignment="0" pref="157" max="32767" attributes="0"/>
+                                                      <Component id="txtTenNV" alignment="0" max="32767" attributes="0"/>
                                                       <Group type="102" alignment="1" attributes="0">
-                                                          <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                                                           <Component id="jLabel15" min="-2" max="-2" attributes="0"/>
-                                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                                          <EmptySpace max="32767" attributes="0"/>
                                                           <Component id="txtMaKH" min="-2" pref="57" max="-2" attributes="0"/>
+                                                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                                                       </Group>
                                                   </Group>
                                               </Group>
@@ -526,7 +525,8 @@
         <DimensionLayout dim="1">
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
+                  <Component id="txtTenNV" min="-2" max="-2" attributes="0"/>
+                  <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="txtMaHD" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -537,12 +537,19 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="txtMaKH" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="txtTenKH" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton1" alignment="3" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="btnLayTTKH" min="-2" max="-2" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txtMaKH" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel15" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="btnLayTTKH" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
@@ -569,7 +576,7 @@
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
                           <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace pref="76" max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="txtTienKM" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -579,7 +586,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="btnHuyDon" alignment="0" min="-2" pref="50" max="-2" attributes="0"/>
-                      <Component id="btnThanhToan" alignment="1" max="32767" attributes="0"/>
+                      <Component id="btnThanhToan" alignment="1" pref="54" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="btnTaoHD" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
                           <Component id="btnSuaHD" alignment="1" min="-2" pref="50" max="-2" attributes="0"/>
@@ -618,7 +625,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
-            <Property name="text" type="java.lang.String" value="T&#xea;n NV:"/>
+            <Property name="text" type="java.lang.String" value="M&#xe3; NV:"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel5">
@@ -779,6 +786,9 @@
             </Property>
             <Property name="text" type="java.lang.String" value="S&#x1eed;a &#x111;&#x1a1;n"/>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSuaHDMouseClicked"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
           <Properties>
@@ -889,6 +899,11 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtTienKM">
+        </Component>
+        <Component class="javax.swing.JLabel" name="txtTenNV">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="null"/>
+          </Properties>
         </Component>
       </SubComponents>
     </Container>

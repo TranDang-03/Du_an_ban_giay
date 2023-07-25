@@ -219,7 +219,7 @@ public class DangNhap extends javax.swing.JFrame {
         } else if (nv.getTrangThai() == 1) {
             JOptionPane.showMessageDialog(this, "Tài khoản đã bị dừng hoạt động!!!");
         } else {
-            UserInfor.user.put(nv.getIdNV(), nv.getTenNV());
+            UserInfor.user.put(nv.getMaNV(), nv.getTenNV());
             JOptionPane.showMessageDialog(this, "Đăng nhập thành công!!!");
             this.dispose();
             TrangChu dn = new TrangChu();

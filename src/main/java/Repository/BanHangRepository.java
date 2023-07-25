@@ -145,14 +145,15 @@ public class BanHangRepository {
     }
 
     public List<String> getAllMaNhanVien() {
-        String query = "SELECT [maNhanVien]\n"
-                + "  FROM [dbo].[nhan_vien]";
+        String query = "SELECT [maNhanVien] \n"
+                + "  FROM [dbo].[nhan_vien] WHERE trangThai = 0";
         List<String> list = new ArrayList<>();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("maNhanVien"));
             }
+            return list;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
@@ -696,15 +697,35 @@ public class BanHangRepository {
         return a;
     }
 
+    public boolean updateHoaDon(String maKH, String maNV, String maKM, String maHD) {
+        String query = "UPDATE [dbo].[hoa_don]\n"
+                + "   SET [idKhachHang] = 1\n"
+                + "      ,[idNhanVien] = 1\n"
+                + "      ,[thanhTien] = 0\n"
+                + "      ,[idKhuyenMai] = ?\n"
+                + "      ,[trangThai] = 1\n"
+                + " WHERE idHoaDon = ?";
+        int check = 0;
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, getIDKhachHang(maKH));
+            ps.setObject(2, getIDNhanVien(maNV));
+            ps.setObject(3, getIDKhuyenMai(maKM));
+            ps.setObject(4, getIDHD(maHD));           
+            check = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return check > 0;
+    }
+
     public static void main(String[] args) {
-        // List<String> list = new BanHangRepository().getAllMaHD();
-        // for (String string : list) {
-        // System.out.println(list);
-        // }
+//        List<String> list = new BanHangRepository().getAllMaNhanVien();
+//        for (String string : list) {
+//            System.out.println(list);
+//        }
         // int a = new BanHangRepository().getIDHD("HD01");
         // System.out.println(a);
-
-        float a = new BanHangRepository().tinhTongTienSanPhamTheoHoaDon("HD01");
-        System.out.println(a);
+//        float a = new BanHangRepository().tinhTongTienSanPhamTheoHoaDon("HD01");
+//        System.out.println(a);
     }
 }

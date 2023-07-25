@@ -162,4 +162,12 @@ public class BanHangService {
     public Integer layIdHDCTTheoIdHDVaIdCTSP(int idCTSP, String maHD){
         return this.banHang.layIdHDCTTheoIdHDVaIdCTSP(idCTSP, maHD);
     }
+    
+    public List<String> getAllMaNV(){
+        return this.banHang.getAllMaNhanVien();
+    }
+    
+    public boolean updateHD(String maKH, String maNV, String maKM, String maHD){
+        return this.banHang.updateHoaDon(maKH, maNV, maKM, maHD);
+    }
 }

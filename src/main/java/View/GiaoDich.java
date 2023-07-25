@@ -103,7 +103,7 @@ public class GiaoDich extends javax.swing.JFrame {
         String headerCTSP[] = {"Tên SP", "Loại", "Thương Hiệu", "Size", "Giá", "Số lượng tồn", "Màu Sắc"};
         dtmCTSP.setColumnIdentifiers(headerCTSP);
 
-        listNhanVien = banHangService.getAllTenNhanVien();
+        listNhanVien = banHangService.getAllMaNV();
         dcbmNhanVien.addAll(listNhanVien);
 
         listMauSac = banHangService.getAllTenMauSac();
@@ -164,9 +164,13 @@ public class GiaoDich extends javax.swing.JFrame {
         txtTenKH.setText("Khach Ban Le");
         txtMaKH.setText("KH00");
 
-        String employee = String.valueOf(UserInfor.user.values());
+        String employee = String.valueOf(UserInfor.user.keySet());
         String replaceAll = employee.replaceAll("[\\[\\]\\{\\}()]", "");
         ccbNhanVien.setSelectedItem(replaceAll);
+
+        String employeeName = String.valueOf(UserInfor.user.values());
+        String replaceAllName = employeeName.replaceAll("[\\[\\]\\{\\}()]", "");
+        txtTenNV.setText(replaceAllName);
 
     }
 
@@ -234,6 +238,7 @@ public class GiaoDich extends javax.swing.JFrame {
         btnLayTTKH = new javax.swing.JButton();
         jLabel16 = new javax.swing.JLabel();
         txtTienKM = new javax.swing.JTextField();
+        txtTenNV = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -391,7 +396,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         jLabel3.setText("Mã HÐ:");
 
-        jLabel4.setText("Tên NV:");
+        jLabel4.setText("Mã NV:");
 
         jLabel5.setText("Ngày tạo:");
 
@@ -459,6 +464,11 @@ public class GiaoDich extends javax.swing.JFrame {
         btnSuaHD.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnSuaHD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Edit.png"))); // NOI18N
         btnSuaHD.setText("Sửa đơn");
+        btnSuaHD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuaHDMouseClicked(evt);
+            }
+        });
 
         jLabel14.setText("Hóa Đơn:");
 
@@ -512,6 +522,8 @@ public class GiaoDich extends javax.swing.JFrame {
         });
 
         jLabel16.setText("Tiền khuyến mãi:");
+
+        txtTenNV.setText("null");
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -574,15 +586,15 @@ public class GiaoDich extends javax.swing.JFrame {
                                                         .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                         .addComponent(btnLayTTKH, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(jPanel3Layout.createSequentialGroup()
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                                        .addComponent(ccbKhuyenMai, javax.swing.GroupLayout.PREFERRED_SIZE, 157, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGap(18, 18, 18)
+                                                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(ccbKhuyenMai, 0, 157, Short.MAX_VALUE)
+                                                    .addComponent(txtTenNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                                                        .addGap(50, 50, 50)
                                                         .addComponent(jLabel15)
-                                                        .addGap(18, 18, 18)
-                                                        .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addGap(25, 25, 25))))
                                             .addGroup(jPanel3Layout.createSequentialGroup()
                                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -617,7 +629,8 @@ public class GiaoDich extends javax.swing.JFrame {
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
+                .addComponent(txtTenNV)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(txtMaHD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -627,11 +640,15 @@ public class GiaoDich extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel6)
-                        .addComponent(txtMaKH)
                         .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel15)
                         .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(btnLayTTKH))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtMaKH)
+                                .addComponent(jLabel15))
+                            .addComponent(btnLayTTKH))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
@@ -652,14 +669,14 @@ public class GiaoDich extends javax.swing.JFrame {
                             .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 76, Short.MAX_VALUE)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel16)
                             .addComponent(txtTienKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnHuyDon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnThanhToan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnThanhToan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnTaoHD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSuaHD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -724,6 +741,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblSanPhamCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamCTMouseClicked
@@ -853,9 +871,17 @@ public class GiaoDich extends javax.swing.JFrame {
                 resetTableHoaDon();
                 Float total = this.banHangService.getTongTienTheoMaHD(maHD);
                 txtThanhTien.setText(String.valueOf(total));
+                JOptionPane.showMessageDialog(this, "Chỉnh sửa số lượng thành công!!!");
             }
         }
     }//GEN-LAST:event_btnSuaSLMouseClicked
+
+    private void btnSuaHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaHDMouseClicked
+        // TODO add your handling code here:
+       String maNV = txtTenNV.getText();
+       String maKH = txtMaKH.getText();
+       
+    }//GEN-LAST:event_btnSuaHDMouseClicked
 
     private void btnTaoHDActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTaoHDActionPerformed
         // TODO add your handling code here:
@@ -1173,6 +1199,7 @@ public class GiaoDich extends javax.swing.JFrame {
     public javax.swing.JLabel txtMaKH;
     private com.toedter.calendar.JDateChooser txtNgayTao;
     public javax.swing.JTextField txtTenKH;
+    private javax.swing.JLabel txtTenNV;
     private javax.swing.JTextField txtThanhTien;
     private javax.swing.JTextField txtTienKM;
     private javax.swing.JTextField txtTienKhachTra;

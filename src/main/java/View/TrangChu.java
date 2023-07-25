@@ -1,6 +1,7 @@
 package View;
 
 import Constrant.UserInfor;
+import Utilties.BarChartExample;
 import java.awt.BorderLayout;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,10 +16,12 @@ import javax.swing.JOptionPane;
 public class TrangChu extends javax.swing.JFrame implements Runnable {
 
     GiaoDich gd = new GiaoDich();
-//    SanPhamCT sp = new SanPhamCT();
+    SanPhamCT sp = new SanPhamCT();
     NhanVien1 nv = new NhanVien1();
     ThongKe tk = new ThongKe();
     KhachHang1 kh = new KhachHang1();
+
+    BarChartExample bar = new BarChartExample();
 
     public TrangChu() {
         initComponents();
@@ -218,7 +221,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_jbgdMouseClicked
 
     private void jbspMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbspMouseClicked
-//        this.setFrame(sp.getRootPane());
+        this.setFrame(sp.getRootPane());
     }//GEN-LAST:event_jbspMouseClicked
 
     private void jbnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbnvMouseClicked

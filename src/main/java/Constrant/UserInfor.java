@@ -25,6 +25,6 @@ public class UserInfor {
         CUSTOMERCODE = code;
     }
 
-    public static Map<Integer, String> user = new HashMap<>();
+    public static Map<String, String> user = new HashMap<>();
 
 }
