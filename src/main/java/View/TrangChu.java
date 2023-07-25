@@ -34,7 +34,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         String replaceAll = employee.replaceAll("[\\[\\]\\{\\}()]", "");
         System.out.println(replaceAll);
 
-        txtWelcome.setText( replaceAll);
+        txtWelcome.setText(replaceAll);
     }
 
     private void setFrame(JComponent comp) {
@@ -208,18 +208,22 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
 
     private void jbgdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbgdMouseClicked
         this.setFrame(gd.getRootPane());
+        gd.timer.start();
     }//GEN-LAST:event_jbgdMouseClicked
 
     private void jbspMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbspMouseClicked
         this.setFrame(sp.getRootPane());
+        gd.timer.stop();
     }//GEN-LAST:event_jbspMouseClicked
 
     private void jbnvMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbnvMouseClicked
         this.setFrame(nv.getRootPane());
+        gd.timer.stop();
     }//GEN-LAST:event_jbnvMouseClicked
 
     private void jbtkMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbtkMouseClicked
         this.setFrame(tk.getRootPane());
+        gd.timer.stop();
     }//GEN-LAST:event_jbtkMouseClicked
 
     private void btnThoatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThoatMouseClicked
@@ -227,8 +231,10 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         if (cf == JOptionPane.YES_OPTION) {
             UserInfor.user.clear();
             System.out.println(UserInfor.user);
+            gd.timer.stop();
             dispose();
         } else {
+            gd.timer.stop();
             return;
         }
     }//GEN-LAST:event_btnThoatMouseClicked

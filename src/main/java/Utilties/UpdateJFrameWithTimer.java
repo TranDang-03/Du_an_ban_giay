@@ -14,39 +14,34 @@ public class UpdateJFrameWithTimer extends JFrame {
     private JLabel dataLabel;
     private int data;
 
+    private final int MIN_COUNT = 0; // Giá trị tối đa của đồng hồ đếm
+    private Timer timer;
+
     public UpdateJFrameWithTimer() {
-        data = 0;
+        data = 5;
 
         dataLabel = new JLabel("Data: " + data);
-        JButton updateButton = new JButton("Update Data");
-        updateButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // Tăng giá trị của biến data và cập nhật dữ liệu trên JLabel
-                data++;
-                dataLabel.setText("Data: " + data);
-            }
-        });
 
-        // Add components to the frame
+        // Add the JLabel to the frame
         setLayout(new FlowLayout());
         add(dataLabel);
-        add(updateButton);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
 
-        // Tạo đồng hồ đếm ngược cứ 5 giây
-        Timer timer = new Timer(5000, new ActionListener() {
+        // Tạo đồng hồ đếm ngược từ 0 đến MAX_COUNT, sau đó lặp lại
+        timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Thực hiện cập nhật dữ liệu và vẽ lại JFrame
-                data++;
                 dataLabel.setText("Data: " + data);
-                revalidate();
-                repaint();
+
+                if (data == MIN_COUNT) {
+                    data = 5; // Đặt lại giá trị về 0 khi đạt đến MAX_COUNT
+                } else {
+                    data--; // Tăng giá trị lên 1 nếu chưa đạt MAX_COUNT
+                }
             }
         });
         timer.start();

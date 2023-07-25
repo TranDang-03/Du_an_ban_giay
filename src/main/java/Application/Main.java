@@ -19,7 +19,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        /* #############################################################
+/* #############################################################
 # Nhân quả không nợ chúng ta thứ gì, cho nên xin đừng oán giận #
 #                            _                                 #
 #                         _ooOoo_                              #
@@ -63,6 +63,8 @@ public class Main {
 //        GiaoDich view = new GiaoDich();
 //        view.setVisible(true);
 //        view.setLocationRelativeTo(null);
+
+
         DangNhap view = new DangNhap();
         view.setVisible(true);
         view.setLocationRelativeTo(null);

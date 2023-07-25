@@ -31,7 +31,7 @@ public class BanHangRepository {
                 + "  FROM [dbo].[hoa_don]";
         List<String> list = new ArrayList();
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("maHoaDon"));
@@ -48,7 +48,7 @@ public class BanHangRepository {
                 + "  FROM [dbo].[hoa_don] WHERE maHoaDon = ?";
         int a;
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, maHD);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -83,7 +83,7 @@ public class BanHangRepository {
                 + "  FROM [dbo].[khuyen_mai] where trangThai = 0";
         List<String> list = new ArrayList<>();
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("tenKhuyenMai"));
@@ -99,7 +99,7 @@ public class BanHangRepository {
         String query = "SELECT [idKhuyenMai]\n"
                 + "  FROM [dbo].[khuyen_mai] WHERE tenKhuyenMai = ?";
         int a;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, maKM);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -115,7 +115,7 @@ public class BanHangRepository {
         String query = "SELECT [tenKhuyenMai]\n"
                 + "  FROM [dbo].[khuyen_mai]";
         List<String> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("tenKhuyenMai"));
@@ -132,7 +132,7 @@ public class BanHangRepository {
                 + "  FROM [dbo].[khach_hang] WHERE maKhachhang = ?";
         int a;
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, maKH);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -148,7 +148,7 @@ public class BanHangRepository {
         String query = "SELECT [maNhanVien] \n"
                 + "  FROM [dbo].[nhan_vien] WHERE trangThai = 0";
         List<String> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("maNhanVien"));
@@ -164,7 +164,7 @@ public class BanHangRepository {
         String query = "SELECT [idNhanVien]\n"
                 + "  FROM [dbo].[nhan_vien] WHERE maNhanVien = ?";
         int a;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, maNV);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -182,7 +182,7 @@ public class BanHangRepository {
                 + "  FROM [dbo].[mau_sac]";
         List<String> list = new ArrayList<>();
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("tenMauSac"));
@@ -198,7 +198,7 @@ public class BanHangRepository {
         String query = "SELECT [tenKichCo]\n"
                 + "  FROM [dbo].[kich_co] ORDER BY tenKichCo ASC";
         List<Integer> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getInt("tenKichCo"));
@@ -215,7 +215,7 @@ public class BanHangRepository {
                 + "  FROM [dbo].[thuong_hieu]";
         List<String> list = new ArrayList<>();
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("tenThuongHieu"));
@@ -239,7 +239,7 @@ public class BanHangRepository {
                 + "           (?,?,GETDATE(),0,1)";
         int check = 0;
         String maHD = maHD();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, getIDKhachHang(maKH));
             ps.setObject(2, maHD);
             check = ps.executeUpdate();
@@ -253,7 +253,7 @@ public class BanHangRepository {
         String query = "DELETE FROM [dbo].[hoa_don_chi_tiet]\n"
                 + "      WHERE idHoaDonChiTiet = ? AND idHoaDon = ?";
         int check = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, idHDCT);
             ps.setObject(2, getIDHD(maHD));
             check = ps.executeUpdate();
@@ -272,7 +272,7 @@ public class BanHangRepository {
                 + "join mau_sac on chi_tiet_san_pham.idMauSac = mau_sac.idMauSac";
 
         List<CTSPBanHang> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 CTSPBanHang ctsp = new CTSPBanHang(rs.getInt("idChiTietSP"),
@@ -296,7 +296,7 @@ public class BanHangRepository {
                 + "                left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai\n"
                 + "                where hoa_don.trangThai = 1 order by idHoaDon desc";
         List<HoaDonViewModel> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HoaDonViewModel hd = new HoaDonViewModel(rs.getString("maHoaDon"),
@@ -319,7 +319,7 @@ public class BanHangRepository {
                 + "                left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai\n"
                 + "                where hoa_don.trangThai = 0 order by idHoaDon desc";
         List<HoaDonViewModel> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HoaDonViewModel hd = new HoaDonViewModel(rs.getString("maHoaDon"),
@@ -341,7 +341,7 @@ public class BanHangRepository {
                 + "left join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
                 + "left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai order by idHoaDon desc";
         List<HoaDonViewModel> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 HoaDonViewModel hd = new HoaDonViewModel(rs.getString("maHoaDon"),
@@ -367,7 +367,7 @@ public class BanHangRepository {
                 + "where san_pham.tenSanPham like ? \n"
                 + "group by idChiTietSP,tenSanPham,tenDongSP,tenThuongHieu,tenKichCo,giaBan,soLuongTon,tenMauSac";
         List<CTSPBanHang> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             String ten = "%" + name + "%";
             ps.setObject(1, ten);
             ResultSet rs = ps.executeQuery();
@@ -389,7 +389,7 @@ public class BanHangRepository {
         String query = "select maKhachhang,tenKhachHang,gioiTinh,ngaySinh,sdt,diaChi,trangThai from khach_hang where trangThai = 0";
         List<KhachHang> list = new ArrayList<>();
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 KhachHang kh = new KhachHang(rs.getString("maKhachHang"), rs.getString("tenKhachHang"),
@@ -407,7 +407,7 @@ public class BanHangRepository {
     public List<String> getAllTenNhanVien() {
         String query = "select tenNhanVien from nhan_vien where trangThai = 0";
         List<String> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 list.add(rs.getString("tenNhanVien"));
@@ -429,7 +429,7 @@ public class BanHangRepository {
                 + "join hoa_don on hoa_don_chi_tiet.idHoaDon = hoa_don.idHoaDon\n"
                 + "where maHoaDon = ?";
         List<HDCTBanHang> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, maHD);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -451,7 +451,7 @@ public class BanHangRepository {
                 + "     WHERE idHoaDonChiTiet = ? and idHoaDon = ?";
         int check = 0;
 
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, idHDCT);
             ps.setObject(2, getIDHD(maHD));
             check = ps.executeUpdate();
@@ -470,7 +470,7 @@ public class BanHangRepository {
                 + "     VALUES\n"
                 + "           (?,?,?,?)";
         int check = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
 
             ps.setObject(1, soLuong);
             ps.setObject(2, donGia);
@@ -489,7 +489,7 @@ public class BanHangRepository {
                 + "   SET [soLuong] = ?\n"
                 + " WHERE idHoaDonChiTiet = ? and idHoaDon = ?";
         int check = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, soLuong);
             ps.setObject(2, idHDCT);
             ps.setObject(3, getIDHD(maHD));
@@ -504,7 +504,7 @@ public class BanHangRepository {
         String query = "select idChiTietSanPham from hoa_don_chi_tiet join hoa_don on hoa_don_chi_tiet.idHoaDon = hoa_don.idHoaDon\n"
                 + "where idChiTietSanPham = ? and hoa_don.idHoaDon = ?";
         List<HDCTBanHang> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, idCTSP);
             ps.setObject(2, getIDHD(maHD));
             ResultSet rs = ps.executeQuery();
@@ -536,7 +536,7 @@ public class BanHangRepository {
                 + ")\n"
                 + "ORDER BY hdct.idHoaDon";
         List<HDCTBanHang> list = new ArrayList<>();
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, getIDHD(maHD));
             ps.setObject(2, idCTSP);
             ResultSet rs = ps.executeQuery();
@@ -559,7 +559,7 @@ public class BanHangRepository {
                 + "   SET [soLuong] = ?  \n"
                 + " WHERE idChiTietSanPham = ? and idHoaDon = ?";
         int check = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
 
             ps.setObject(1, soLuong);
             ps.setObject(2, idCTSP);
@@ -578,7 +578,7 @@ public class BanHangRepository {
                 + "\n"
                 + " WHERE idChiTietSP = ?";
         int check = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, soLuong);
             ps.setObject(2, idCTSP);
             check = ps.executeUpdate();
@@ -601,7 +601,7 @@ public class BanHangRepository {
                 + "    hd.maHoaDon,\n"
                 + "    hd.ngayTao;";
         float a = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, getIDHD(maHD));
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -622,7 +622,7 @@ public class BanHangRepository {
                 + "    idHoaDon = ?\n"
                 + "    AND idChiTietSanPham = ?;";
         int a = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, getIDHD(maHD));
             ps.setObject(2, idCTSP);
             ResultSet rs = ps.executeQuery();
@@ -642,7 +642,7 @@ public class BanHangRepository {
                 + "WHERE\n"
                 + "    idHoaDonChiTiet = ? and idHoaDon = ?";
         int a = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, idHDCT);
             ps.setObject(2, getIDHD(maHD));
             ResultSet rs = ps.executeQuery();
@@ -663,7 +663,7 @@ public class BanHangRepository {
                 + "WHERE\n"
                 + "    idChiTietSP = ?";
         int a = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, idCTSP);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -684,7 +684,7 @@ public class BanHangRepository {
                 + "    idChiTietSanPham = ?\n"
                 + "    AND idHoaDon = ?";
         int a = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, idCTSP);
             ps.setObject(2, getIDHD(maHD));
             ResultSet rs = ps.executeQuery();
@@ -706,11 +706,11 @@ public class BanHangRepository {
                 + "      ,[trangThai] = 1\n"
                 + " WHERE idHoaDon = ?";
         int check = 0;
-        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+        try (Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, getIDKhachHang(maKH));
             ps.setObject(2, getIDNhanVien(maNV));
             ps.setObject(3, getIDKhuyenMai(maKM));
-            ps.setObject(4, getIDHD(maHD));           
+            ps.setObject(4, getIDHD(maHD));
             check = ps.executeUpdate();
         } catch (SQLException ex) {
             ex.printStackTrace();
@@ -719,13 +719,13 @@ public class BanHangRepository {
     }
 
     public static void main(String[] args) {
-//        List<String> list = new BanHangRepository().getAllMaNhanVien();
-//        for (String string : list) {
-//            System.out.println(list);
-//        }
+        // List<String> list = new BanHangRepository().getAllMaNhanVien();
+        // for (String string : list) {
+        // System.out.println(list);
+        // }
         // int a = new BanHangRepository().getIDHD("HD01");
         // System.out.println(a);
-//        float a = new BanHangRepository().tinhTongTienSanPhamTheoHoaDon("HD01");
-//        System.out.println(a);
+        // float a = new BanHangRepository().tinhTongTienSanPhamTheoHoaDon("HD01");
+        // System.out.println(a);
     }
 }
