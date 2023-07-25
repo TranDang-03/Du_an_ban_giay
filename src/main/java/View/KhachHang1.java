@@ -48,7 +48,7 @@ public class KhachHang1 extends javax.swing.JDialog {
                 kh.getIdKH(),
                 kh.getMaKH(),
                 kh.getTenKH(),
-                kh.isGioiTinh(),
+                kh.isGioiTinh() == true ? "Nam " : "Nữ",
                 kh.getNgSinh(),
                 kh.getSdt(),
                 kh.getDiaChi(),
@@ -115,6 +115,8 @@ public class KhachHang1 extends javax.swing.JDialog {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         txtTenKH = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnSua = new javax.swing.JButton();
@@ -173,8 +175,11 @@ public class KhachHang1 extends javax.swing.JDialog {
         });
         jScrollPane1.setViewportView(tblKH);
 
+        buttonGroup1.add(radioHoatDong);
+        radioHoatDong.setSelected(true);
         radioHoatDong.setText("Hoạt động");
 
+        buttonGroup1.add(radioKhongHoatDong);
         radioKhongHoatDong.setText("Không hoạt động");
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
@@ -203,6 +208,8 @@ public class KhachHang1 extends javax.swing.JDialog {
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Gioi Tinh");
 
+        buttonGroup2.add(radioNam);
+        radioNam.setSelected(true);
         radioNam.setText("Nam");
         radioNam.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -210,6 +217,7 @@ public class KhachHang1 extends javax.swing.JDialog {
             }
         });
 
+        buttonGroup2.add(radioNu);
         radioNu.setText("Nu");
 
         btnLM.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Refresh.png"))); // NOI18N
@@ -392,7 +400,7 @@ public class KhachHang1 extends javax.swing.JDialog {
 
                     boolean gioiTinh;
 
-                    if (radioNam.isSelected() == true) {
+                    if (radioNu.isSelected() == true) {
                         gioiTinh = true;
                     } else {
                         gioiTinh = false;
@@ -491,8 +499,8 @@ public class KhachHang1 extends javax.swing.JDialog {
             radioNam.setSelected(true);
             radioNu.setSelected(false);
         } else {
-            radioHoatDong.setSelected(false);
-            radioKhongHoatDong.setSelected(true);
+            radioNam.setSelected(false);
+            radioNu.setSelected(true);
         }
         if (trangThai == 0) {
             radioHoatDong.setSelected(true);
@@ -551,6 +559,8 @@ public class KhachHang1 extends javax.swing.JDialog {
     private javax.swing.JButton btnLM;
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnThem;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

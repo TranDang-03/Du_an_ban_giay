@@ -140,7 +140,6 @@ public class NhanVien1 extends javax.swing.JDialog {
         this.txtMK.setText("");
         this.txtDiaChi.setText("");
 
-        this.cbbnv.setSelectedItem(true);
     }
 
     public boolean checkData() {
@@ -196,6 +195,9 @@ public class NhanVien1 extends javax.swing.JDialog {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
+        buttonGroup4 = new javax.swing.ButtonGroup();
+        buttonGroup5 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtma = new javax.swing.JTextField();
@@ -218,13 +220,14 @@ public class NhanVien1 extends javax.swing.JDialog {
         jLabel10 = new javax.swing.JLabel();
         txt_Luong = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        cbbnv = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
         txtMK = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton11 = new javax.swing.JButton();
+        rd_hd = new javax.swing.JRadioButton();
+        rd_khd = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -259,7 +262,6 @@ public class NhanVien1 extends javax.swing.JDialog {
         jLabel6.setText("Giới tính:");
 
         buttonGroup1.add(rd_nam);
-        rd_nam.setSelected(true);
         rd_nam.setText("Nam");
         rd_nam.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -275,7 +277,6 @@ public class NhanVien1 extends javax.swing.JDialog {
         jLabel8.setText("Chức vụ:");
 
         buttonGroup2.add(rd_ql);
-        rd_ql.setSelected(true);
         rd_ql.setText("Trưởng phòng");
         rd_ql.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,8 +292,6 @@ public class NhanVien1 extends javax.swing.JDialog {
         jLabel10.setText("Lương:");
 
         jLabel11.setText("Trạng thái:");
-
-        cbbnv.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "0", "1" }));
 
         jLabel12.setText("Mật khẩu:");
 
@@ -330,6 +329,23 @@ public class NhanVien1 extends javax.swing.JDialog {
         jButton11.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton11ActionPerformed(evt);
+            }
+        });
+
+        buttonGroup5.add(rd_hd);
+        rd_hd.setSelected(true);
+        rd_hd.setText("Hoạt Động");
+        rd_hd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rd_hdActionPerformed(evt);
+            }
+        });
+
+        buttonGroup5.add(rd_khd);
+        rd_khd.setText("Không Hoạt Động");
+        rd_khd.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rd_khdActionPerformed(evt);
             }
         });
 
@@ -373,7 +389,9 @@ public class NhanVien1 extends javax.swing.JDialog {
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 69, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(cbbnv, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(rd_hd, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(rd_khd)))
                         .addGap(198, 198, 198)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,9 +457,10 @@ public class NhanVien1 extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
-                    .addComponent(cbbnv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtMK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                    .addComponent(jLabel12)
+                    .addComponent(rd_hd)
+                    .addComponent(rd_khd))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -531,7 +550,7 @@ public class NhanVien1 extends javax.swing.JDialog {
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 36, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0))
         );
@@ -555,7 +574,12 @@ public class NhanVien1 extends javax.swing.JDialog {
         } else {
             chucVu = 1;
         }
-        int trangThai = Integer.parseInt(cbbnv.getSelectedItem().toString());
+        int trangThai;
+        if (rd_hd.isSelected() == true) {
+            trangThai = 0;
+        } else {
+            trangThai = 1;
+        }
 //      
         String ngaySinh = txtNgaySinh.getText();
         Date dateNgaySinh;
@@ -650,7 +674,11 @@ public class NhanVien1 extends javax.swing.JDialog {
         this.txtMK.setText(matKhau);
         this.txtTK.setText(tenTaiKhoan);
         this.txtDiaChi.setText(diaChi);
-        this.cbbnv.setSelectedItem(trangThai);
+        if (trangThai.equals("Không hoạt động")) {
+            rd_khd.setSelected(true);
+        } else {
+            rd_hd.setSelected(true);
+        }
     }//GEN-LAST:event_tblnvMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -718,8 +746,13 @@ public class NhanVien1 extends javax.swing.JDialog {
                     } else {
                         chucVu = 0;
                     }
-                    int trangThai = Integer.parseInt(cbbnv.getSelectedItem().toString());
-//      
+
+                    int trangThai;
+                    if (rd_hd.isSelected() == true) {
+                        trangThai = 0;
+                    } else {
+                        trangThai = 1;
+                    }
                     String ngaySinh = txtNgaySinh.getText();
                     Date dateNgaySinh;
                     try {
@@ -762,25 +795,83 @@ public class NhanVien1 extends javax.swing.JDialog {
     }//GEN-LAST:event_txttenActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-        dtm = (DefaultTableModel) tblnv.getModel();
-        dtm.setRowCount(0);
+//        dtm = (DefaultTableModel) tblnv.getModel();
+//        dtm.setRowCount(0);
+//        FileInputStream excelFIS = null;
+//        BufferedInputStream excelBIS = null;
+//        XSSFWorkbook excelImportWorkBook = null;
+//        String currentDirectoryPath = "C:\\Users\\admin\\Documents";
+//        JFileChooser ejfc = new JFileChooser(currentDirectoryPath);
+//        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Excel file", "xls", "xlsx", "xslm");
+//        ejfc.setFileFilter(extensionFilter);
+//        int excelchooser = ejfc.showOpenDialog(null);
+//        if (excelchooser == JFileChooser.APPROVE_OPTION) {
+//            try {
+//                File excelFile = ejfc.getSelectedFile();
+//                excelFIS = new FileInputStream(excelFile);
+//                excelBIS = new BufferedInputStream(excelFIS);
+//                excelImportWorkBook = new XSSFWorkbook(excelBIS);
+//                XSSFSheet excelSheet = excelImportWorkBook.getSheetAt(0);
+//                for (int i = 1; i < excelSheet.getLastRowNum(); i++) {
+//                    XSSFRow excelRow = excelSheet.getRow(i);
+//                    XSSFCell maNV = excelRow.getCell(0);
+//                    XSSFCell ten = excelRow.getCell(1);
+//                    XSSFCell gioiTinh = excelRow.getCell(2);
+//                    String gioiTinhStr = String.valueOf(gioiTinh).equals("1") ? "Nam" : "Nữ";
+////                    System.out.println("Gioi tinh sau khi convert string : " + gioiTinhStr);
+//
+////                    String gioiTinhStr = gioiTinh.equals("1")?"Nam":"Nữ";
+//                    java.util.Date ngaySinh = excelRow.getCell(3).getDateCellValue();
+//                    DateFormat dateFormatNgaySinh = new SimpleDateFormat("yyyy-MM-dd");
+//                    String strNgaySinh = dateFormatNgaySinh.format(ngaySinh);
+////                  
+//                    XSSFCell SDT = excelRow.getCell(4);
+//                    XSSFCell diaChi = excelRow.getCell(5);
+//                    XSSFCell chucVu = excelRow.getCell(6);
+////                    String chucVuString = String.valueOf(chucVu);
+//////                    Integer chucVuInt = Integer.parseInt(chucVuString);
+////                    
+////                    System.out.println("Chuc vu excel: " + chucVu);
+//                    String chucVuStr = String.valueOf(chucVu).equals("1") ? "1" : "0";
+//                    XSSFCell Luong = excelRow.getCell(7);
+//                    String luongStr = String.valueOf(chucVu);
+//                    XSSFCell tenTK = excelRow.getCell(8);
+//                    XSSFCell mk = excelRow.getCell(9);
+//                    XSSFCell trangThai = excelRow.getCell(10);
+//                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "0" : "1";
+//
+//                    System.out.println();
+//                    dtm.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, diaChi, SDT, chucVuStr, Luong, tenTK, mk, trangThaiStr});
+//                }
+//                JOptionPane.showMessageDialog(rootPane, "Import Excel thanh cong");
+//            } catch (FileNotFoundException ex) {
+//                ex.printStackTrace();
+//            } catch (IOException ex) {
+//                Logger.getLogger(ImportExcelNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//
+//        }
+//
+        File excelFile;
         FileInputStream excelFIS = null;
         BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelImportWorkBook = null;
-        String currentDirectoryPath = "C:\\Users\\admin\\Documents";
-        JFileChooser ejfc = new JFileChooser(currentDirectoryPath);
-        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Excel file", "xls", "xlsx", "xslm");
-        ejfc.setFileFilter(extensionFilter);
-        int excelchooser = ejfc.showOpenDialog(null);
-        if (excelchooser == JFileChooser.APPROVE_OPTION) {
+        XSSFWorkbook excelImportToJTable = null;
+        String defaultCurrentDirectoryPath = "C:\\Users\\admin\\Documents";
+        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
+        excelFileChooser.setDialogTitle("Select Excel File");
+        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
+        excelFileChooser.setFileFilter(fnef);
+        int excelChooser = excelFileChooser.showOpenDialog(null);
+        if (excelChooser == JFileChooser.APPROVE_OPTION) {
             try {
-                File excelFile = ejfc.getSelectedFile();
+                excelFile = excelFileChooser.getSelectedFile();
                 excelFIS = new FileInputStream(excelFile);
                 excelBIS = new BufferedInputStream(excelFIS);
-                excelImportWorkBook = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelImportWorkBook.getSheetAt(0);
-                for (int i = 1; i < excelSheet.getLastRowNum(); i++) {
-                    XSSFRow excelRow = excelSheet.getRow(i);
+                excelImportToJTable = new XSSFWorkbook(excelBIS);
+                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
+
+                for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
+                    XSSFRow excelRow = excelSheet.getRow(row);
                     XSSFCell maNV = excelRow.getCell(0);
                     XSSFCell ten = excelRow.getCell(1);
                     XSSFCell gioiTinh = excelRow.getCell(2);
@@ -799,27 +890,44 @@ public class NhanVien1 extends javax.swing.JDialog {
 ////                    Integer chucVuInt = Integer.parseInt(chucVuString);
 //                    
 //                    System.out.println("Chuc vu excel: " + chucVu);
-                    String chucVuStr = String.valueOf(chucVu).equals("1") ? "1" : "0";
+                    String chucVuStr = String.valueOf(chucVu).equals("1") ? "Trưởng phòng" : "Nhân Viên";
                     XSSFCell Luong = excelRow.getCell(7);
-                    String luongStr = String.valueOf(chucVu);
+                    String luongStr = String.valueOf(Luong);
                     XSSFCell tenTK = excelRow.getCell(8);
                     XSSFCell mk = excelRow.getCell(9);
                     XSSFCell trangThai = excelRow.getCell(10);
-                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "0" : "1";
-
-                    System.out.println();
-                    dtm.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, diaChi, SDT, chucVuStr, Luong, tenTK, mk, trangThaiStr});
+                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "Không hoạt Động" : "Hoạt Động";
+                    model.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, SDT, diaChi, chucVuStr, luongStr, tenTK, mk, trangThaiStr});
                 }
-                JOptionPane.showMessageDialog(rootPane, "Import Excel thanh cong");
-            } catch (FileNotFoundException ex) {
-                ex.printStackTrace();
-            } catch (IOException ex) {
-                Logger.getLogger(ImportExcelNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(null, "Imported thành công !!!");
+            } catch (IOException iOException) {
+                JOptionPane.showMessageDialog(null, iOException.getMessage());
+            } finally {
+                try {
+                    if (excelFIS != null) {
+                        excelFIS.close();
+                    }
+                    if (excelBIS != null) {
+                        excelBIS.close();
+                    }
+                    if (excelImportToJTable != null) {
+                        excelImportToJTable.close();
+                    }
+                } catch (IOException iOException) {
+                    JOptionPane.showMessageDialog(null, iOException.getMessage());
+                }
             }
-
         }
 
     }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void rd_hdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rd_hdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rd_hdActionPerformed
+
+    private void rd_khdActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rd_khdActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rd_khdActionPerformed
 
     /**
      * @param args the command line arguments
@@ -859,7 +967,9 @@ public class NhanVien1 extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JComboBox<String> cbbnv;
+    private javax.swing.ButtonGroup buttonGroup3;
+    private javax.swing.ButtonGroup buttonGroup4;
+    private javax.swing.ButtonGroup buttonGroup5;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton11;
     private javax.swing.JButton jButton2;
@@ -880,6 +990,8 @@ public class NhanVien1 extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton rd_hd;
+    private javax.swing.JRadioButton rd_khd;
     private javax.swing.JRadioButton rd_nam;
     private javax.swing.JRadioButton rd_nu;
     private javax.swing.JRadioButton rd_nv;
