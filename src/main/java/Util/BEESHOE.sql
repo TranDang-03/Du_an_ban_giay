@@ -214,3 +214,6 @@ insert into hoa_don_chi_tiet(soLuong,donGia,idHoaDon,idChiTietSanPham) values
 
 alter table hoa_don_chi_tiet
 add trangThai int
+
+alter table khuyen_mai
+add giaApDung int
