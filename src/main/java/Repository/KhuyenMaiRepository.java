@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package Repository;
+
 import Model.KhuyenMai;
 import Util.DBConnect;
 import java.sql.Connection;
@@ -10,11 +11,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+
 /**
  *
  * @author admin
  */
 public class KhuyenMaiRepository {
+
     public ArrayList<KhuyenMai> all() {
         ArrayList<KhuyenMai> list = new ArrayList<>();
         try {
@@ -25,15 +28,15 @@ public class KhuyenMaiRepository {
             while (rs.next()) {
                 int idKhuyenMai = rs.getInt("idKhuyenMai");
                 String tenKhuyenMai = rs.getString("tenkhuyenMai");
-                int giaTriKM  = rs.getInt("giaTriKM");
+                int giaTriKM = rs.getInt("giaTriKM");
                 Date ngayBatDau = rs.getDate("ngayBatDau");
                 Date ngayKrtThuc = rs.getDate("ngayKetThuc");
-                
+
                 int trangThai = rs.getInt("trangThai");
                 int loaiKhuyenMai = rs.getInt("loaiKhuyenMai");
                 String moTa = rs.getString("moTa");
-
-                 KhuyenMai km = new KhuyenMai(idKhuyenMai, tenKhuyenMai, giaTriKM, ngayBatDau, ngayKrtThuc, trangThai, loaiKhuyenMai, moTa);
+                int giaApDung = rs.getInt("giaApDung");
+                KhuyenMai km = new KhuyenMai(idKhuyenMai, tenKhuyenMai, giaTriKM, ngayBatDau, ngayKrtThuc, trangThai, loaiKhuyenMai, moTa,giaApDung);
                 list.add(km);
             }
         } catch (Exception e) {
@@ -45,19 +48,19 @@ public class KhuyenMaiRepository {
     public boolean insert(KhuyenMai km) {
         try {
             Connection conn = DBConnect.getConnection();
-            String sql = " INSERT INTO khuyen_mai(tenKhuyenMai, giaTriKM, ngayBatDau, ngayKetThuc, trangThai, loaiKhuyenMai, moTa) VALUES (?,?,?,?,?,?,?)";
+            String sql = " INSERT INTO khuyen_mai(tenKhuyenMai, giaTriKM, ngayBatDau, ngayKetThuc, trangThai, loaiKhuyenMai, moTa,giaApDung) VALUES (?,?,?,?,?,?,?,?)";
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, km.getTenKM());
             ps.setInt(2, km.getGiaTri());
             java.sql.Date ngayBatDau = new java.sql.Date(km.getNgayBatDau().getTime());
             ps.setDate(3, ngayBatDau);
-            
-            
+
             java.sql.Date ngayKetThuc = new java.sql.Date(km.getNgayKetThuc().getTime());
             ps.setDate(4, ngayKetThuc);
             ps.setInt(5, km.getTrangThai());
             ps.setInt(6, km.getLoaiKM());
             ps.setString(7, km.getMoTa());
+            ps.setInt(8, km.getGiaApDung());
             ps.execute();
 
             return true;
@@ -70,20 +73,20 @@ public class KhuyenMaiRepository {
     public boolean update(KhuyenMai km) {
         try {
             Connection conn = DBConnect.getConnection();
-            String sql = "UPDATE khuyen_mai SET tenKhuyenMai = ?, giaTriKM = ?, ngayBatDau = ?, ngayKetThuc = ?, trangThai = ?, loaiKhuyenMai = ?, moTa = ? WHERE idKhuyenMai = ? ";
+            String sql = "UPDATE khuyen_mai SET tenKhuyenMai = ?, giaTriKM = ?, ngayBatDau = ?, ngayKetThuc = ?, trangThai = ?, loaiKhuyenMai = ?, moTa = ?, giaApDung = ? WHERE idKhuyenMai = ? ";
             PreparedStatement ps = conn.prepareStatement(sql);
-           ps.setString(1, km.getTenKM());
+            ps.setString(1, km.getTenKM());
             ps.setInt(2, km.getGiaTri());
             java.sql.Date ngayBatDau = new java.sql.Date(km.getNgayBatDau().getTime());
             ps.setDate(3, ngayBatDau);
-            
-            
+
             java.sql.Date ngayKetThuc = new java.sql.Date(km.getNgayKetThuc().getTime());
             ps.setDate(4, ngayKetThuc);
             ps.setInt(5, km.getTrangThai());
             ps.setInt(6, km.getLoaiKM());
             ps.setString(7, km.getMoTa());
-            ps.setInt(8, km.getIdKM());
+            ps.setInt(8, km.getGiaApDung());
+            ps.setInt(9, km.getIdKM());
             ps.execute();
 
             return true;
@@ -93,5 +96,4 @@ public class KhuyenMaiRepository {
         }
     }
 
-   
 }

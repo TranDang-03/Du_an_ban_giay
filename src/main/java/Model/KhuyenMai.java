@@ -19,11 +19,12 @@ public class KhuyenMai {
     private int trangThai;
     private int loaiKM;
     private String moTa;
+    private int giaApDung;
 
     public KhuyenMai() {
     }
 
-    public KhuyenMai(int idKM, String tenKM, int giaTri, Date ngayBatDau, Date ngayKetThuc, int trangThai, int loaiKM, String moTa) {
+    public KhuyenMai(int idKM, String tenKM, int giaTri, Date ngayBatDau, Date ngayKetThuc, int trangThai, int loaiKM, String moTa, int giaApDung) {
         this.idKM = idKM;
         this.tenKM = tenKM;
         this.giaTri = giaTri;
@@ -32,6 +33,7 @@ public class KhuyenMai {
         this.trangThai = trangThai;
         this.loaiKM = loaiKM;
         this.moTa = moTa;
+        this.giaApDung = giaApDung;
     }
 
     public int getIdKM() {
@@ -98,5 +100,14 @@ public class KhuyenMai {
         this.moTa = moTa;
     }
 
+    public int getGiaApDung() {
+        return giaApDung;
+    }
+
+    public void setGiaApDung(int giaApDung) {
+        this.giaApDung = giaApDung;
+    }
+
+   
    
 }
