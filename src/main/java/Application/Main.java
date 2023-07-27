@@ -9,6 +9,7 @@ import View.DangNhap;
 import View.GiaoDich;
 import View.KichCo;
 import View.NhanVien1;
+import View.ThemTaiKhoan;
 import View.TrangChu;
 
 /**
@@ -63,8 +64,6 @@ public class Main {
 //        GiaoDich view = new GiaoDich();
 //        view.setVisible(true);
 //        view.setLocationRelativeTo(null);
-
-
         DangNhap view = new DangNhap();
         view.setVisible(true);
         view.setLocationRelativeTo(null);

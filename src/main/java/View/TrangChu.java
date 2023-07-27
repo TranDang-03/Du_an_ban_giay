@@ -37,6 +37,8 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
         System.out.println(replaceAll);
 
         txtWelcome.setText(replaceAll);
+
+        gd.timer.stop();
     }
 
     private void setFrame(JComponent comp) {
@@ -271,6 +273,7 @@ public class TrangChu extends javax.swing.JFrame implements Runnable {
 
     private void jbMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbMouseClicked
         this.setFrame(kh.getRootPane());
+        gd.timer.stop();
     }//GEN-LAST:event_jbMouseClicked
 
     private void jbsp1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jbsp1MouseClicked

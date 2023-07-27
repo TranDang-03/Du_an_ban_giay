@@ -181,6 +181,8 @@ public class GiaoDich extends javax.swing.JFrame {
 
         ccbNhanVien.setEnabled(false);
 
+        txtNgayTao.setEnabled(false);
+
         data = 10;
 
         txtTimer.setText(data + " s");
@@ -699,14 +701,14 @@ public class GiaoDich extends javax.swing.JFrame {
                             .addComponent(txtTienKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16)))
                     .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnHuyDon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(btnTaoHD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnSuaHD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(btnThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 58, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel14)
@@ -726,6 +728,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         jLabel17.setText("Tự động làm mới sau: ");
 
+        txtTimer.setForeground(new java.awt.Color(255, 51, 51));
         txtTimer.setText("null");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -989,7 +992,6 @@ public class GiaoDich extends javax.swing.JFrame {
         txtTenKH.setText(listGetAllHD.get(row).getTenKH());
 
 //      ccbNhanVien.setSelectedItem(listGetAllHD.get(row).getTenNV());
-
 //      txtThanhTien.setText(String.valueOf(listGetAllHD.get(row).getThanhTien()));
         txtThanhTien.setText(String.valueOf(this.banHangService.getTongTienTheoMaHD(listGetAllHD.get(row).getMaHD())));
 
