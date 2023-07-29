@@ -183,7 +183,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         txtNgayTao.setEnabled(false);
 
-        data = 10;
+        data = 60;
 
         txtTimer.setText(data + " s");
 
@@ -192,8 +192,8 @@ public class GiaoDich extends javax.swing.JFrame {
             public void actionPerformed(ActionEvent e) {
                 txtTimer.setText(data + " s");
                 if (data == MIN_COUNT) {
-                    JOptionPane.showMessageDialog(rootPane, "Reset lai du lieu nha =D");
-                    data = 10;
+//                    JOptionPane.showMessageDialog(rootPane, "Reset lai du lieu nha =D");
+                    data = 60;
                 } else {
                     data--;
                 }
