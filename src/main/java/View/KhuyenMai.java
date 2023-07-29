@@ -39,7 +39,7 @@ public class KhuyenMai extends javax.swing.JDialog {
     public void loadTable() {
         ArrayList<Model.KhuyenMai> list = this.service.all();
         model.setRowCount(0);
-
+        listkm = this.service.all();
         for (Model.KhuyenMai km : list) {
             model.addRow(new Object[]{
                 km.getIdKM(),
@@ -96,9 +96,9 @@ public class KhuyenMai extends javax.swing.JDialog {
 //    
 //
     public boolean checkTenKMAdd() {
-        String ten = this.txtten.getText();
+        String tenKhuyenMai = this.txtten.getText();
         for (Model.KhuyenMai khuyenMai : listkm) {
-            if (khuyenMai.getTenKM().equalsIgnoreCase(ten)) {
+            if (khuyenMai.getTenKM().equalsIgnoreCase(tenKhuyenMai)) {
                 JOptionPane.showMessageDialog(this, "Tên khuyến mãi đã tồn tại");
                 return false;
             }
@@ -429,7 +429,6 @@ public class KhuyenMai extends javax.swing.JDialog {
                         loaiKhuyenMai = 1;
                     }
 
-                    
 //        String t = String.valueOf(loaiKhuyenMai);
                     String moTa = this.txtMoTa.getText();
 
@@ -455,8 +454,6 @@ public class KhuyenMai extends javax.swing.JDialog {
 
                     boolean a = this.service.insert(km);
 
-                   
-
                     if (a == true) {
                         JOptionPane.showMessageDialog(rootPane, "Thêm thành công");
                     } else {
@@ -471,6 +468,7 @@ public class KhuyenMai extends javax.swing.JDialog {
                 return;
             }
         }
+
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
