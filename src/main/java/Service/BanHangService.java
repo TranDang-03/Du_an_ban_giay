@@ -154,20 +154,33 @@ public class BanHangService {
     public Integer layIDCTSPTheoMAHDvIdCTHD(int idCTHD, String maHD) {
         return this.banHang.layIDCTSPTheoMAHD(idCTHD, maHD);
     }
-    
-    public Integer laySLTonTheoIdCTSP(int idCTSP){
+
+    public Integer laySLTonTheoIdCTSP(int idCTSP) {
         return this.banHang.laySLTonTheoidCTSP(idCTSP);
     }
-    
-    public Integer layIdHDCTTheoIdHDVaIdCTSP(int idCTSP, String maHD){
+
+    public Integer layIdHDCTTheoIdHDVaIdCTSP(int idCTSP, String maHD) {
         return this.banHang.layIdHDCTTheoIdHDVaIdCTSP(idCTSP, maHD);
     }
-    
-    public List<String> getAllMaNV(){
+
+    public List<String> getAllMaNV() {
         return this.banHang.getAllMaNhanVien();
     }
-    
-    public boolean updateHD(String maKH, String maNV, String maKM, String maHD){
+
+    public boolean updateHD(String maKH, String maNV, String maKM, String maHD) {
         return this.banHang.updateHoaDon(maKH, maNV, maKM, maHD);
     }
+
+    public List<HoaDonViewModel> listGetAllHDPage(int rowoffset) {
+        return this.banHang.getAllHDPage(rowoffset);
+    }
+
+//    public static void main(String[] args) {
+//        BanHangService bh = new BanHangService();
+//        List<HoaDonViewModel> list = bh.listGetAllHDPage(0);
+//        
+//        for (HoaDonViewModel x : list) {
+//            System.out.println(x.toString());
+//        }
+//    }
 }

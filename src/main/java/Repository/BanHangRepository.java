@@ -461,7 +461,7 @@ public class BanHangRepository {
         return check > 0;
     }
 
-    public boolean themSPVaoHDCT(int soLuong, float donGia, String maHD, int idHDCT) {
+    public boolean themSPVaoHDCT(int soLuong, float donGia, String maHD, int idCTSP) {
         String query = "INSERT INTO [dbo].[hoa_don_chi_tiet]\n"
                 + "           ([soLuong]\n"
                 + "           ,[donGia]\n"
@@ -475,7 +475,7 @@ public class BanHangRepository {
             ps.setObject(1, soLuong);
             ps.setObject(2, donGia);
             ps.setObject(3, getIDHD(maHD));
-            ps.setObject(4, idHDCT);
+            ps.setObject(4, idCTSP);
 
             check = ps.executeUpdate();
         } catch (SQLException ex) {
@@ -719,10 +719,11 @@ public class BanHangRepository {
     }
 
     public List<HoaDonViewModel> getAllHDPage(int rowoffset) {
-        String query = "select maHoaDon,tenNhanVien,tenKhachHang,tenKhuyenMai,thanhTien,ngayTao,hoa_don.trangThai  \n"
+        String query = "select maHoaDon,tenNhanVien,tenKhachHang,tenKhuyenMai,thanhTien,ngayTao,hoa_don.trangThai \n"
                 + "from hoa_don left join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien  \n"
                 + "left join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang  \n"
                 + "left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai \n"
+                + "where hoa_don.trangThai = 1\n"
                 + "order by idHoaDon desc\n"
                 + "offset ? rows\n"
                 + "fetch next 5 rows only";
@@ -730,7 +731,7 @@ public class BanHangRepository {
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, rowoffset);
             ResultSet rs = ps.executeQuery();
-            while(rs.next()){
+            while (rs.next()) {
                 HoaDonViewModel hd = new HoaDonViewModel(rs.getString("maHoaDon"),
                         rs.getString("tenKhachHang"), rs.getString("tenNhanVien"), rs.getString("tenKhuyenMai"),
                         rs.getFloat("thanhTien"), rs.getDate("ngayTao"), rs.getInt("trangThai"));

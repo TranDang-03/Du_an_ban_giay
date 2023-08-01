@@ -15,7 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import javax.swing.JFrame;
 
-public class BarChartExample extends JFrame{
+public class BarChartExample extends JFrame {
+
     public static void main(String[] args) {
         // Tạo bộ dữ liệu cho biểu đồ
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
