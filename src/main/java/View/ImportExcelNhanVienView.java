@@ -63,7 +63,7 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Mã Nhân Viên", "Tên Nhân Viên", "Giới tính", "Ngày sinh", "Địa chỉ", "Sđt", "Chức Vụ", "Lương", "Tên Tk", "Mật khẩu", "Trạng thái"
+                "Mã Nhân Viên", "Tên Nhân Viên", "Giới tính", "Ngày sinh", "Địa chỉ", "Sđt", "Chức Vụ", "Trạng thái", "Lương", "Tên TK", "Mật khẩu"
             }
         ));
         tblExcel.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -151,23 +151,23 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
                     DateFormat dateFormatNgaySinh = new SimpleDateFormat("yyyy-MM-dd");
                     String strNgaySinh = dateFormatNgaySinh.format(ngaySinh);
 //                  
-                    XSSFCell SDT = excelRow.getCell(4);
-                    XSSFCell diaChi = excelRow.getCell(5);
+                    XSSFCell SDT = excelRow.getCell(5);
+                    XSSFCell diaChi = excelRow.getCell(4);
                     XSSFCell chucVu = excelRow.getCell(6);
 //                    String chucVuString = String.valueOf(chucVu);
 ////                    Integer chucVuInt = Integer.parseInt(chucVuString);
 //                    
 //                    System.out.println("Chuc vu excel: " + chucVu);
                     String chucVuStr = String.valueOf(chucVu).equals("1") ? "1" : "0";
-                    XSSFCell Luong = excelRow.getCell(7);
+                    XSSFCell Luong = excelRow.getCell(8);
                     String luongStr = String.valueOf(chucVu);
-                    XSSFCell tenTK = excelRow.getCell(8);
-                    XSSFCell mk = excelRow.getCell(9);
-                    XSSFCell trangThai = excelRow.getCell(10);
-                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "0" : "1";
+                    XSSFCell tenTK = excelRow.getCell(9);
+                    XSSFCell mk = excelRow.getCell(10);
+                    XSSFCell trangThai = excelRow.getCell(7);
+                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "1" : "0";
 
                     System.out.println();
-                    dtm.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, diaChi, SDT, chucVuStr, Luong, tenTK, mk, trangThaiStr});
+                    dtm.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, diaChi, SDT, chucVuStr, trangThaiStr, Luong, tenTK, mk});
                 }
                 JOptionPane.showMessageDialog(rootPane, "Import Excel thanh cong");
             } catch (FileNotFoundException ex) {
@@ -184,12 +184,12 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
         //Đây là phần thêm từ excelf db
         int insertedRows = 0;
         int row = tblExcel.getRowCount();
-        String query = "INSERT INTO [dbo].[nhan_Vien]\n"
+        String query = "INSERT INTO [dbo].[nhan_vien]\n"
                 + "           ([maNhanVien]\n"
                 + "           ,[tenNhanVien]\n"
                 + "           ,[gioiTinh]\n"
-                + "           ,[diachi]\n"
                 + "           ,[ngaySinh]\n"
+                + "           ,[diachi]\n"
                 + "           ,[sdt]\n"
                 + "           ,[chucVu]\n"
                 + "           ,[trangThai]\n"
@@ -210,14 +210,16 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
             String ten = dtm.getValueAt(i, 1).toString();
             String gioiTinh = dtm.getValueAt(i, 2).toString();
             String ngaySinh = dtm.getValueAt(i, 3).toString();
+            String diachi = dtm.getValueAt(i, 4).toString();
             String SDT = dtm.getValueAt(i, 5).toString();
 
-            String diachi = dtm.getValueAt(i, 4).toString();
+            
             String chucVu = dtm.getValueAt(i, 6).toString();
-            String luong = dtm.getValueAt(i, 7).toString();
-            String tenTK = dtm.getValueAt(i, 8).toString();
-            String mk = dtm.getValueAt(i, 9).toString();
-            String trangThai = dtm.getValueAt(i, 10).toString();
+             String trangThai = dtm.getValueAt(i, 7).toString();
+            String luong = dtm.getValueAt(i, 8).toString();
+            String tenTK = dtm.getValueAt(i, 9).toString();
+            String mk = dtm.getValueAt(i, 10).toString();
+           
 
             try {
                 ps = con.prepareStatement(query);
@@ -227,15 +229,17 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
                 // ngaySinh - date 
                 Boolean gioiTinhBoolean = gioiTinh.equals("Nam") ? true : false;
                 ps.setBoolean(3, gioiTinhBoolean);
-                ps.setString(4, ngaySinh);
-               
-                try {
-                    java.util.Date dateNgaySinhUtil = (Date) new SimpleDateFormat("yyyy/MM/dd").parse(ngaySinh);
-                    java.sql.Date sqlDateNgaySinh = new java.sql.Date(dateNgaySinhUtil.getTime());
-                     ps.setDate(4, sqlDateNgaySinh);
-                } catch (Exception e) {
-                    System.out.println("Errror convert date to date.sql " + e.getMessage());
-                }
+
+//                    
+//                    java.util.Date dateNgaySinhUtil = (Date) new SimpleDateFormat("yyyy-MM-dd").parse(ngaySinh);
+//                    java.sql.Date sqlDateNgaySinh = new java.sql.Date(dateNgaySinhUtil.getTime());
+//                    ps.setDate(4, sqlDateNgaySinh);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                java.util.Date parse = dateFormat.parse(ngaySinh);
+                java.sql.Date sqlDate = new java.sql.Date(parse.getTime());
+
+                ps.setDate(4, sqlDate);
+
 //                String ngaySinh = txtNgaySinh.getText();
 //                Date dateNgaySinh;
 //                try {
@@ -244,15 +248,14 @@ public class ImportExcelNhanVienView extends javax.swing.JDialog {
 //                    JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
 //                    return;
 //                }
-
                 ps.setString(5, diachi);
                 ps.setString(6, SDT);
 //                ps.setInt(6, Integer.valueOf(SDT));
                 ps.setInt(7, Integer.parseInt(chucVu));   // kiểu int 
-                ps.setFloat(8, Float.valueOf(luong));
-                ps.setString(9, tenTK);
-                ps.setString(10, mk);
-                ps.setInt(11, Integer.parseInt(trangThai));
+                ps.setFloat(9, Float.valueOf(luong));
+                ps.setString(10, tenTK);
+                ps.setString(11, mk);
+                ps.setInt(8, Integer.parseInt(trangThai));
 
                 int result = ps.executeUpdate();
                 if (result > 0) {

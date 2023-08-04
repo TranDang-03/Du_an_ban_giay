@@ -67,10 +67,10 @@
                 <Column editable="true" title="&#x110;&#x1ecb;a ch&#x1ec9;" type="java.lang.Object"/>
                 <Column editable="true" title="S&#x111;t" type="java.lang.Object"/>
                 <Column editable="true" title="Ch&#x1ee9;c V&#x1ee5;" type="java.lang.Object"/>
-                <Column editable="true" title="L&#x1b0;&#x1a1;ng" type="java.lang.Object"/>
-                <Column editable="true" title="T&#xea;n Tk" type="java.lang.Object"/>
-                <Column editable="true" title="M&#x1ead;t kh&#x1ea9;u" type="java.lang.Object"/>
                 <Column editable="true" title="Tr&#x1ea1;ng th&#xe1;i" type="java.lang.Object"/>
+                <Column editable="true" title="L&#x1b0;&#x1a1;ng" type="java.lang.Object"/>
+                <Column editable="true" title="T&#xea;n TK" type="java.lang.Object"/>
+                <Column editable="true" title="M&#x1ead;t kh&#x1ea9;u" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
