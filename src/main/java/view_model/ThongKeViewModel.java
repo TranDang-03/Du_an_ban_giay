@@ -10,6 +10,36 @@ package view_model;
  */
 public class ThongKeViewModel {
 
-    String tenSP;
+    int month;
     float tongDoanhThu;
+
+    public ThongKeViewModel() {
+    }
+
+    public ThongKeViewModel(int month, float tongDoanhThu) {
+        this.month = month;
+        this.tongDoanhThu = tongDoanhThu;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public void setMonth(int month) {
+        this.month = month;
+    }
+
+    public float getTongDoanhThu() {
+        return tongDoanhThu;
+    }
+
+    public void setTongDoanhThu(float tongDoanhThu) {
+        this.tongDoanhThu = tongDoanhThu;
+    }
+
+    @Override
+    public String toString() {
+        return "ThongKeViewModel{" + "month=" + month + ", tongDoanhThu=" + tongDoanhThu + '}';
+    }
+
 }

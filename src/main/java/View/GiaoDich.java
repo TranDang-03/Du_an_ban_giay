@@ -871,6 +871,7 @@ public class GiaoDich extends javax.swing.JFrame {
                     if (tienThua >= 0) {
                         JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
                         banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
+                        resetTableHoaDon();
                         System.out.println(tienThua);
                     } else {
                         JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");
@@ -884,7 +885,8 @@ public class GiaoDich extends javax.swing.JFrame {
                     float tienThua = tienKhachTra - thanhTien;
                     if (tienThua >= 0) {
                         JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
-                         banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
+                        banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
+                        resetTableHoaDon();
                         System.out.println(tienThua);
                     } else {
                         JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");

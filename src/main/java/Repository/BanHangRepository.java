@@ -812,7 +812,7 @@ public class BanHangRepository {
                 + "      ,[ngayThanhToan] = GETDATE()\n"
                 + "      ,[thanhTien] = ?\n"
                 + "      ,[idKhuyenMai] = ? \n"
-                + "      ,[trangThai] = 1\n"
+                + "      ,[trangThai] = 0\n"
                 + " WHERE idHoaDon = ?";
         int check = 0;
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
