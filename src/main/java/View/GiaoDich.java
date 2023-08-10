@@ -10,6 +10,8 @@ import Repository.BanHangRepository;
 import Service.BanHangService;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -77,7 +79,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private List<HDCTBanHang> listHDCT = new ArrayList<>();
 
-    private BanHangService banHangService = new BanHangService();
+    public BanHangService banHangService = new BanHangService();
 
     private int data;
 
@@ -131,10 +133,6 @@ public class GiaoDich extends javax.swing.JFrame {
         listKichCo.add(0);
         dcbmKichCo.addAll(listKichCo);
 
-        listKhuyenMai = banHangService.getALLMaKhuyenMai();
-        listKhuyenMai.add("Không");
-        dcbmKhuyenMai.addAll(listKhuyenMai);
-
         listGetAllHD = banHangService.getAllHDChuaThanhToan();
 
         ccbNhanVien.setSelectedIndex(0);
@@ -164,7 +162,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         txtNgayTao.setDate(new java.util.Date());
 
-        btnSuaHD.setEnabled(false);
+        jButton2.setEnabled(false);
 
         btnThanhToan.setEnabled(false);
 
@@ -191,6 +189,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         txtNgayTao.setEnabled(false);
 
+//------------------------------------------------------------------------------
         data = 60;
 
         txtTimer.setText(data + " s");
@@ -205,11 +204,34 @@ public class GiaoDich extends javax.swing.JFrame {
                 } else {
                     data--;
                 }
-//            revalidate();
-//            repaint();
             }
         });
         timer.start();
+//------------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+        ccbKhuyenMai.addItemListener(new ItemListener() {
+            @Override
+            public void itemStateChanged(ItemEvent e) {
+                if (e.getStateChange() == ItemEvent.SELECTED) {
+                    String maKM = (String) ccbKhuyenMai.getSelectedItem();
+                    float tienKM = 0;
+                    float tongTien = Float.valueOf(txtThanhTien.getText());
+
+                    int loaiKM = banHangService.loaiKM(maKM);
+                    if (loaiKM == 0) {
+                        int giaTriKM = banHangService.giaTriKM(maKM);
+                        tienKM = tongTien - giaTriKM;
+                        txtTienKM.setText(String.valueOf(tienKM));
+                    } else {
+                        int giaTriKM = banHangService.giaTriKM(maKM);
+                        tienKM = tongTien - (tongTien * (giaTriKM / 100.0f));
+                        txtTienKM.setText(String.valueOf(tienKM));
+                    }
+                }
+            }
+        });
+//------------------------------------------------------------------------------
     }
 
     /**
@@ -250,7 +272,7 @@ public class GiaoDich extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtTienKhachTra = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        txtTienThua = new javax.swing.JTextField();
         btnHuyDon = new javax.swing.JButton();
         btnThanhToan = new javax.swing.JButton();
         btnTaoHD = new javax.swing.JButton();
@@ -260,7 +282,6 @@ public class GiaoDich extends javax.swing.JFrame {
         ccbKhuyenMai = new javax.swing.JComboBox<>();
         txtNgayTao = new com.toedter.calendar.JDateChooser();
         ccbNhanVien = new javax.swing.JComboBox<>();
-        btnSuaHD = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         txtHoaDonChon = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
@@ -278,6 +299,7 @@ public class GiaoDich extends javax.swing.JFrame {
         txtTienKM = new javax.swing.JTextField();
         txtTenNV = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         txtTimer = new javax.swing.JLabel();
 
@@ -443,19 +465,27 @@ public class GiaoDich extends javax.swing.JFrame {
 
         jLabel6.setText("Tên KH:");
 
-        jLabel7.setText("Thành tiền:");
+        jLabel7.setText("Tổng Tiền:");
 
         txtThanhTien.setEditable(false);
         txtThanhTien.setForeground(new java.awt.Color(255, 0, 0));
         txtThanhTien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtThanhTien.addKeyListener(new java.awt.event.KeyAdapter() {
+        });
 
         jLabel8.setText("Tiền khách trả:");
 
+        txtTienKhachTra.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTienKhachTraKeyReleased(evt);
+            }
+        });
+
         jLabel9.setText("Tiền thừa: ");
 
-        jTextField8.setEditable(false);
-        jTextField8.setForeground(new java.awt.Color(255, 0, 0));
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        txtTienThua.setEditable(false);
+        txtTienThua.setForeground(new java.awt.Color(255, 0, 0));
+        txtTienThua.setHorizontalAlignment(javax.swing.JTextField.CENTER);
 
         btnHuyDon.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         btnHuyDon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Delete.png"))); // NOI18N
@@ -502,15 +532,6 @@ public class GiaoDich extends javax.swing.JFrame {
 
         ccbNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        btnSuaHD.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        btnSuaHD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Edit.png"))); // NOI18N
-        btnSuaHD.setText("Sửa đơn");
-        btnSuaHD.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSuaHDMouseClicked(evt);
-            }
-        });
-
         jLabel14.setText("Hóa Đơn:");
 
         txtHoaDonChon.setText("null");
@@ -541,6 +562,11 @@ public class GiaoDich extends javax.swing.JFrame {
         txtMaKH.setText("Null");
 
         btnLast.setText(">|");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
 
         btnNext.setText(">>");
         btnNext.addActionListener(new java.awt.event.ActionListener() {
@@ -557,6 +583,11 @@ public class GiaoDich extends javax.swing.JFrame {
         });
 
         btnHead.setText("|<");
+        btnHead.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHeadActionPerformed(evt);
+            }
+        });
 
         jLabel15.setText("Mã KH:");
 
@@ -567,11 +598,20 @@ public class GiaoDich extends javax.swing.JFrame {
             }
         });
 
-        jLabel16.setText("Tiền khuyến mãi:");
+        jLabel16.setText("Thành Tiền:");
 
         txtTenNV.setText("null");
 
         jLabel18.setText("Tên NV: ");
+
+        jButton2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/icon/Edit.png"))); // NOI18N
+        jButton2.setText("Sửa Đơn");
+        jButton2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -619,7 +659,7 @@ public class GiaoDich extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -660,8 +700,8 @@ public class GiaoDich extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(btnTaoHD)
                 .addGap(18, 18, 18)
-                .addComponent(btnSuaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnThanhToan)
                 .addGap(18, 18, 18)
                 .addComponent(btnHuyDon)
@@ -709,17 +749,17 @@ public class GiaoDich extends javax.swing.JFrame {
                         .addGap(23, 23, 23)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtTienThua, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(txtTienKM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16)))
                     .addComponent(jLabel5))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnTaoHD, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSuaHD, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnHuyDon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 24, Short.MAX_VALUE)
+                    .addComponent(btnHuyDon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 50, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -801,9 +841,7 @@ public class GiaoDich extends javax.swing.JFrame {
         if (DateTimNgay.getDate() == null) {
             rowoffset -= 5;
             if (rowoffset < 0) {
-                int a = this.banHangService.getAllHD().size() % fetch;
-                System.out.println(a);
-                rowoffset = this.banHangService.getAllHD().size() - a;
+                rowoffset = this.banHangService.getAllHD().size() - fetch;
             }
             pageHoaDon = this.banHangService.listGetAllHDPage(rowoffset);
             showDataHD(pageHoaDon);
@@ -812,12 +850,58 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
         // TODO add your handling code here:
+        int row = tblHoaDon.getSelectedRow();
+        String maKM = (String) ccbKhuyenMai.getSelectedItem();
+        String makm = "";
+        float tongTien = Float.valueOf(txtThanhTien.getText());
+        float tienKM = 0;
 
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn cần thanh toán!!!");
+        } else {
+            if (maKM.isEmpty() || !maKM.isEmpty()) {
+                makm = pageHoaDon.get(row).getMaKM();
+                if (banHangService.getTrangThaiKM(makm) == 0) {
+                    int giaTriKM = banHangService.giaTriKM(maKM);
+                    tienKM = tongTien - giaTriKM;
+                    txtTienKM.setText(String.valueOf(tienKM));
+                    float thanhTien = Float.valueOf(txtTienKM.getText());
+                    float tienKhachTra = Float.valueOf(txtTienKhachTra.getText());
+                    float tienThua = tienKhachTra - thanhTien;
+                    if (tienThua >= 0) {
+                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
+                        banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
+                        System.out.println(tienThua);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");
+                    }
+                } else if (makm.isEmpty()) {
+                    int giaTriKM = banHangService.giaTriKM("KM0");
+                    tienKM = tongTien - giaTriKM;
+                    txtTienKM.setText(String.valueOf(tienKM));
+                    float thanhTien = Float.valueOf(txtTienKM.getText());
+                    float tienKhachTra = Float.valueOf(txtTienKhachTra.getText());
+                    float tienThua = tienKhachTra - thanhTien;
+                    if (tienThua >= 0) {
+                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
+                         banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
+                        System.out.println(tienThua);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(this, "Khuyến mãi không còn hiệu lực!!!!");
+                }
+
+            }
+        }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblSanPhamCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamCTMouseClicked
         // TODO add your handling code here:
         int number;
+
+        String maKM = "";
 
         if (txtHoaDonChon.getText().equalsIgnoreCase("null")) {
 
@@ -854,6 +938,42 @@ public class GiaoDich extends javax.swing.JFrame {
                             resetTableHoaDon();
                             Float total = this.banHangService.getTongTienTheoMaHD(maHD);
                             txtThanhTien.setText(String.valueOf(total));
+
+//------------------------------------------------------------------------------
+                            float tongTien = Float.valueOf(txtThanhTien.getText());
+                            float tienKM = 0;
+                            if (ccbKhuyenMai.getSelectedItem() == null) {
+                                int giaTriKM = banHangService.giaTriKM("KM0");
+                                tienKM = tongTien - giaTriKM;
+                                txtTienKM.setText(String.valueOf(tienKM));
+                            } else {
+                                maKM = (String) ccbKhuyenMai.getSelectedItem();
+                                int loaiKM = banHangService.loaiKM(maKM);
+                                if (loaiKM == 0) {
+                                    int giaTriKM = banHangService.giaTriKM(maKM);
+                                    tienKM = tongTien - giaTriKM;
+                                    txtTienKM.setText(String.valueOf(tienKM));
+                                } else {
+                                    int giaTriKM = banHangService.giaTriKM(maKM);
+                                    tienKM = tongTien - (tongTien * (giaTriKM / 100.0f));
+                                    txtTienKM.setText(String.valueOf(tienKM));
+                                }
+                            }
+
+                            if (!txtThanhTien.getText().isEmpty()) {
+                                float totalPrice = Float.valueOf(txtThanhTien.getText());
+                                if (totalPrice > 0) {
+                                    listKhuyenMai.removeAll(listKhuyenMai);
+                                    ccbKhuyenMai.removeAllItems();
+                                    listKhuyenMai = banHangService.getAllMaKMTheoGiaApDung(totalPrice);
+                                    dcbmKhuyenMai.addAll(listKhuyenMai);
+                                } else {
+                                    listKhuyenMai.removeAll(listKhuyenMai);
+                                    ccbKhuyenMai.removeAllItems();
+                                    dcbmKhuyenMai.addAll(listKhuyenMai);
+                                }
+                            }
+//------------------------------------------------------------------------------
                         } else {
 
                             JOptionPane.showMessageDialog(this, "Thêm sản phẩm thất bại!!!");
@@ -866,9 +986,6 @@ public class GiaoDich extends javax.swing.JFrame {
                             JOptionPane.showMessageDialog(this, "Cập nhật số lượng thành công!!!");
                             System.out.println(quantity);
                             int soLuongTonKho = soLuongTon + quantity;
-                            System.out.println(soLuongTon);
-                            System.out.println(soLuongTonKho);
-                            System.out.println(number);
                             this.banHangService.suaSoLuongCTSP(soLuongTonKho, idCTSP);
                             soLuongTon = soLuongTonKho - number;
                             this.banHangService.suaSoLuongCTSP(soLuongTon, idCTSP);
@@ -877,6 +994,42 @@ public class GiaoDich extends javax.swing.JFrame {
                             resetTableHoaDon();
                             Float total = this.banHangService.getTongTienTheoMaHD(maHD);
                             txtThanhTien.setText(String.valueOf(total));
+
+//------------------------------------------------------------------------------
+                            float tongTien = Float.valueOf(txtThanhTien.getText());
+                            float tienKM = 0;
+                            if (ccbKhuyenMai.getSelectedItem() == null) {
+                                int giaTriKM = banHangService.giaTriKM("KM0");
+                                tienKM = tongTien - giaTriKM;
+                                txtTienKM.setText(String.valueOf(tienKM));
+                            } else {
+                                maKM = (String) ccbKhuyenMai.getSelectedItem();
+                                int loaiKM = banHangService.loaiKM(maKM);
+                                if (loaiKM == 0) {
+                                    int giaTriKM = banHangService.giaTriKM(maKM);
+                                    tienKM = tongTien - giaTriKM;
+                                    txtTienKM.setText(String.valueOf(tienKM));
+                                } else {
+                                    int giaTriKM = banHangService.giaTriKM(maKM);
+                                    tienKM = tongTien - (tongTien * (giaTriKM / 100.0f));
+                                    txtTienKM.setText(String.valueOf(tienKM));
+                                }
+                            }
+
+                            if (!txtThanhTien.getText().isEmpty()) {
+                                float totalPrice = Float.valueOf(txtThanhTien.getText());
+                                if (totalPrice > 0) {
+                                    listKhuyenMai.removeAll(listKhuyenMai);
+                                    ccbKhuyenMai.removeAllItems();
+                                    listKhuyenMai = banHangService.getAllMaKMTheoGiaApDung(totalPrice);
+                                    dcbmKhuyenMai.addAll(listKhuyenMai);
+                                } else {
+                                    listKhuyenMai.removeAll(listKhuyenMai);
+                                    ccbKhuyenMai.removeAllItems();
+                                    dcbmKhuyenMai.addAll(listKhuyenMai);
+                                }
+                            }
+//------------------------------------------------------------------------------
                         } else {
                             JOptionPane.showMessageDialog(this, "Cập nhật số lượng thất bại!!!!");
                         }
@@ -888,26 +1041,67 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnXoaSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaSPMouseClicked
         // TODO add your handling code here:
+        String maKM = "";
+
         int row = tblHDCT.getSelectedRow();
         String maHD = txtHoaDonChon.getText();
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Hãy chọn sản phẩm muốn xóa!!!");
         } else {
-            int idCTSP = listHDCT.get(row).getId();
-            int soLuongMua = listHDCT.get(row).getSoLuong();
-//      int idCTSP = this.banHangService.layIDCTSPTheoMAHDvIdCTHD(idHDCT, maHD);
-            int soLuongTon = this.banHangService.laySLTonTheoIdCTSP(idCTSP);
-            int idHDCT = this.banHangService.layIdHDCTTheoIdHDVaIdCTSP(idCTSP, maHD);
+            int chooser = JOptionPane.showConfirmDialog(this, "Bạn muốn xóa sản phẩm này chứ?", "", 1);
+            if (chooser == 0) {
+                int idCTSP = listHDCT.get(row).getId();
+                int soLuongMua = listHDCT.get(row).getSoLuong();
+                int soLuongTon = this.banHangService.laySLTonTheoIdCTSP(idCTSP);
+                int idHDCT = this.banHangService.layIdHDCTTheoIdHDVaIdCTSP(idCTSP, maHD);
+                if (this.banHangService.xoaSPHDCT(idHDCT, maHD)) {
+                    int quantity = soLuongMua + soLuongTon;
+                    this.banHangService.suaSoLuongCTSP(quantity, idCTSP);
+                    JOptionPane.showMessageDialog(this, "Xóa thành công!!!!");
+                    resetTableCTSP();
+                    resetTableHDCT();
+                    resetTableHoaDon();
+                    Float total = this.banHangService.getTongTienTheoMaHD(maHD);
+                    txtThanhTien.setText(String.valueOf(total));
 
-            if (this.banHangService.xoaSPHDCT(idHDCT, maHD)) {
-                int quantity = soLuongMua + soLuongTon;
-                this.banHangService.suaSoLuongCTSP(quantity, idCTSP);
-                JOptionPane.showMessageDialog(this, "Xóa thành công!!!!");
-                resetTableCTSP();
-                resetTableHDCT();
-                resetTableHoaDon();
-                Float total = this.banHangService.getTongTienTheoMaHD(maHD);
-                txtThanhTien.setText(String.valueOf(total));
+//------------------------------------------------------------------------------
+                    float tongTien = Float.valueOf(txtThanhTien.getText());
+                    float tienKM = 0;
+                    if (ccbKhuyenMai.getSelectedItem() == null) {
+                        int giaTriKM = banHangService.giaTriKM("KM0");
+                        tienKM = tongTien - giaTriKM;
+                        txtTienKM.setText(String.valueOf(tienKM));
+                        giaTriKM = banHangService.giaTriKM(maKM);
+                        txtTienKM.setText(String.valueOf(tienKM));
+                    } else {
+                        ccbKhuyenMai.getSelectedItem();
+                        int loaiKM = banHangService.loaiKM(maKM);
+                        if (loaiKM == 0) {
+                            int giaTriKM = banHangService.giaTriKM(maKM);
+                            tienKM = tongTien - giaTriKM;
+                            txtTienKM.setText(String.valueOf(tienKM));
+                        } else {
+                            int giaTriKM = banHangService.giaTriKM(maKM);
+                            tienKM = tongTien - (tongTien * (giaTriKM / 100.0f));
+                            txtTienKM.setText(String.valueOf(tienKM));
+                        }
+                    }
+
+                    if (!txtThanhTien.getText().isEmpty()) {
+                        float totalPrice = Float.valueOf(txtThanhTien.getText());
+                        if (totalPrice > 0) {
+                            listKhuyenMai.removeAll(listKhuyenMai);
+                            ccbKhuyenMai.removeAllItems();
+                            listKhuyenMai = banHangService.getAllMaKMTheoGiaApDung(totalPrice);
+                            dcbmKhuyenMai.addAll(listKhuyenMai);
+                        } else {
+                            listKhuyenMai.removeAll(listKhuyenMai);
+                            ccbKhuyenMai.removeAllItems();
+                            dcbmKhuyenMai.addAll(listKhuyenMai);
+                        }
+                    }
+//------------------------------------------------------------------------------
+                }
             } else {
                 JOptionPane.showMessageDialog(this, "Xóa thất bại!!!!");
             }
@@ -947,13 +1141,6 @@ public class GiaoDich extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnSuaSLMouseClicked
 
-    private void btnSuaHDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaHDMouseClicked
-        // TODO add your handling code here:
-        String maNV = txtTenNV.getText();
-        String maKH = txtMaKH.getText();
-
-    }//GEN-LAST:event_btnSuaHDMouseClicked
-
     private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
         // TODO add your handling code here:
         if (DateTimNgay.getDate() == null) {
@@ -969,8 +1156,81 @@ public class GiaoDich extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnNextActionPerformed
 
+    private void txtTienKhachTraKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTienKhachTraKeyReleased
+        // TODO add your handling code here:
+
+        if (txtThanhTien.getText().isBlank() || txtTienKhachTra.getText().isBlank()) {
+            txtTienThua.setText("");
+        } else {
+            if (!txtTienKhachTra.getText().matches("^[1-9]\\d*$")) {
+                JOptionPane.showMessageDialog(rootPane, "Hãy nhập lại số tiền!!!!");
+            } else {
+                float tongTien = Float.valueOf(txtThanhTien.getText());
+                float tienTra = Float.valueOf(txtTienKhachTra.getText());
+                float tienThua = tienTra - tongTien;
+                if (tienThua < 0) {
+                    txtTienThua.setText("0");
+                } else {
+                    String formattedNumber = String.format("%.0f", tienThua);
+                    txtTienThua.setText(String.valueOf(formattedNumber));
+                }
+            }
+        }
+    }//GEN-LAST:event_txtTienKhachTraKeyReleased
+
+    private void btnHeadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHeadActionPerformed
+        // TODO add your handling code here:
+        rowoffset = 0;
+        pageHoaDon = banHangService.listGetAllHDPage(rowoffset);
+        showDataHD(pageHoaDon);
+    }//GEN-LAST:event_btnHeadActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+//      int c = banHangService.getAllHD().size() / fetch;
+        rowoffset = banHangService.getAllHD().size() - fetch;
+        pageHoaDon = banHangService.listGetAllHDPage(rowoffset);
+        showDataHD(pageHoaDon);
+        System.out.println(rowoffset);
+    }//GEN-LAST:event_btnLastActionPerformed
+
+    private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
+        // TODO add your handling code here:
+        String maKH = txtMaKH.getText();
+        String maNV = (String) ccbNhanVien.getSelectedItem();
+
+        String maKM = (String) ccbKhuyenMai.getSelectedItem();
+
+        String maHD = txtHoaDonChon.getText();
+
+        int row = tblHoaDon.getSelectedRow();
+
+        if (row == -1) {
+            JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn cần sửa!!!!");
+        } else {
+            if (maKM == null) {
+                boolean a = this.banHangService.updateHD(maKH, maNV, maHD);
+                if (a) {
+                    JOptionPane.showMessageDialog(this, "Cập nhật thành công!!!!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cập nhật thất bại!!!!");
+                }
+            } else {
+                boolean a = this.banHangService.updateHD(maKH, maNV, maHD);
+                if (a) {
+                    JOptionPane.showMessageDialog(this, "Cập nhật thành công!!!!");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Cập nhật thất bại!!!!");
+                }
+            }
+        }
+
+        resetTableHoaDon();
+    }//GEN-LAST:event_jButton2MouseClicked
+
     private void btnTaoHDActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTaoHDActionPerformed
         // TODO add your handling code here:
+//------------------------------------------------------------------------------
         java.util.Date ngayTao = txtNgayTao.getDate();
         System.out.println(ngayTao);
         if (ngayTao != null) {
@@ -981,16 +1241,17 @@ public class GiaoDich extends javax.swing.JFrame {
                 java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
                 System.out.println(sqlDate);
             } catch (Exception ex) {
-                // Logger.getLogger(GiaoDich.class.getName()).log(Level.SEVERE, null, ex);
                 ex.printStackTrace();
             }
         } else {
             JOptionPane.showMessageDialog(this, "Ngày tạo không hợp lệ");
         }
-
+//------------------------------------------------------------------------------
         String maKH = txtMaKH.getText();
 
-        boolean check = this.banHangService.addHoaDon(maKH);
+        String maNV = (String) ccbNhanVien.getSelectedItem();
+
+        boolean check = this.banHangService.addHoaDon(maKH, maNV);
         if (check) {
             JOptionPane.showMessageDialog(this, "Tạo hóa đơn thành công");
         } else {
@@ -1021,7 +1282,12 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void tblHoaDonMouseClicked(java.awt.event.MouseEvent evt) {// GEN-FIRST:event_tblHoaDonMouseClicked
         // TODO add your handling code here:
+
         int row = tblHoaDon.getSelectedRow();
+
+        txtTienKM.setText("");
+
+        txtTienThua.setText("");
 
         btnXoaSP.setEnabled(true);
 
@@ -1032,8 +1298,6 @@ public class GiaoDich extends javax.swing.JFrame {
 
         txtTenKH.setText(pageHoaDon.get(row).getTenKH());
 
-//      ccbNhanVien.setSelectedItem(listGetAllHD.get(row).getTenNV());
-//      txtThanhTien.setText(String.valueOf(listGetAllHD.get(row).getThanhTien()));
         txtThanhTien.setText(String.valueOf(this.banHangService.getTongTienTheoMaHD(pageHoaDon.get(row).getMaHD())));
 
         txtHoaDonChon.setText(pageHoaDon.get(row).getMaHD());
@@ -1044,15 +1308,56 @@ public class GiaoDich extends javax.swing.JFrame {
         showDataHDCT(listHDCT);
 
         if (pageHoaDon.get(row).getTrangThai() != 1) {
-            btnSuaHD.setEnabled(false);
+            jButton2.setEnabled(false);
             btnThanhToan.setEnabled(false);
             btnHuyDon.setEnabled(false);
         } else {
-            btnSuaHD.setEnabled(true);
+            jButton2.setEnabled(true);
             btnThanhToan.setEnabled(true);
             btnHuyDon.setEnabled(true);
         }
 
+        if (txtThanhTien.getText() != null) {
+            float totalPrice = Float.valueOf(txtThanhTien.getText());
+            if (totalPrice > 0) {
+                listKhuyenMai.removeAll(listKhuyenMai);
+                ccbKhuyenMai.removeAllItems();
+                listKhuyenMai = banHangService.getAllMaKMTheoGiaApDung(totalPrice);
+                dcbmKhuyenMai.addAll(listKhuyenMai);
+            } else {
+                listKhuyenMai.removeAll(listKhuyenMai);
+                ccbKhuyenMai.removeAllItems();
+                dcbmKhuyenMai.addAll(listKhuyenMai);
+            }
+        }
+
+        ccbKhuyenMai.setSelectedItem(pageHoaDon.get(row).getMaKM());
+
+        txtMaKH.setText(pageHoaDon.get(row).getMaKhachHang());
+
+        System.out.println(pageHoaDon.get(row).toString());
+
+//------------------------------------------------------------------------------
+        String maKM = pageHoaDon.get(row).getMaKM();
+        float tienKM = 0;
+        float tongTien = Float.valueOf(txtThanhTien.getText());
+        if (maKM == null) {
+            int giaTriKM = banHangService.giaTriKM("KM0");
+            tienKM = tongTien - giaTriKM;
+            txtTienKM.setText(String.valueOf(tienKM));
+        } else {
+            int loaiKM = banHangService.loaiKM(maKM);
+            if (loaiKM == 0) {
+                int giaTriKM = banHangService.giaTriKM(maKM);
+                tienKM = tongTien - giaTriKM;
+                txtTienKM.setText(String.valueOf(tienKM));
+            } else {
+                int giaTriKM = banHangService.giaTriKM(maKM);
+                tienKM = tongTien - (tongTien * (giaTriKM / 100.0f));
+                txtTienKM.setText(String.valueOf(tienKM));
+            }
+        }
+//------------------------------------------------------------------------------
     }// GEN-LAST:event_tblHoaDonMouseClicked
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtTimKiemKeyReleased
@@ -1084,6 +1389,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
     }// GEN-LAST:event_DateTimNgayKeyReleased
 
+//------------------------------------------------------------------------------
     ActionListener filterListener = new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
@@ -1133,6 +1439,7 @@ public class GiaoDich extends javax.swing.JFrame {
             dtmCTSP.addRow(row);
         }
     }
+//------------------------------------------------------------------------------
 
     private void showDataHD(List<HoaDonViewModel> list) {
         dtmHoaDon.setRowCount(0);
@@ -1172,7 +1479,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
     public void resetTableCTSP() {
         String find = txtTimKiem.getText();
-        
+
         if (find.isBlank()) {
             listCTSP.removeAll(listCTSP);
             listCTSP = this.banHangService.getAllCTSP();
@@ -1202,7 +1509,7 @@ public class GiaoDich extends javax.swing.JFrame {
         txtTienKM.setText("");
         txtTienKhachTra.setText("");
         txtTimKiem.setText("");
-        jTextField8.setText("");
+        txtTienThua.setText("");
     }
 
     /**
@@ -1252,7 +1559,6 @@ public class GiaoDich extends javax.swing.JFrame {
     private javax.swing.JButton btnLayTTKH;
     private javax.swing.JButton btnNext;
     private javax.swing.JButton btnPrevious;
-    private javax.swing.JButton btnSuaHD;
     private javax.swing.JButton btnSuaSL;
     private javax.swing.JButton btnTaoHD;
     private javax.swing.JButton btnThanhToan;
@@ -1264,6 +1570,7 @@ public class GiaoDich extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> ccbThuongHieu;
     private javax.swing.JComboBox<String> ccbTrangThaiHoaDon;
     public javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1288,7 +1595,6 @@ public class GiaoDich extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField8;
     private javax.swing.JTable tblHDCT;
     private javax.swing.JTable tblHoaDon;
     private javax.swing.JTable tblSanPhamCT;
@@ -1301,6 +1607,7 @@ public class GiaoDich extends javax.swing.JFrame {
     private javax.swing.JTextField txtThanhTien;
     private javax.swing.JTextField txtTienKM;
     private javax.swing.JTextField txtTienKhachTra;
+    private javax.swing.JTextField txtTienThua;
     private javax.swing.JTextField txtTimKiem;
     public javax.swing.JLabel txtTimer;
     // End of variables declaration//GEN-END:variables

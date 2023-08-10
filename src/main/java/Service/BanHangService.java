@@ -119,8 +119,8 @@ public class BanHangService {
         return this.banHang.getAllHDCTTheoMaHD(maHD);
     }
 
-    public boolean addHoaDon(String maKH) {
-        return this.banHang.addHoaDon(maKH);
+    public boolean addHoaDon(String maKH,String maNV) {
+        return this.banHang.addHoaDon(maKH,maNV);
     }
 
     public List<HDCTBanHang> checkTonTaiSP(String maHD, int idCTSP) {
@@ -167,20 +167,31 @@ public class BanHangService {
         return this.banHang.getAllMaNhanVien();
     }
 
-    public boolean updateHD(String maKH, String maNV, String maKM, String maHD) {
-        return this.banHang.updateHoaDon(maKH, maNV, maKM, maHD);
+    public boolean updateHD(String maKH, String maNV, String maHD) {
+        return this.banHang.updateHoaDon(maKH, maNV, maHD);
     }
 
     public List<HoaDonViewModel> listGetAllHDPage(int rowoffset) {
         return this.banHang.getAllHDPage(rowoffset);
     }
 
-//    public static void main(String[] args) {
-//        BanHangService bh = new BanHangService();
-//        List<HoaDonViewModel> list = bh.listGetAllHDPage(0);
-//        
-//        for (HoaDonViewModel x : list) {
-//            System.out.println(x.toString());
-//        }
-//    }
+    public List<String> getAllMaKMTheoGiaApDung(float giaApDung) {
+        return this.banHang.getMaKMTheoGiaApDung(giaApDung);
+    }
+
+    public Integer loaiKM(String maKM) {
+        return this.banHang.getLoaiKhuyenMai(maKM);
+    }
+
+    public Integer giaTriKM(String maKM) {
+        return this.banHang.getGiaTriKM(maKM);
+    }
+
+    public Integer getTrangThaiKM(String maKM) {
+        return this.banHang.getGiaTriKM(maKM);
+    }
+    
+    public boolean thanhToanHD(String maKH, String maNV, float thanhTien, String maKM, String maHD){
+        return this.banHang.thanhToanHD(maKH, maNV, thanhTien, maKM, maHD);
+    }
 }
