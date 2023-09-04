@@ -270,7 +270,7 @@ public class BanHangRepository {
                 + "join dong_sp on chi_tiet_san_pham.idDongSP = dong_sp.idDongSP\n"
                 + "join thuong_hieu on chi_tiet_san_pham.idThuongHieu = thuong_hieu.idThuongHieu\n"
                 + "join kich_co on chi_tiet_san_pham.idKichCo = kich_co.idKichCo\n"
-                + "join mau_sac on chi_tiet_san_pham.idMauSac = mau_sac.idMauSac";
+                + "join mau_sac on chi_tiet_san_pham.idMauSac = mau_sac.idMauSac where chi_tiet_san_pham.trang_thai = 0";
 
         List<CTSPBanHang> list = new ArrayList<>();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
