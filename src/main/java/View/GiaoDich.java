@@ -470,8 +470,6 @@ public class GiaoDich extends javax.swing.JFrame {
         txtThanhTien.setEditable(false);
         txtThanhTien.setForeground(new java.awt.Color(255, 0, 0));
         txtThanhTien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtThanhTien.addKeyListener(new java.awt.event.KeyAdapter() {
-        });
 
         jLabel8.setText("Tiền khách trả:");
 
@@ -526,8 +524,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         jLabel13.setText("Khuyến Mãi:");
 
-        ccbKhuyenMai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
+        ccbKhuyenMai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));      
         txtNgayTao.setDateFormatString("yyyy-MM-dd");
 
         ccbNhanVien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -759,7 +756,7 @@ public class GiaoDich extends javax.swing.JFrame {
                     .addComponent(btnThanhToan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHuyDon, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 50, Short.MAX_VALUE)
+                .addGap(18, 86, Short.MAX_VALUE)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
