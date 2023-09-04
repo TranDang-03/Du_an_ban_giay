@@ -859,7 +859,7 @@ public class GiaoDich extends javax.swing.JFrame {
         if (row == -1) {
             JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn cần thanh toán!!!");
         } else {
-            if (maKM.isEmpty() || !maKM.isEmpty()) {
+            if (maKM.isEmpty()) {
                 makm = pageHoaDon.get(row).getMaKM();
                 if (banHangService.getTrangThaiKM(makm) == 0) {
                     int giaTriKM = banHangService.giaTriKM(maKM);
@@ -902,7 +902,6 @@ public class GiaoDich extends javax.swing.JFrame {
     private void tblSanPhamCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamCTMouseClicked
         // TODO add your handling code here:
         int number;
-
         String maKM = "";
 
         if (txtHoaDonChon.getText().equalsIgnoreCase("null")) {
@@ -1226,7 +1225,6 @@ public class GiaoDich extends javax.swing.JFrame {
                 }
             }
         }
-
         resetTableHoaDon();
     }//GEN-LAST:event_jButton2MouseClicked
 

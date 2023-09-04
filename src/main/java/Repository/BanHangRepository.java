@@ -829,6 +829,7 @@ public class BanHangRepository {
     }
 
     public static void main(String[] args) {
+        
         // List<String> list = new BanHangRepository().getAllMaNhanVien();
         // for (String string : list) {
         // System.out.println(list);
