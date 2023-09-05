@@ -828,8 +828,36 @@ public class BanHangRepository {
         return check > 0;
     }
 
+    public boolean xoaHD(String maHD) {
+        String query = "DELETE FROM [dbo].[hoa_don]\n"
+                + "      WHERE hoa_don.idHoaDon = ?";
+        int check = 0;
+
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
+            ps.setObject(1, getIDHD(maHD));
+            check = ps.executeUpdate();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return check > 0;
+    }
+
+    public boolean huyHoaDon(String maHD) {
+        String query = "UPDATE [dbo].[hoa_don]\n"
+                + "   SET [trangThai] = 2\n"
+                + " WHERE hoa_don.idHoaDon = ?";
+        int check = 0;
+        try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);){
+            ps.setObject(1, getIDHD(maHD));
+            check = ps.executeUpdate();
+        }catch(SQLException ex){
+            ex.printStackTrace();
+        }
+        return check > 0;
+    }
+
     public static void main(String[] args) {
-        
+
         // List<String> list = new BanHangRepository().getAllMaNhanVien();
         // for (String string : list) {
         // System.out.println(list);

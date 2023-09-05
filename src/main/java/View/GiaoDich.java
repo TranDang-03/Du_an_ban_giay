@@ -189,6 +189,13 @@ public class GiaoDich extends javax.swing.JFrame {
 
         txtNgayTao.setEnabled(false);
 
+        txtThanhTien.setEditable(false);
+
+        DateTimNgay.setEnabled(false);
+
+        txtThanhTien.setText("0.0");
+        txtTienKM.setText("0.0");
+
 //------------------------------------------------------------------------------
         data = 60;
 
@@ -856,54 +863,96 @@ public class GiaoDich extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPreviousActionPerformed
 
     private void btnThanhToanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThanhToanActionPerformed
-        // TODO add your handling code here:
-        int row = tblHoaDon.getSelectedRow();
-        String maKM = (String) ccbKhuyenMai.getSelectedItem();
-        String makm = "";
-        float tongTien = Float.valueOf(txtThanhTien.getText());
-        float tienKM = 0;
+//      TODO add your handling code here:
 
-        if (row == -1) {
-            JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn cần thanh toán!!!");
+//        int row = tblHoaDon.getSelectedRow();
+//        String maKM = (String) ccbKhuyenMai.getSelectedItem();
+//        String makm = "";
+//        float tongTien = Float.valueOf(txtThanhTien.getText());
+//        float tienKM = 0;
+//
+//        if (row == -1) {
+//            JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn cần thanh toán!!!");
+//        } else {
+//            if (maKM.isEmpty()) {
+//                makm = pageHoaDon.get(row).getMaKM();
+//                if (banHangService.getTrangThaiKM(makm) == 0) {
+//                    int giaTriKM = banHangService.giaTriKM(maKM);
+//                    tienKM = tongTien - giaTriKM;
+//                    txtTienKM.setText(String.valueOf(tienKM));
+//                    float thanhTien = Float.valueOf(txtTienKM.getText());
+//                    float tienKhachTra = Float.valueOf(txtTienKhachTra.getText());
+//                    float tienThua = tienKhachTra - thanhTien;
+//                    if (tienThua >= 0) {
+//                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
+//                        banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
+//                        resetTableHoaDon();
+//                        System.out.println(tienThua);
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");
+//                    }
+//                } else if (makm.isEmpty()) {
+//                    int giaTriKM = banHangService.giaTriKM("KM0");
+//                    tienKM = tongTien - giaTriKM;
+//                    txtTienKM.setText(String.valueOf(tienKM));
+//                    float thanhTien = Float.valueOf(txtTienKM.getText());
+//                    float tienKhachTra = Float.valueOf(txtTienKhachTra.getText());
+//                    float tienThua = tienKhachTra - thanhTien;
+//                    if (tienThua >= 0) {
+//                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
+//                        banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
+//                        resetTableHoaDon();
+//                        System.out.println(tienThua);
+//                    } else {
+//                        JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");
+//                    }
+//                } else {
+//                    JOptionPane.showMessageDialog(this, "Khuyến mãi không còn hiệu lực!!!!");
+//                }
+//
+//            }
+//        }
+        String maKH = txtMaKH.getText();
+        String maNV = (String) ccbNhanVien.getSelectedItem();
+        String maKM = "";
+        float thanhtien = Float.valueOf(txtTienKM.getText());
+        String maHD = txtHoaDonChon.getText();
+        float tienKhachTra = 0;
+
+        if (ccbKhuyenMai.getSelectedItem() == null) {
+            maKM = "KM0";
         } else {
-            if (maKM.isEmpty()) {
-                makm = pageHoaDon.get(row).getMaKM();
-                if (banHangService.getTrangThaiKM(makm) == 0) {
-                    int giaTriKM = banHangService.giaTriKM(maKM);
-                    tienKM = tongTien - giaTriKM;
-                    txtTienKM.setText(String.valueOf(tienKM));
-                    float thanhTien = Float.valueOf(txtTienKM.getText());
-                    float tienKhachTra = Float.valueOf(txtTienKhachTra.getText());
-                    float tienThua = tienKhachTra - thanhTien;
-                    if (tienThua >= 0) {
-                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
-                        banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
-                        resetTableHoaDon();
-                        System.out.println(tienThua);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");
-                    }
-                } else if (makm.isEmpty()) {
-                    int giaTriKM = banHangService.giaTriKM("KM0");
-                    tienKM = tongTien - giaTriKM;
-                    txtTienKM.setText(String.valueOf(tienKM));
-                    float thanhTien = Float.valueOf(txtTienKM.getText());
-                    float tienKhachTra = Float.valueOf(txtTienKhachTra.getText());
-                    float tienThua = tienKhachTra - thanhTien;
-                    if (tienThua >= 0) {
-                        JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
-                        banHangService.thanhToanHD(txtMaKH.getText(), (String) ccbNhanVien.getSelectedItem(), Float.valueOf(thanhTien), maKM, txtHoaDonChon.getText());
-                        resetTableHoaDon();
-                        System.out.println(tienThua);
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(this, "Khuyến mãi không còn hiệu lực!!!!");
-                }
-
-            }
+            maKM = (String) ccbKhuyenMai.getSelectedItem();
         }
+
+        if (txtTienKhachTra.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Hãy nhập lại số tiền!!!!");
+        } else {
+            tienKhachTra = Float.valueOf(txtTienKhachTra.getText());
+        }
+
+        if (maHD == null || maHD.equals("null")) {
+            JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn cần thanh toán!!!");
+        } else if (!txtTienKhachTra.getText().matches("^(0*[1-9]\\d*|0*[0-9]+\\.\\d+|0*[1-9]+\\d*\\.\\d+)$")) {
+            JOptionPane.showMessageDialog(this, "Hãy nhập lại số tiền cần thanh toán!!!!!");
+        } else if (thanhtien <= 0) {
+            JOptionPane.showMessageDialog(this, "Thanh toán thất bại!!!!");
+        } else if (tienKhachTra <= 0 || tienKhachTra < thanhtien) {
+            JOptionPane.showMessageDialog(this, "Số tiền thanh toán không đủ hãy nhập lại!!!!");
+        } else {
+            System.out.println(tienKhachTra);
+            System.out.println(thanhtien);
+            System.out.println(maKM);
+            System.out.println(maHD);
+            System.out.println(maNV);
+            this.banHangService.thanhToanHD(maKH, maNV, thanhtien, maKM, maHD);
+            resetTableHoaDon();
+            listHDCT.removeAll(listHDCT);
+            showDataHDCT(listHDCT);
+            clear();
+            JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
+        }
+
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblSanPhamCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamCTMouseClicked
@@ -949,6 +998,7 @@ public class GiaoDich extends javax.swing.JFrame {
 //------------------------------------------------------------------------------
                             float tongTien = Float.valueOf(txtThanhTien.getText());
                             float tienKM = 0;
+                            ccbKhuyenMai.setSelectedItem(null);
                             if (ccbKhuyenMai.getSelectedItem() == null) {
                                 int giaTriKM = banHangService.giaTriKM("KM0");
                                 tienKM = tongTien - giaTriKM;
@@ -1005,6 +1055,7 @@ public class GiaoDich extends javax.swing.JFrame {
 //------------------------------------------------------------------------------
                             float tongTien = Float.valueOf(txtThanhTien.getText());
                             float tienKM = 0;
+                            ccbKhuyenMai.setSelectedItem(null);
                             if (ccbKhuyenMai.getSelectedItem() == null) {
                                 int giaTriKM = banHangService.giaTriKM("KM0");
                                 tienKM = tongTien - giaTriKM;
@@ -1048,6 +1099,8 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnSuaSLMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaSLMouseClicked
         // TODO add your handling code here:
+
+        String maKM = "";
         int row = tblHDCT.getSelectedRow();
 
         if (row == -1) {
@@ -1074,6 +1127,42 @@ public class GiaoDich extends javax.swing.JFrame {
                 resetTableHoaDon();
                 Float total = this.banHangService.getTongTienTheoMaHD(maHD);
                 txtThanhTien.setText(String.valueOf(total));
+
+                float tongTien = Float.valueOf(txtThanhTien.getText());
+                float tienKM = 0;
+                if (ccbKhuyenMai.getSelectedItem() == null) {
+                    int giaTriKM = banHangService.giaTriKM("KM0");
+                    tienKM = tongTien - giaTriKM;
+                    txtTienKM.setText(String.valueOf(tienKM));
+                    giaTriKM = banHangService.giaTriKM(maKM);
+                    txtTienKM.setText(String.valueOf(tienKM));
+                } else {
+                    ccbKhuyenMai.getSelectedItem();
+                    int loaiKM = banHangService.loaiKM(maKM);
+                    if (loaiKM == 0) {
+                        int giaTriKM = banHangService.giaTriKM(maKM);
+                        tienKM = tongTien - giaTriKM;
+                        txtTienKM.setText(String.valueOf(tienKM));
+                    } else {
+                        int giaTriKM = banHangService.giaTriKM(maKM);
+                        tienKM = tongTien - (tongTien * (giaTriKM / 100.0f));
+                        txtTienKM.setText(String.valueOf(tienKM));
+                    }
+                }
+
+                if (!txtThanhTien.getText().isEmpty()) {
+                    float totalPrice = Float.valueOf(txtThanhTien.getText());
+                    if (totalPrice > 0) {
+                        listKhuyenMai.removeAll(listKhuyenMai);
+                        ccbKhuyenMai.removeAllItems();
+                        listKhuyenMai = banHangService.getAllMaKMTheoGiaApDung(totalPrice);
+                        dcbmKhuyenMai.addAll(listKhuyenMai);
+                    } else {
+                        listKhuyenMai.removeAll(listKhuyenMai);
+                        ccbKhuyenMai.removeAllItems();
+                        dcbmKhuyenMai.addAll(listKhuyenMai);
+                    }
+                }
                 JOptionPane.showMessageDialog(this, "Chỉnh sửa số lượng thành công!!!");
             }
         }
@@ -1103,7 +1192,7 @@ public class GiaoDich extends javax.swing.JFrame {
             if (!txtTienKhachTra.getText().matches("^[1-9]\\d*$")) {
                 JOptionPane.showMessageDialog(rootPane, "Hãy nhập lại số tiền!!!!");
             } else {
-                float tongTien = Float.valueOf(txtThanhTien.getText());
+                float tongTien = Float.valueOf(txtTienKM.getText());
                 float tienTra = Float.valueOf(txtTienKhachTra.getText());
                 float tienThua = tienTra - tongTien;
                 if (tienThua < 0) {
@@ -1167,7 +1256,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnXoaSPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaSPMouseClicked
         // TODO add your handling code here:
-                String maKM = "";
+        String maKM = "";
 
         int row = tblHDCT.getSelectedRow();
         String maHD = txtHoaDonChon.getText();
@@ -1236,27 +1325,49 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnHuyDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyDonActionPerformed
         // TODO add your handling code here:
-        
+
+        //this.banHangService.getAllHDCTTheoMaHD(txtHoaDonChon.getText());
+        if (txtHoaDonChon.getText().equals("null") || txtHoaDonChon.getText() == null) {
+            JOptionPane.showMessageDialog(this, "Hãy chọn hóa đơn cần hủy!!!");
+        } else if (listHDCT.isEmpty()) {
+            this.banHangService.xoaHD(txtHoaDonChon.getText());
+            JOptionPane.showMessageDialog(this, "Xóa hóa đơn thành công!!!!");
+            resetTableHoaDon();
+            clear();
+        } else {
+            for (HDCTBanHang x : listHDCT) {
+                int sl = this.banHangService.laySLTonTheoIdCTSP(x.getId());
+                this.banHangService.suaSoLuongCTSP(sl + x.getSoLuong(), x.getId());
+            }
+            this.banHangService.huyDon(txtHoaDonChon.getText());
+            JOptionPane.showMessageDialog(this, "Hủy đơn thành công!!!!");          
+            resetTableHoaDon();
+            resetTableCTSP();
+            listHDCT.removeAll(listHDCT);
+            showDataHDCT(listHDCT);
+            clear();
+        }
+
     }//GEN-LAST:event_btnHuyDonActionPerformed
 
     private void btnTaoHDActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_btnTaoHDActionPerformed
         // TODO add your handling code here:
 //------------------------------------------------------------------------------
-        java.util.Date ngayTao = txtNgayTao.getDate();
-        System.out.println(ngayTao);
-        if (ngayTao != null) {
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-            String formattedDate = dateFormat.format(ngayTao);
-            try {
-                java.util.Date parsedDate = dateFormat.parse(formattedDate);
-                java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
-                System.out.println(sqlDate);
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Ngày tạo không hợp lệ");
-        }
+//        java.util.Date ngayTao = txtNgayTao.getDate();
+//        System.out.println(ngayTao);
+//        if (ngayTao != null) {
+//            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+//            String formattedDate = dateFormat.format(ngayTao);
+//            try {
+//                java.util.Date parsedDate = dateFormat.parse(formattedDate);
+//                java.sql.Date sqlDate = new java.sql.Date(parsedDate.getTime());
+//                System.out.println(sqlDate);
+//            } catch (Exception ex) {
+//                ex.printStackTrace();
+//            }
+//        } else {
+//            JOptionPane.showMessageDialog(this, "Ngày tạo không hợp lệ");
+//        }
 //------------------------------------------------------------------------------
         String maKH = txtMaKH.getText();
 
@@ -1269,8 +1380,8 @@ public class GiaoDich extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Tạo hóa đơn thất bại");
         }
 
-        listGetAllHD = this.banHangService.getAllHD();
-        showDataHD(listGetAllHD);
+        pageHoaDon = this.banHangService.listGetAllHDPage(rowoffset);
+        showDataHD(pageHoaDon);
     }// GEN-LAST:event_btnTaoHDActionPerformed
 
     private void ccbTrangThaiHoaDonActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_ccbTrangThaiHoaDonActionPerformed
@@ -1512,7 +1623,7 @@ public class GiaoDich extends javax.swing.JFrame {
     }
 
     public void clear() {
-        txtHoaDonChon.setText("");
+        txtHoaDonChon.setText("null");
         txtNgayTao.setDate(null);
         txtTenKH.setText("Khach Ban Le");
         txtMaKH.setText("KH00");
@@ -1521,6 +1632,7 @@ public class GiaoDich extends javax.swing.JFrame {
         txtTienKhachTra.setText("");
         txtTimKiem.setText("");
         txtTienThua.setText("");
+        ccbKhuyenMai.setSelectedItem(null);
     }
 
     /**

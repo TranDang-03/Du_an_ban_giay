@@ -194,4 +194,13 @@ public class BanHangService {
     public boolean thanhToanHD(String maKH, String maNV, float thanhTien, String maKM, String maHD){
         return this.banHang.thanhToanHD(maKH, maNV, thanhTien, maKM, maHD);
     }
+    
+    public boolean xoaHD(String maHD){
+        return this.banHang.xoaHD(maHD);
+    }
+    
+    public boolean huyDon(String maHD){
+        return this.banHang.huyHoaDon(maHD);
+    }
+    
 }
