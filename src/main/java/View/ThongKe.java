@@ -25,15 +25,14 @@ import view_model.ThongKeViewModel;
  */
 public class ThongKe extends javax.swing.JFrame {
 
-    /**
-     * Creates new form ThongKe
-     */
+
     private ThongKeService tk = new ThongKeService();
     private List<ThongKeViewModel> listThongKe = new ArrayList<>();
 
     public ThongKe() {
 
         initComponents();
+        listThongKe.removeAll(listThongKe);
         listThongKe = this.tk.thongKeTheoThang(2023);
         showBarChart(listThongKe);
     }
@@ -41,10 +40,11 @@ public class ThongKe extends javax.swing.JFrame {
     public void showBarChart(List<ThongKeViewModel> list) {
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        
         for (ThongKeViewModel x : listThongKe) {
             dataset.addValue(x.getTongDoanhThu(), "Doanh thu", "Tháng " + String.valueOf(x.getMonth()));
         }
-        // Tạo biểu đồ cột
+ //     Tạo biểu đồ cột
         JFreeChart chart = ChartFactory.createBarChart(
                 "Tổng doanh thu cửa hàng BEESHOE theo các tháng ", // Tiêu đề biểu đồ
                 "Tháng", // Tên trục x
@@ -63,7 +63,7 @@ public class ThongKe extends javax.swing.JFrame {
         jPanel1.revalidate();
         chartPanel.repaint();
 
-//         Lưu biểu đồ thành file ảnh PNG
+//      Lưu biểu đồ thành file ảnh PNG
         try {
             ChartUtilities.saveChartAsPNG(new File("bar_chart.png"), chart, 500, 300);
         } catch (IOException e) {
