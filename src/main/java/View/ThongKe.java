@@ -29,17 +29,16 @@ public class ThongKe extends javax.swing.JFrame {
      * Creates new form ThongKe
      */
     private ThongKeService tk = new ThongKeService();
-
     private List<ThongKeViewModel> listThongKe = new ArrayList<>();
 
     public ThongKe() {
-        initComponents();
-        showBarChart(2023);
 
+        initComponents();
+        listThongKe = this.tk.thongKeTheoThang(2023);
+        showBarChart(listThongKe);
     }
 
-    public void showBarChart(int year) {
-        listThongKe = this.tk.thongKeTheoThang(year);
+    public void showBarChart(List<ThongKeViewModel> list) {
 
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         for (ThongKeViewModel x : listThongKe) {
@@ -47,7 +46,7 @@ public class ThongKe extends javax.swing.JFrame {
         }
         // Tạo biểu đồ cột
         JFreeChart chart = ChartFactory.createBarChart(
-                "Tổng doanh thu cửa hàng BEESHOE theo tháng " + "năm " + year, // Tiêu đề biểu đồ
+                "Tổng doanh thu cửa hàng BEESHOE theo các tháng ", // Tiêu đề biểu đồ
                 "Tháng", // Tên trục x
                 "Doanh thu (VND)", // Tên trục y
                 dataset, // Bộ dữ liệu
@@ -64,12 +63,12 @@ public class ThongKe extends javax.swing.JFrame {
         jPanel1.revalidate();
         chartPanel.repaint();
 
-        // Lưu biểu đồ thành file ảnh PNG
-//        try {
-//            ChartUtilities.saveChartAsPNG(new File("bar_chart.png"), chart, 500, 300);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
+//         Lưu biểu đồ thành file ảnh PNG
+        try {
+            ChartUtilities.saveChartAsPNG(new File("bar_chart.png"), chart, 500, 300);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -94,7 +93,7 @@ public class ThongKe extends javax.swing.JFrame {
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jPanel1.setPreferredSize(new java.awt.Dimension(460, 420));
+        jPanel1.setPreferredSize(new java.awt.Dimension(360, 320));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
