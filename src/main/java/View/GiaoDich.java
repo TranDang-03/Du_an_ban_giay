@@ -132,7 +132,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         ccbNhanVien.setModel(dcbmNhanVien);
 
-        String headerHoaDon[] = {"Mã HD", "Tên KH", "Tên NV", "Mã Khuyến Mãi", "Thành Tiền", "Ngày Tạo", "Trạng Thái"};
+        String headerHoaDon[] = {"Mã HD", "Tên KH", "Tên NV", "Ngày Tạo", "Trạng Thái"};
         dtmHoaDon.setColumnIdentifiers(headerHoaDon);
 
         String headerHDCT[] = {"Tên SP", "Số lượng", "Dòng SP", "Hãng", "Size", "Đơn giá"};
@@ -878,10 +878,12 @@ public class GiaoDich extends javax.swing.JFrame {
         if (DateTimNgay.getDate() == null) {
             rowoffset -= 5;
             if (rowoffset < 0) {
-                rowoffset = this.banHangService.getAllHD().size() - fetch;
+                int c = this.banHangService.getAllHD().size() % fetch;
+                rowoffset = this.banHangService.getAllHD().size() - c;
             }
             pageHoaDon = this.banHangService.listGetAllHDPage(rowoffset);
             showDataHD(pageHoaDon);
+            System.out.println(rowoffset);
         }
     }//GEN-LAST:event_btnPreviousActionPerformed
 
@@ -1363,8 +1365,7 @@ public class GiaoDich extends javax.swing.JFrame {
             pageHoaDon = this.banHangService.listGetAllHDPage(rowoffset);
             showDataHD(pageHoaDon);
 
-            int c = this.banHangService.getAllHD().size();
-            System.out.println(c);
+            System.out.println(rowoffset);
         }
     }//GEN-LAST:event_btnNextActionPerformed
 
@@ -1399,11 +1400,13 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
         // TODO add your handling code here:
-//      int c = banHangService.getAllHD().size() / fetch;
-        rowoffset = banHangService.getAllHD().size() - fetch;
+        int c = banHangService.getAllHD().size() % fetch;
+        rowoffset = banHangService.getAllHD().size() - c;
         pageHoaDon = banHangService.listGetAllHDPage(rowoffset);
         showDataHD(pageHoaDon);
+        System.out.println(c);
         System.out.println(rowoffset);
+        System.out.println(banHangService.getAllHD().size());
     }//GEN-LAST:event_btnLastActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
@@ -1755,8 +1758,6 @@ public class GiaoDich extends javax.swing.JFrame {
                 x.getMaHD(),
                 x.getTenKH(),
                 x.getTenNV(),
-                x.getMaKM(),
-                x.getThanhTien(),
                 x.getNgayTao(),
                 x.getTrangThai() == 0 ? "Đã thanh toán" : (x.getTrangThai() == 1) ? "Chưa thanh toán" : "Đã hủy"
             });

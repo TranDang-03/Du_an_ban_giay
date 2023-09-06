@@ -337,10 +337,12 @@ public class BanHangRepository {
     }
 
     public List<HoaDonViewModel> getAllHoaDon() {
-        String query = "select maHoaDon,tenNhanVien,tenKhachHang,tenKhuyenMai,thanhTien,ngayTao,hoa_don.trangThai\n"
-                + "from hoa_don left join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien\n"
-                + "left join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang\n"
-                + "left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai order by idHoaDon desc";
+        String query = "select maHoaDon,tenNhanVien,tenKhachHang,tenKhuyenMai,thanhTien,ngayTao,hoa_don.trangThai \n"
+                + " from hoa_don left join nhan_vien on hoa_don.idNhanVien = nhan_vien.idNhanVien \n"
+                + " left join khach_hang on hoa_don.idKhachHang = khach_hang.idKhachhang \n"
+                + " left join khuyen_mai on hoa_don.idKhuyenMai = khuyen_mai.idKhuyenMai\n"
+                + " where hoa_don.trangThai = 1\n"
+                + " order by idHoaDon desc";
         List<HoaDonViewModel> list = new ArrayList<>();
         try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ResultSet rs = ps.executeQuery();
@@ -847,10 +849,10 @@ public class BanHangRepository {
                 + "   SET [trangThai] = 2\n"
                 + " WHERE hoa_don.idHoaDon = ?";
         int check = 0;
-        try(Connection con = DBConnect.getConnection(); PreparedStatement ps = con.prepareStatement(query);){
+        try ( Connection con = DBConnect.getConnection();  PreparedStatement ps = con.prepareStatement(query);) {
             ps.setObject(1, getIDHD(maHD));
             check = ps.executeUpdate();
-        }catch(SQLException ex){
+        } catch (SQLException ex) {
             ex.printStackTrace();
         }
         return check > 0;
