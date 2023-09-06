@@ -8,10 +8,31 @@ import Constrant.UserInfor;
 import Model.HoaDon;
 import Repository.BanHangRepository;
 import Service.BanHangService;
+import com.itextpdf.io.image.ImageData;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.color.Color;
+import com.itextpdf.kernel.color.DeviceRgb;
+import com.itextpdf.kernel.font.PdfFont;
+import com.itextpdf.kernel.font.PdfFontFactory;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.border.Border;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.VerticalAlignment;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Element;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.pdf.draw.DottedLineSeparator;
+import com.itextpdf.text.pdf.draw.LineSeparator;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.io.FileNotFoundException;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.ParseException;
@@ -19,6 +40,8 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -109,7 +132,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
         ccbNhanVien.setModel(dcbmNhanVien);
 
-        String headerHoaDon[] = {"Mã HD", "Tên KH", "Tên NV", "Mã Khuyến Mãi", "Thành Tiền", "Ngày Tạo", "Trạng Thái"};
+        String headerHoaDon[] = {"Mã HD", "Tên KH", "Tên NV", "Ngày Tạo", "Trạng Thái"};
         dtmHoaDon.setColumnIdentifiers(headerHoaDon);
 
         String headerHDCT[] = {"Tên SP", "Số lượng", "Dòng SP", "Hãng", "Size", "Đơn giá"};
@@ -855,10 +878,12 @@ public class GiaoDich extends javax.swing.JFrame {
         if (DateTimNgay.getDate() == null) {
             rowoffset -= 5;
             if (rowoffset < 0) {
-                rowoffset = this.banHangService.getAllHD().size() - fetch;
+                int c = this.banHangService.getAllHD().size() % fetch;
+                rowoffset = this.banHangService.getAllHD().size() - c;
             }
             pageHoaDon = this.banHangService.listGetAllHDPage(rowoffset);
             showDataHD(pageHoaDon);
+            System.out.println(rowoffset);
         }
     }//GEN-LAST:event_btnPreviousActionPerformed
 
@@ -909,7 +934,6 @@ public class GiaoDich extends javax.swing.JFrame {
 //                } else {
 //                    JOptionPane.showMessageDialog(this, "Khuyến mãi không còn hiệu lực!!!!");
 //                }
-//
 //            }
 //        }
         String maKH = txtMaKH.getText();
@@ -946,13 +970,176 @@ public class GiaoDich extends javax.swing.JFrame {
             System.out.println(maHD);
             System.out.println(maNV);
             this.banHangService.thanhToanHD(maKH, maNV, thanhtien, maKM, maHD);
-            resetTableHoaDon();
-            listHDCT.removeAll(listHDCT);
-            showDataHDCT(listHDCT);
-            clear();
-            JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
-        }
 
+            JOptionPane.showMessageDialog(this, "Thanh toán thành công!!!");
+
+            int check = JOptionPane.showConfirmDialog(this, "Bạn có muốn in hóa đơn không?", "", 2);
+
+            if (check == 0) {
+                Document document;
+                try {
+                    try {
+                        String font = "C:\\Users\\PC\\Documents\\Du_an_ban_giay\\src\\unicode.ttf";
+                        String path = "C:\\Users\\PC\\Documents\\Du_an_ban_giay\\src\\hoadon.pdf";
+                        String imagePath = "C:\\Users\\PC\\Documents\\Du_an_ban_giay\\src\\main\\java\\icon\\banner.png";
+                        PdfFont fontTitle = PdfFontFactory.createFont(font, com.itextpdf.text.pdf.BaseFont.IDENTITY_H);
+
+                        java.util.Date date = new java.util.Date();
+                        Calendar calendar = GregorianCalendar.getInstance();
+                        calendar.setTime(date);
+
+                        int year = calendar.get(Calendar.YEAR);
+                        int month = calendar.get(Calendar.MONTH);
+                        int day = calendar.get(Calendar.DAY_OF_MONTH);
+                        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+                        int min = calendar.get(Calendar.MINUTE);
+                        int second = calendar.get(Calendar.SECOND);
+                        String timeNow = hour + ":" + min + ":" + second + "\t" + day + "/" + month + "/" + year;
+
+                        PdfWriter pdfWriter = new PdfWriter(path);
+
+                        PdfDocument pdfDocument = new PdfDocument(pdfWriter);
+                        pdfDocument.addNewPage();
+                        ImageData imageData = ImageDataFactory.create(imagePath);
+                        com.itextpdf.layout.element.Image img = new com.itextpdf.layout.element.Image(imageData);
+                        img.setHeight(50f).setWidth(65f);
+
+                        document = new Document(pdfDocument);
+                        float columnWith[] = {80, 1000};
+                        Table tableHeader = new Table(columnWith).setBorder(Border.NO_BORDER).setHeight(60f).setAutoLayout();
+
+                        tableHeader.setBackgroundColor(new DeviceRgb(91, 168, 44));
+                        tableHeader.addCell(new Cell().add(img).setBorder(Border.NO_BORDER)
+                                .setVerticalAlignment(VerticalAlignment.MIDDLE).setMarginTop(5f));
+                        tableHeader.addCell(new Cell().add("Hóa đơn bán hàng")
+                                .setFontColor(new DeviceRgb(255, 255, 255)).setFontSize(17f)
+                                .setBold()
+                                .setMarginLeft(15f)
+                                .setFont(fontTitle)
+                                .setTextAlignment(TextAlignment.CENTER)
+                                .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                                .setBorder(Border.NO_BORDER));
+
+                        Font fontCapture = new Font(Font.FontFamily.HELVETICA, 16, Font.BOLD);
+                        Paragraph infoCostumer = new Paragraph("Thông tin hóa đơn");
+                        infoCostumer.setFont(fontTitle).setBold().setMarginTop(15f);
+
+                        Paragraph nameCos = new Paragraph("Mã Hóa Đơn:\t" + txtHoaDonChon.getText());
+                        nameCos.setFont(fontTitle).setFontSize(9f);
+
+                        Paragraph purchaseTime = new Paragraph("Ngày Thanh Toán:\t" + timeNow);
+                        purchaseTime.setFont(fontTitle).setFontSize(9f);
+
+                        Paragraph phoneNumber = new Paragraph("Tên Khách Hàng:\t" + txtTenKH.getText());
+                        phoneNumber.setFont(fontTitle).setFontSize(9f);
+
+                        Paragraph staffName = new Paragraph("Tên Nhân Viên:\t" + txtTenNV.getText());
+                        staffName.setFont(fontTitle).setFontSize(9f);
+
+                        document.add(tableHeader);
+                        document.add(infoCostumer);
+                        document.add(nameCos);
+                        document.add(purchaseTime);
+                        document.add(phoneNumber);
+                        document.add(staffName);
+
+                        Paragraph listProducts = new Paragraph("Sản phẩm");
+                        listProducts.setFont(fontTitle).setBold().setMarginTop(25f).setMarginBottom(-10);
+
+                        document.add(listProducts);
+
+                        float columnWithTableContent[] = {150, 350, 400};
+                        Table tableContent = new Table(columnWithTableContent)
+                                .setTextAlignment(TextAlignment.CENTER)
+                                .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                                .setBorder(Border.NO_BORDER).setMarginTop(15f);
+                        tableContent.addCell(new Cell().add("Tên sản phẩm")
+                                .setBackgroundColor(new DeviceRgb(91, 168, 44))
+                                .setFont(fontTitle).setBold().setFontColor(Color.WHITE)
+                                .setFontSize(9)
+                                .setBorder(Border.NO_BORDER));
+                        tableContent.addCell(new Cell().add("Số lượng")
+                                .setBackgroundColor(new DeviceRgb(91, 168, 44)).setFont(fontTitle)
+                                .setBold().setFontColor(Color.WHITE)
+                                .setFontSize(9)
+                                .setBorder(Border.NO_BORDER));
+                        tableContent.addCell(new Cell().add("Giá bán")
+                                .setFontSize(9)
+                                .setBackgroundColor(new DeviceRgb(91, 168, 44)).setFont(fontTitle)
+                                .setBold().setFontColor(Color.WHITE)
+                                .setBorder(Border.NO_BORDER));
+
+                        float price = 0;
+
+                        for (HDCTBanHang x : listHDCT) {
+                            tableContent.addCell(new Cell().add(x.getTenSP()).setFont(fontTitle).setBorder(Border.NO_BORDER).setFontSize(9));
+                            tableContent.addCell(new Cell().add(x.getSoLuong() + "").setFont(fontTitle).setBorder(Border.NO_BORDER).setFontSize(9));
+                            tableContent.addCell(new Cell().add(x.getDonGia() + "").setFont(fontTitle).setBorder(Border.NO_BORDER).setFontSize(9));
+                            price += x.getSoLuong() * Float.parseFloat(x.getDonGia() + "");
+                        }
+                        document.add(tableContent);
+
+                        float coulumnWithFotter[] = {100, 300, 900, 250, 150};
+                        Table tableFotter = new Table(coulumnWithFotter)
+                                .setTextAlignment(TextAlignment.LEFT)
+                                .setVerticalAlignment(VerticalAlignment.MIDDLE)
+                                .setBorder(Border.NO_BORDER);
+                        tableFotter.addCell(new Cell().setBackgroundColor(new DeviceRgb(91, 168, 44)).setBorder(Border.NO_BORDER));
+                        tableFotter.addCell(new Cell().setBackgroundColor(new DeviceRgb(91, 168, 44)).setBorder(Border.NO_BORDER));
+                        tableFotter.addCell(new Cell().setBackgroundColor(new DeviceRgb(91, 168, 44)).setBorder(Border.NO_BORDER));
+                        tableFotter.addCell(new Cell().add("Tổng tiền"
+                                + "\nGiảm giá"
+                                + "\nTổng tiền khách đưa"
+                                + "\nTrả lại")
+                                .setFont(fontTitle)
+                                .setFontColor(Color.WHITE)
+                                .setFontSize(9)
+                                .setBold()
+                                .setBackgroundColor(new DeviceRgb(91, 168, 44))
+                                .setBorder(Border.NO_BORDER)
+                        );
+
+                        String tongTienTra = txtTienKhachTra.getText();
+                        String tienTraLai = txtTienThua.getText();
+                        float tienKhuyenMai = Float.valueOf(txtThanhTien.getText()) - Float.valueOf(txtTienKM.getText());
+
+                        tableFotter.addCell(new Cell().add(
+                                price
+                                + "\n" + tienKhuyenMai
+                                + "\n" + tongTienTra
+                                + "\n" + tienTraLai
+                        )
+                                .setFont(fontTitle)
+                                .setFontColor(Color.WHITE)
+                                .setFontSize(9)
+                                .setBold()
+                                .setBackgroundColor(new DeviceRgb(91, 168, 44))
+                                .setBorder(Border.NO_BORDER)
+                        );
+
+                        document.add(tableFotter);
+
+                        document.close();
+                        System.out.println("Create a PDF file sussecess");
+                        resetTableHoaDon();
+                        listHDCT.removeAll(listHDCT);
+                        showDataHDCT(listHDCT);
+                        clear();
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                        e.getMessage();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    e.getMessage();
+                }
+            } else {
+                resetTableHoaDon();
+                listHDCT.removeAll(listHDCT);
+                showDataHDCT(listHDCT);
+                clear();
+            }
+        }
     }//GEN-LAST:event_btnThanhToanActionPerformed
 
     private void tblSanPhamCTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblSanPhamCTMouseClicked
@@ -1178,8 +1365,7 @@ public class GiaoDich extends javax.swing.JFrame {
             pageHoaDon = this.banHangService.listGetAllHDPage(rowoffset);
             showDataHD(pageHoaDon);
 
-            int c = this.banHangService.getAllHD().size();
-            System.out.println(c);
+            System.out.println(rowoffset);
         }
     }//GEN-LAST:event_btnNextActionPerformed
 
@@ -1214,11 +1400,13 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
         // TODO add your handling code here:
-//      int c = banHangService.getAllHD().size() / fetch;
-        rowoffset = banHangService.getAllHD().size() - fetch;
+        int c = banHangService.getAllHD().size() % fetch;
+        rowoffset = banHangService.getAllHD().size() - c;
         pageHoaDon = banHangService.listGetAllHDPage(rowoffset);
         showDataHD(pageHoaDon);
+        System.out.println(c);
         System.out.println(rowoffset);
+        System.out.println(banHangService.getAllHD().size());
     }//GEN-LAST:event_btnLastActionPerformed
 
     private void jButton2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton2MouseClicked
@@ -1340,7 +1528,7 @@ public class GiaoDich extends javax.swing.JFrame {
                 this.banHangService.suaSoLuongCTSP(sl + x.getSoLuong(), x.getId());
             }
             this.banHangService.huyDon(txtHoaDonChon.getText());
-            JOptionPane.showMessageDialog(this, "Hủy đơn thành công!!!!");          
+            JOptionPane.showMessageDialog(this, "Hủy đơn thành công!!!!");
             resetTableHoaDon();
             resetTableCTSP();
             listHDCT.removeAll(listHDCT);
@@ -1570,8 +1758,6 @@ public class GiaoDich extends javax.swing.JFrame {
                 x.getMaHD(),
                 x.getTenKH(),
                 x.getTenNV(),
-                x.getMaKM(),
-                x.getThanhTien(),
                 x.getNgayTao(),
                 x.getTrangThai() == 0 ? "Đã thanh toán" : (x.getTrangThai() == 1) ? "Chưa thanh toán" : "Đã hủy"
             });
