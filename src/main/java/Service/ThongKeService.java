@@ -6,6 +6,7 @@ package Service;
 
 import Repository.ThongKeRepository;
 import java.util.List;
+import view_model.ThongKeSanPhamViewModel;
 import view_model.ThongKeViewModel;
 
 /**
@@ -18,5 +19,13 @@ public class ThongKeService {
     
     public List<ThongKeViewModel> thongKeTheoThang(int year){
         return this.thongKe.thongKeDoanhThuTheoThang(year);
+    }
+    
+    public List<ThongKeSanPhamViewModel> thongKeSanPhamDaBan(){
+        return this.thongKe.thongKeSanPhamDaBan();
+    }
+    
+    public int thongKeDoanhThuTong(){
+        return this.thongKe.thongKeTongDoanhThu();
     }
 }
