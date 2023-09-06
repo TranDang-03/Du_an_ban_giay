@@ -586,7 +586,7 @@ public class NhanVien1 extends javax.swing.JDialog {
         try {
             dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày sinh theo định dạng Year/Month/Day");
             return;
         }
         float luong = Float.parseFloat(txt_Luong.getText());
@@ -758,7 +758,7 @@ public class NhanVien1 extends javax.swing.JDialog {
                     try {
                         dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
                     } catch (ParseException ex) {
-                        JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+                        JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày sinh theo định dạng Year/Month/Day");
                         return;
                     }
                     float luong = Float.parseFloat(txt_Luong.getText());
@@ -795,129 +795,9 @@ public class NhanVien1 extends javax.swing.JDialog {
     }//GEN-LAST:event_txttenActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
-//        dtm = (DefaultTableModel) tblnv.getModel();
-//        dtm.setRowCount(0);
-//        FileInputStream excelFIS = null;
-//        BufferedInputStream excelBIS = null;
-//        XSSFWorkbook excelImportWorkBook = null;
-//        String currentDirectoryPath = "C:\\Users\\admin\\Documents";
-//        JFileChooser ejfc = new JFileChooser(currentDirectoryPath);
-//        FileNameExtensionFilter extensionFilter = new FileNameExtensionFilter("Excel file", "xls", "xlsx", "xslm");
-//        ejfc.setFileFilter(extensionFilter);
-//        int excelchooser = ejfc.showOpenDialog(null);
-//        if (excelchooser == JFileChooser.APPROVE_OPTION) {
-//            try {
-//                File excelFile = ejfc.getSelectedFile();
-//                excelFIS = new FileInputStream(excelFile);
-//                excelBIS = new BufferedInputStream(excelFIS);
-//                excelImportWorkBook = new XSSFWorkbook(excelBIS);
-//                XSSFSheet excelSheet = excelImportWorkBook.getSheetAt(0);
-//                for (int i = 1; i < excelSheet.getLastRowNum(); i++) {
-//                    XSSFRow excelRow = excelSheet.getRow(i);
-//                    XSSFCell maNV = excelRow.getCell(0);
-//                    XSSFCell ten = excelRow.getCell(1);
-//                    XSSFCell gioiTinh = excelRow.getCell(2);
-//                    String gioiTinhStr = String.valueOf(gioiTinh).equals("1") ? "Nam" : "Nữ";
-////                    System.out.println("Gioi tinh sau khi convert string : " + gioiTinhStr);
-//
-////                    String gioiTinhStr = gioiTinh.equals("1")?"Nam":"Nữ";
-//                    java.util.Date ngaySinh = excelRow.getCell(3).getDateCellValue();
-//                    DateFormat dateFormatNgaySinh = new SimpleDateFormat("yyyy-MM-dd");
-//                    String strNgaySinh = dateFormatNgaySinh.format(ngaySinh);
-////                  
-//                    XSSFCell SDT = excelRow.getCell(4);
-//                    XSSFCell diaChi = excelRow.getCell(5);
-//                    XSSFCell chucVu = excelRow.getCell(6);
-////                    String chucVuString = String.valueOf(chucVu);
-//////                    Integer chucVuInt = Integer.parseInt(chucVuString);
-////                    
-////                    System.out.println("Chuc vu excel: " + chucVu);
-//                    String chucVuStr = String.valueOf(chucVu).equals("1") ? "1" : "0";
-//                    XSSFCell Luong = excelRow.getCell(7);
-//                    String luongStr = String.valueOf(chucVu);
-//                    XSSFCell tenTK = excelRow.getCell(8);
-//                    XSSFCell mk = excelRow.getCell(9);
-//                    XSSFCell trangThai = excelRow.getCell(10);
-//                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "0" : "1";
-//
-//                    System.out.println();
-//                    dtm.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, diaChi, SDT, chucVuStr, Luong, tenTK, mk, trangThaiStr});
-//                }
-//                JOptionPane.showMessageDialog(rootPane, "Import Excel thanh cong");
-//            } catch (FileNotFoundException ex) {
-//                ex.printStackTrace();
-//            } catch (IOException ex) {
-//                Logger.getLogger(ImportExcelNhanVienView.class.getName()).log(Level.SEVERE, null, ex);
-//            }
-//
-//        }
-//
-        File excelFile;
-        FileInputStream excelFIS = null;
-        BufferedInputStream excelBIS = null;
-        XSSFWorkbook excelImportToJTable = null;
-        String defaultCurrentDirectoryPath = "D:\\";
-        JFileChooser excelFileChooser = new JFileChooser(defaultCurrentDirectoryPath);
-        excelFileChooser.setDialogTitle("Select Excel File");
-        FileNameExtensionFilter fnef = new FileNameExtensionFilter("EXCEL FILES", "xls", "xlsx", "xlsm");
-        excelFileChooser.setFileFilter(fnef);
-        int excelChooser = excelFileChooser.showOpenDialog(null);
-        if (excelChooser == JFileChooser.APPROVE_OPTION) {
-            try {
-                excelFile = excelFileChooser.getSelectedFile();
-                excelFIS = new FileInputStream(excelFile);
-                excelBIS = new BufferedInputStream(excelFIS);
-                excelImportToJTable = new XSSFWorkbook(excelBIS);
-                XSSFSheet excelSheet = excelImportToJTable.getSheetAt(0);
 
-                for (int row = 1; row < excelSheet.getLastRowNum(); row++) {
-                    XSSFRow excelRow = excelSheet.getRow(row);
-                    XSSFCell maNV = excelRow.getCell(0);
-                    XSSFCell ten = excelRow.getCell(1);
-                    XSSFCell gioiTinh = excelRow.getCell(2);
-                    String gioiTinhStr = String.valueOf(gioiTinh).equals("1") ? "Nam" : "Nữ";
-//                    System.out.println("Gioi tinh sau khi convert string : " + gioiTinhStr);
-
-//                    String gioiTinhStr = gioiTinh.equals("1")?"Nam":"Nữ";
-                    java.util.Date ngaySinh = excelRow.getCell(3).getDateCellValue();
-                    DateFormat dateFormatNgaySinh = new SimpleDateFormat("yyyy-MM-dd");
-                    String strNgaySinh = dateFormatNgaySinh.format(ngaySinh);
-//                  
-                    XSSFCell SDT = excelRow.getCell(4);
-                    XSSFCell diaChi = excelRow.getCell(5);
-                    XSSFCell chucVu = excelRow.getCell(6);
-//                    String chucVuString = String.valueOf(chucVu);
-////                    Integer chucVuInt = Integer.parseInt(chucVuString);
-//                    
-//                    System.out.println("Chuc vu excel: " + chucVu);
-                    String chucVuStr = String.valueOf(chucVu).equals("1") ? "Trưởng phòng" : "Nhân Viên";
-                    XSSFCell Luong = excelRow.getCell(7);
-                    String luongStr = String.valueOf(Luong);
-                    XSSFCell tenTK = excelRow.getCell(8);
-                    XSSFCell mk = excelRow.getCell(9);
-                    XSSFCell trangThai = excelRow.getCell(10);
-                    String trangThaiStr = String.valueOf(trangThai).equals("1") ? "Không hoạt Động" : "Hoạt Động";
-                    model.addRow(new Object[]{maNV, ten, gioiTinhStr, strNgaySinh, SDT, diaChi, chucVuStr, luongStr, tenTK, mk, trangThaiStr});
-                }
-                JOptionPane.showMessageDialog(null, "Imported thành công !!!");
-            } catch (IOException iOException) {
-                JOptionPane.showMessageDialog(null, iOException.getMessage());
-            } finally {
-                try {
-                    if (excelFIS != null) {
-                        excelFIS.close();
-                    }
-                    if (excelBIS != null) {
-                        excelBIS.close();
-                    }
-                    if (excelImportToJTable != null) {
-                        excelImportToJTable.close();
-                    }
-                } catch (IOException iOException) {
-                    JOptionPane.showMessageDialog(null, iOException.getMessage());
-                }
-            }
-        }
+        ImportExcelNhanVienView excelNhanVienView = new ImportExcelNhanVienView();
+        excelNhanVienView.setVisible(true);
 
     }//GEN-LAST:event_jButton11ActionPerformed
 

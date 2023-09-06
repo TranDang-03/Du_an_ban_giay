@@ -6,8 +6,13 @@ package View;
 
 import Constrant.UserInfor;
 import Repository.BanHangRepository;
+import Service.KhachHangService;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,7 +27,7 @@ public class KhachHang extends javax.swing.JFrame {
     DefaultTableModel dtmKH = new DefaultTableModel();
 
     List<Model.KhachHang> listKH = new ArrayList<>();
-
+ private KhachHangService service = new KhachHangService();
     private BanHangRepository repo = new BanHangRepository();
 
     public static String code = "";
@@ -45,7 +50,36 @@ public class KhachHang extends javax.swing.JFrame {
             System.out.println(khachHang.toString());
         }
     }
+public void loadtable() {
+        listKH = this.service.getAll();
+        dtmKH.setRowCount(0);
 
+        for (Model.KhachHang kh : listKH) {
+            dtmKH.addRow(new Object[]{
+               
+                kh.getMaKH(),
+                kh.getTenKH(),
+                kh.isGioiTinh() == true ? "Nam " : "Nữ",
+                kh.getNgSinh(),
+                kh.getSdt(),
+                kh.getDiaChi(),
+                kh.getTrangThai() == 0 ? "Hoạt động" : "Không hoạt động"
+            });
+        }
+    }
+
+    public void clear() {
+        
+        txtMaKH.setText("");
+        txtTenKH.setText("");
+        txtDC.setText("");
+        txtNgaySinh.setText("");
+        txtSDT.setText("");
+        rd_hd.setSelected(false);
+        rd_khd.setSelected(false);
+        rd_nam.setSelected(false);
+        rd_nu.setSelected(false);
+    }
     private void showDataKhachHang(List<Model.KhachHang> list) {
         dtmKH.setRowCount(0);
         for (Model.KhachHang kh : list) {
@@ -61,7 +95,39 @@ public class KhachHang extends javax.swing.JFrame {
             dtmKH.addRow(row);
         }
     }
+    public boolean checkMaKHAdd() {
+        String ma = this.txtMaKH.getText();
+        for (Model.KhachHang khachHangService : listKH) {
+            if (khachHangService.getMaKH().equalsIgnoreCase(ma)) {
+                JOptionPane.showMessageDialog(this, "Mã khách hàng đã tồn tại");
+                return false;
+            }
+        }
+        return true;
+    }
+public boolean checkData() {
+        if (txtMaKH.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Mã không được để trống!");
+            return false;
+        } else if (txtTenKH.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Tên không được để trống!");
+            return false;
+        } else if (txtDC.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Địa Chỉ không được để trống!");
+            return false;
+        } else if (txtDC.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ngày Sinh không được để trống!");
+            return false;
 
+        } else if (txtSDT.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Sdt không được để trống!");
+            return false;
+
+        } else {
+            return true;
+        }
+        
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -86,22 +152,22 @@ public class KhachHang extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        txtMaKH = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        txtTenKH = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rd_nam = new javax.swing.JRadioButton();
+        rd_nu = new javax.swing.JRadioButton();
         jLabel6 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        txtNgaySinh = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        txtSDT = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        rd_hd = new javax.swing.JRadioButton();
+        rd_khd = new javax.swing.JRadioButton();
         jLabel9 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txtDC = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -189,14 +255,20 @@ public class KhachHang extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel5.setText("Giới tính:");
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Nam");
+        buttonGroup1.add(rd_nam);
+        rd_nam.setText("Nam");
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Nữ");
+        buttonGroup1.add(rd_nu);
+        rd_nu.setText("Nữ");
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel6.setText("Ngày sinh:");
+
+        txtNgaySinh.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNgaySinhActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel7.setText("SĐT:");
@@ -204,20 +276,25 @@ public class KhachHang extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel8.setText("Trạng thái:");
 
-        buttonGroup2.add(jRadioButton3);
-        jRadioButton3.setText("Hoạt động");
+        buttonGroup2.add(rd_hd);
+        rd_hd.setText("Hoạt động");
 
-        buttonGroup2.add(jRadioButton4);
-        jRadioButton4.setText("Không hoạt động");
+        buttonGroup2.add(rd_khd);
+        rd_khd.setText("Không hoạt động");
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         jLabel9.setText("Địa chỉ:");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane2.setViewportView(jTextArea1);
+        txtDC.setColumns(20);
+        txtDC.setRows(5);
+        jScrollPane2.setViewportView(txtDC);
 
         jButton1.setText("Thêm");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         jButton2.setText("Sửa");
 
@@ -244,20 +321,20 @@ public class KhachHang extends javax.swing.JFrame {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(rd_nam, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addGap(33, 33, 33)
-                                    .addComponent(jRadioButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addComponent(rd_nu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addComponent(jTextField2, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE)
-                                .addComponent(jTextField3)
-                                .addComponent(jTextField4)
-                                .addComponent(jTextField5)
-                                .addComponent(jTextField6))
+                                .addComponent(txtMaKH)
+                                .addComponent(txtTenKH)
+                                .addComponent(txtNgaySinh)
+                                .addComponent(txtSDT))
                             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(jPanel4Layout.createSequentialGroup()
-                                    .addComponent(jRadioButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(rd_hd, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(jRadioButton4))))
+                                    .addComponent(rd_khd))))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jButton1)
@@ -277,29 +354,29 @@ public class KhachHang extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtMaKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtTenKH, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2))
+                    .addComponent(rd_nam)
+                    .addComponent(rd_nu))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
-                    .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNgaySinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSDT, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4))
+                    .addComponent(rd_hd)
+                    .addComponent(rd_khd))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel9)
@@ -370,6 +447,67 @@ public class KhachHang extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_tblKhachHangMouseClicked
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        int cf = JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc muốn thêm ?");
+        if (cf == JOptionPane.YES_OPTION) {
+
+            if (checkData()) {
+                if (checkMaKHAdd()) {
+                    String maKH = txtMaKH.getText();
+                    String tenKH = txtTenKH.getText();
+                    
+                    String sdt = txtSDT.getText();
+                    String diaChi = txtDC.getText();
+                    String ngaySinh = txtNgaySinh.getText();
+                    Date dateNgaySinh;
+                    try {
+                        dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
+                    } catch (ParseException ex) {
+                        JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày sinh theo định dạng Year/Month/Day");
+                        return;
+                    }
+
+                    boolean gioiTinh;
+
+                    if (rd_nam.isSelected() == true) {
+                        gioiTinh = true;
+                    } else {
+                        gioiTinh = false;
+                    }
+                    int trangThai;
+
+                    if (rd_khd.isSelected() == true) {
+                        trangThai = 0;
+                    } else {
+                        trangThai = 1;
+                    }
+
+                    Model.KhachHang kh = new Model.KhachHang(maKH, tenKH, gioiTinh, dateNgaySinh, sdt, diaChi, trangThai);
+
+                    boolean add = this.service.add(kh);
+
+                    if (add == true) {
+                        JOptionPane.showMessageDialog(this, "Thêm thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Thêm thất bại");
+                    }
+
+                    clear();
+                    loadtable();
+                }
+                } else {
+                    return;
+                }
+            }
+
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtNgaySinhActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNgaySinhActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNgaySinhActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -434,20 +572,20 @@ public class KhachHang extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
+    private javax.swing.JRadioButton rd_hd;
+    private javax.swing.JRadioButton rd_khd;
+    private javax.swing.JRadioButton rd_nam;
+    private javax.swing.JRadioButton rd_nu;
     public javax.swing.JTable tblKhachHang;
+    private javax.swing.JTextArea txtDC;
+    private javax.swing.JTextField txtMaKH;
+    private javax.swing.JTextField txtNgaySinh;
+    private javax.swing.JTextField txtSDT;
+    private javax.swing.JTextField txtTenKH;
     private javax.swing.JTextField txtTimKiem;
     // End of variables declaration//GEN-END:variables
 }

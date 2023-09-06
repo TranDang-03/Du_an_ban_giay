@@ -387,14 +387,15 @@ public class KhachHang1 extends javax.swing.JDialog {
                 if (checkMaKHAdd()) {
                     String maKH = txtMaKH.getText();
                     String tenKH = txtTenKH.getText();
-                    String diaChi = txtDC.getText();
+                    
                     String sdt = txtSDt.getText();
+                    String diaChi = txtDC.getText();
                     String ngaySinh = txtNS.getText();
                     Date dateNgaySinh;
                     try {
                         dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
                     } catch (ParseException ex) {
-                        JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng Year/Month/Day");
+                        JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày sinh theo định dạng Year/Month/Day");
                         return;
                     }
 
@@ -439,14 +440,14 @@ public class KhachHang1 extends javax.swing.JDialog {
         int id = Integer.valueOf(txtID.getText());
         String maKH = txtMaKH.getText();
         String tenKH = txtTenKH.getText();
-        String diaChi = txtDC.getText();
         String sdt = txtSDt.getText();
+        String diaChi = txtDC.getText();
         String ngaySinh = txtNS.getText();
         Date dateNgaySinh;
         try {
             dateNgaySinh = new SimpleDateFormat("yyyy-mm-dd").parse(ngaySinh);
         } catch (ParseException ex) {
-            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày bắt đầu theo định dạng ");
+            JOptionPane.showMessageDialog(this, "Bạn cần nhập ngày sinh theo định dạng ");
             return;
         }
         boolean gioiTinh;
@@ -463,7 +464,7 @@ public class KhachHang1 extends javax.swing.JDialog {
             trangThai = 1;
         }
 
-        Model.KhachHang kh = new Model.KhachHang(maKH, tenKH, gioiTinh, dateNgaySinh, diaChi, sdt, trangThai);
+        Model.KhachHang kh = new Model.KhachHang(maKH, tenKH, gioiTinh, dateNgaySinh, sdt, diaChi, trangThai);
         boolean update = this.service.update(id, kh);
 
         if (update == true) {
